@@ -1,139 +1,144 @@
-import { Page404Component } from './authentication/page404/page404.component';
-import { AuthLayoutComponent } from './layout/app-layout/auth-layout/auth-layout.component';
-import { MainLayoutComponent } from './layout/app-layout/main-layout/main-layout.component';
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from './core/guard/auth.guard';
+import { Page404Component } from "./authentication/page404/page404.component";
+import { AuthLayoutComponent } from "./layout/app-layout/auth-layout/auth-layout.component";
+import { MainLayoutComponent } from "./layout/app-layout/main-layout/main-layout.component";
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
+import { AuthGuard } from "./core/guard/auth.guard";
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: MainLayoutComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: '', redirectTo: '/authentication/signin', pathMatch: 'full' },
+      { path: "", redirectTo: "/authentication/signin", pathMatch: "full" },
       {
-        path: 'dashboard',
+        path: "dashboard",
         loadChildren: () =>
-          import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
+          import("./dashboard/dashboard.module").then((m) => m.DashboardModule),
       },
       {
-        path: 'advance-table',
+        path: "advance-table",
         loadChildren: () =>
-          import('./advance-table/advance-table.module').then(
+          import("./advance-table/advance-table.module").then(
             (m) => m.AdvanceTableModule
           ),
       },
       {
-        path: 'categories',
+        path: "categories",
         loadChildren: () =>
-          import('./categories/categories.module').then(
+          import("./categories/categories.module").then(
             (m) => m.CategoriesModule
           ),
       },
       {
-        path: 'sub_categories',
+        path: "sub_categories",
         loadChildren: () =>
-          import('./sub_categories/categories.module').then(
+          import("./sub_categories/categories.module").then(
             (m) => m.CategoriesModule
           ),
       },
       {
-        path: 'calendar',
+        path: "products",
         loadChildren: () =>
-          import('./calendar/calendar.module').then((m) => m.CalendarsModule),
+          import("./products/products.module").then((m) => m.ProductsModule),
       },
       {
-        path: 'task',
+        path: "calendar",
         loadChildren: () =>
-          import('./task/task.module').then((m) => m.TaskModule),
+          import("./calendar/calendar.module").then((m) => m.CalendarsModule),
       },
       {
-        path: 'contacts',
+        path: "task",
         loadChildren: () =>
-          import('./contacts/contacts.module').then((m) => m.ContactsModule),
+          import("./task/task.module").then((m) => m.TaskModule),
       },
       {
-        path: 'email',
+        path: "contacts",
         loadChildren: () =>
-          import('./email/email.module').then((m) => m.EmailModule),
+          import("./contacts/contacts.module").then((m) => m.ContactsModule),
       },
       {
-        path: 'apps',
+        path: "email",
         loadChildren: () =>
-          import('./apps/apps.module').then((m) => m.AppsModule),
+          import("./email/email.module").then((m) => m.EmailModule),
       },
       {
-        path: 'widget',
+        path: "apps",
         loadChildren: () =>
-          import('./widget/widget.module').then((m) => m.WidgetModule),
+          import("./apps/apps.module").then((m) => m.AppsModule),
       },
       {
-        path: 'ui',
-        loadChildren: () => import('./ui/ui.module').then((m) => m.UiModule),
+        path: "widget",
+        loadChildren: () =>
+          import("./widget/widget.module").then((m) => m.WidgetModule),
       },
       {
-        path: 'forms',
-        loadChildren: () =>
-          import('./forms/forms.module').then((m) => m.FormModule),
+        path: "ui",
+        loadChildren: () => import("./ui/ui.module").then((m) => m.UiModule),
       },
       {
-        path: 'tables',
+        path: "forms",
         loadChildren: () =>
-          import('./tables/tables.module').then((m) => m.TablesModule),
+          import("./forms/forms.module").then((m) => m.FormModule),
       },
       {
-        path: 'media',
+        path: "tables",
         loadChildren: () =>
-          import('./media/media.module').then((m) => m.MediaModule),
+          import("./tables/tables.module").then((m) => m.TablesModule),
       },
       {
-        path: 'charts',
+        path: "media",
         loadChildren: () =>
-          import('./charts/charts.module').then((m) => m.ChartsModule),
+          import("./media/media.module").then((m) => m.MediaModule),
       },
       {
-        path: 'timeline',
+        path: "charts",
         loadChildren: () =>
-          import('./timeline/timeline.module').then((m) => m.TimelineModule),
+          import("./charts/charts.module").then((m) => m.ChartsModule),
       },
       {
-        path: 'icons',
+        path: "timeline",
         loadChildren: () =>
-          import('./icons/icons.module').then((m) => m.IconsModule),
+          import("./timeline/timeline.module").then((m) => m.TimelineModule),
       },
       {
-        path: 'extra-pages',
+        path: "icons",
         loadChildren: () =>
-          import('./extra-pages/extra-pages.module').then(
+          import("./icons/icons.module").then((m) => m.IconsModule),
+      },
+      {
+        path: "extra-pages",
+        loadChildren: () =>
+          import("./extra-pages/extra-pages.module").then(
             (m) => m.ExtraPagesModule
           ),
       },
       {
-        path: 'maps',
+        path: "maps",
         loadChildren: () =>
-          import('./maps/maps.module').then((m) => m.MapsModule),
+          import("./maps/maps.module").then((m) => m.MapsModule),
       },
       {
-        path: 'multilevel',
+        path: "multilevel",
         loadChildren: () =>
-          import('./multilevel/multilevel.module').then(
+          import("./multilevel/multilevel.module").then(
             (m) => m.MultilevelModule
           ),
       },
     ],
   },
   {
-    path: 'authentication',
+    path: "authentication",
     component: AuthLayoutComponent,
     loadChildren: () =>
-      import('./authentication/authentication.module').then(
+      import("./authentication/authentication.module").then(
         (m) => m.AuthenticationModule
       ),
   },
-  { path: '**', component: Page404Component },
+  { path: "**", component: Page404Component },
 ];
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
+  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: "legacy" })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
