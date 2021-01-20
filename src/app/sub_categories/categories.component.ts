@@ -1,33 +1,34 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { CategoriesService } from './categories.service';
-import { HttpClient } from '@angular/common/http';
-import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { CategoriesTable } from './categories.model';
-import { DataSource } from '@angular/cdk/collections';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { BehaviorSubject, fromEvent, merge, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { FormComponent } from './form/form.component';
-import { DeleteComponent } from './delete/delete.component';
-import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
-import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
-import { SelectionModel } from '@angular/cdk/collections';
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { CategoriesService } from "./categories.service";
+import { HttpClient } from "@angular/common/http";
+import { MatDialog } from "@angular/material/dialog";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
+import { CategoriesTable } from "./categories.model";
+import { DataSource } from "@angular/cdk/collections";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { BehaviorSubject, fromEvent, merge, Observable } from "rxjs";
+import { map } from "rxjs/operators";
+import { FormComponent } from "./form/form.component";
+import { DeleteComponent } from "./delete/delete.component";
+import { DateAdapter, MAT_DATE_LOCALE } from "@angular/material/core";
+import { MatMenu, MatMenuTrigger } from "@angular/material/menu";
+import { SelectionModel } from "@angular/cdk/collections";
 
 @Component({
-  selector: 'app-categories',
-  templateUrl: './categories.component.html',
-  styleUrls: ['./categories.component.sass'],
-  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
+  selector: "app-categories",
+  templateUrl: "./categories.component.html",
+  styleUrls: ["./categories.component.sass"],
+  providers: [{ provide: MAT_DATE_LOCALE, useValue: "en-GB" }],
 })
 export class CategoriesComponent implements OnInit {
   displayedColumns = [
-    'select',
-    'category',
-    'created_at',
-    'is_active',
-    'actions',
+    "select",
+    "sub_category",
+    "category",
+    "created_at",
+    "is_active",
+    "actions",
   ];
   exampleDatabase: CategoriesService | null;
   dataSource: ExampleDataSource | null;
@@ -43,10 +44,10 @@ export class CategoriesComponent implements OnInit {
   ) {}
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  @ViewChild('filter', { static: true }) filter: ElementRef;
+  @ViewChild("filter", { static: true }) filter: ElementRef;
   @ViewChild(MatMenuTrigger)
   contextMenu: MatMenuTrigger;
-  contextMenuPosition = { x: '0px', y: '0px' };
+  contextMenuPosition = { x: "0px", y: "0px" };
   ngOnInit() {
     this.loadData();
   }
@@ -57,7 +58,7 @@ export class CategoriesComponent implements OnInit {
     const dialogRef = this.dialog.open(FormComponent, {
       data: {
         advanceTable: this.advanceTable,
-        action: 'add',
+        action: "add",
       },
     });
     dialogRef.afterClosed().subscribe((result) => {
@@ -69,10 +70,10 @@ export class CategoriesComponent implements OnInit {
         );
         this.refresh();
         this.showNotification(
-          'snackbar-success',
-          'Add Record Successfully...!!!',
-          'top',
-          'right'
+          "snackbar-success",
+          "Add Record Successfully...!!!",
+          "top",
+          "right"
         );
       }
     });
@@ -82,7 +83,7 @@ export class CategoriesComponent implements OnInit {
     const dialogRef = this.dialog.open(FormComponent, {
       data: {
         advanceTable: row,
-        action: 'edit',
+        action: "edit",
       },
     });
     dialogRef.afterClosed().subscribe((result) => {
@@ -98,10 +99,10 @@ export class CategoriesComponent implements OnInit {
         // And lastly refresh table
         this.refresh();
         this.showNotification(
-          'black',
-          'Edit Record Successfully...!!!',
-          'top',
-          'right'
+          "black",
+          "Edit Record Successfully...!!!",
+          "top",
+          "right"
         );
       }
     });
@@ -120,10 +121,10 @@ export class CategoriesComponent implements OnInit {
         this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
         this.refresh();
         this.showNotification(
-          'snackbar-danger',
-          'Delete Record Successfully...!!!',
-          'top',
-          'right'
+          "snackbar-danger",
+          "Delete Record Successfully...!!!",
+          "top",
+          "right"
         );
       }
     });
@@ -158,10 +159,10 @@ export class CategoriesComponent implements OnInit {
       this.selection = new SelectionModel<CategoriesTable>(true, []);
     });
     this.showNotification(
-      'snackbar-danger',
-      totalSelect + ' Record Delete Successfully...!!!',
-      'top',
-      'right'
+      "snackbar-danger",
+      totalSelect + " Record Delete Successfully...!!!",
+      "top",
+      "right"
     );
   }
   public loadData() {
@@ -171,7 +172,7 @@ export class CategoriesComponent implements OnInit {
       this.paginator,
       this.sort
     );
-    fromEvent(this.filter.nativeElement, 'keyup').subscribe(() => {
+    fromEvent(this.filter.nativeElement, "keyup").subscribe(() => {
       if (!this.dataSource) {
         return;
       }
@@ -179,7 +180,7 @@ export class CategoriesComponent implements OnInit {
     });
   }
   showNotification(colorName, text, placementFrom, placementAlign) {
-    this.snackBar.open(text, '', {
+    this.snackBar.open(text, "", {
       duration: 2000,
       verticalPosition: placementFrom,
       horizontalPosition: placementAlign,
@@ -190,15 +191,15 @@ export class CategoriesComponent implements OnInit {
   // context menu
   onContextMenu(event: MouseEvent, item: CategoriesTable) {
     event.preventDefault();
-    this.contextMenuPosition.x = event.clientX + 'px';
-    this.contextMenuPosition.y = event.clientY + 'px';
+    this.contextMenuPosition.x = event.clientX + "px";
+    this.contextMenuPosition.y = event.clientY + "px";
     this.contextMenu.menuData = { item: item };
-    this.contextMenu.menu.focusFirstItem('mouse');
+    this.contextMenu.menu.focusFirstItem("mouse");
     this.contextMenu.openMenu();
   }
 }
 export class ExampleDataSource extends DataSource<CategoriesTable> {
-  _filterChange = new BehaviorSubject('');
+  _filterChange = new BehaviorSubject("");
   get filter(): string {
     return this._filterChange.value;
   }
@@ -235,9 +236,7 @@ export class ExampleDataSource extends DataSource<CategoriesTable> {
         this.filteredData = this._exampleDatabase.data
           .slice()
           .filter((advanceTable: CategoriesTable) => {
-            const searchStr = (
-              advanceTable.sub_category_name 
-            ).toLowerCase();
+            const searchStr = advanceTable.sub_category_name.toLowerCase();
             return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
           });
         // Sort filtered data
@@ -255,24 +254,24 @@ export class ExampleDataSource extends DataSource<CategoriesTable> {
   disconnect() {}
   /** Returns a sorted copy of the database data. */
   sortData(data: CategoriesTable[]): CategoriesTable[] {
-    if (!this._sort.active || this._sort.direction === '') {
+    if (!this._sort.active || this._sort.direction === "") {
       return data;
     }
     return data.sort((a, b) => {
-      let propertyA: number | string = '';
-      let propertyB: number | string = '';
+      let propertyA: number | string = "";
+      let propertyB: number | string = "";
       switch (this._sort.active) {
-        case 'id':
+        case "id":
           [propertyA, propertyB] = [a._id, b._id];
           break;
-        case 'sub_category_name':
+        case "sub_category_name":
           [propertyA, propertyB] = [a.sub_category_name, b.sub_category_name];
           break;
       }
       const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
       const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
       return (
-        (valueA < valueB ? -1 : 1) * (this._sort.direction === 'asc' ? 1 : -1)
+        (valueA < valueB ? -1 : 1) * (this._sort.direction === "asc" ? 1 : -1)
       );
     });
   }
