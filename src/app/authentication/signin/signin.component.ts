@@ -1,17 +1,17 @@
-import { AuthService } from 'src/app/core/service/auth.service';
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from "src/app/core/service/auth.service";
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 @Component({
-  selector: 'app-signin',
-  templateUrl: './signin.component.html',
-  styleUrls: ['./signin.component.scss'],
+  selector: "app-signin",
+  templateUrl: "./signin.component.html",
+  styleUrls: ["./signin.component.scss"],
 })
 export class SigninComponent implements OnInit {
   loginForm: FormGroup;
   submitted = false;
   returnUrl: string;
-  error = '';
+  error = "";
   hide = true;
   constructor(
     private formBuilder: FormBuilder,
@@ -20,8 +20,8 @@ export class SigninComponent implements OnInit {
   ) {}
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
-      username: ['admin@gmail.com', Validators.required],
-      password: ['admin123', Validators.required],
+      username: ["", Validators.required],
+      password: ["", Validators.required],
     });
   }
   get f() {
@@ -29,9 +29,9 @@ export class SigninComponent implements OnInit {
   }
   onSubmit() {
     this.submitted = true;
-    this.error = '';
+    this.error = "";
     if (this.loginForm.invalid) {
-      this.error = 'Username and Password not valid !';
+      this.error = "Username and Password not valid !";
       return;
     } else {
       this.authService
@@ -41,10 +41,10 @@ export class SigninComponent implements OnInit {
             if (res) {
               const email_id = this.authService.currentUserValue.email_id;
               if (email_id) {
-                this.router.navigate(['/dashboard/main']);
+                this.router.navigate(["/dashboard/main"]);
               }
             } else {
-              this.error = 'Invalid Login';
+              this.error = "Invalid Login";
             }
           },
           (error) => {
