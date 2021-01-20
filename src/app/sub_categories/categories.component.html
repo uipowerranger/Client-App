@@ -127,23 +127,45 @@
                 </ng-container>
                 <!-- ID Column -->
                 <ng-container matColumnDef="id">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
-                  <mat-cell *matCellDef="let row">{{row._id}}</mat-cell>
+                  <mat-header-cell *matHeaderCellDef mat-sort-header
+                    >Id</mat-header-cell
+                  >
+                  <mat-cell *matCellDef="let row">{{ row._id }}</mat-cell>
                 </ng-container>
-                <ng-container matColumnDef="category">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Sub Category
+                <ng-container matColumnDef="sub_category">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header
+                    >Sub Category
                   </mat-header-cell>
                   <mat-cell
                     *matCellDef="let row"
-                    (contextmenu)="onContextMenu($event, row)">
-                    {{ row.sub_category_name }}</mat-cell>
+                    (contextmenu)="onContextMenu($event, row)"
+                  >
+                    {{ row.sub_category_name }}
+                  </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="category">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header
+                    >Category
+                  </mat-header-cell>
+                  <mat-cell
+                    *matCellDef="let row"
+                    (contextmenu)="onContextMenu($event, row)"
+                  >
+                    {{
+                      row.category.length > 0
+                        ? row.category[0].category_name
+                        : ""
+                    }}</mat-cell
+                  >
                 </ng-container>
                 <ng-container matColumnDef="created_at">
                   <mat-header-cell *matHeaderCellDef mat-sort-header
-                    >Created At</mat-header-cell>
+                    >Created At</mat-header-cell
+                  >
                   <mat-cell
                     *matCellDef="let row"
-                    (contextmenu)="onContextMenu($event, row)">
+                    (contextmenu)="onContextMenu($event, row)"
+                  >
                     {{ row.created_at | date: "MM/dd/yyyy" }}
                   </mat-cell>
                 </ng-container>
