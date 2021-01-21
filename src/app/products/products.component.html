@@ -99,7 +99,7 @@
                 class="mat-cell"
               >
                 <!-- Checkbox Column -->
-                <ng-container matColumnDef="select">
+                <!-- <ng-container matColumnDef="select">
                   <mat-header-cell
                     *matHeaderCellDef
                     [ngClass]="'tbl-col-width-per-6'"
@@ -124,7 +124,7 @@
                     >
                     </mat-checkbox>
                   </mat-cell>
-                </ng-container>
+                </ng-container> -->
                 <!-- ID Column -->
                 <ng-container matColumnDef="id">
                   <mat-header-cell *matHeaderCellDef mat-sort-header
@@ -195,7 +195,9 @@
                     *matCellDef="let row"
                     (contextmenu)="onContextMenu($event, row)"
                   >
-                    {{ row.is_active === "1" ? "Active" : "Deleted" }}</mat-cell
+                    {{
+                      row.is_active === "1" ? "Active" : "Inactive"
+                    }}</mat-cell
                   >
                 </ng-container>
                 <!-- actions -->
@@ -216,6 +218,7 @@
                       >
                     </button>
                     <button
+                      *ngIf="row.is_active === '1'"
                       mat-icon-button
                       color="accent"
                       class="btn-tbl-delete"
@@ -223,7 +226,19 @@
                       (click)="deleteItem(row)"
                     >
                       <mat-icon aria-label="Delete" class="col-white"
-                        >delete</mat-icon
+                        >close</mat-icon
+                      >
+                    </button>
+                    <button
+                      *ngIf="row.is_active === '0'"
+                      mat-icon-button
+                      color="accent"
+                      class="btn-tbl-delete"
+                      (click)="$event.stopPropagation()"
+                      (click)="deleteItem(row)"
+                    >
+                      <mat-icon aria-label="Delete" class="col-white"
+                        >check</mat-icon
                       >
                     </button>
                   </mat-cell>

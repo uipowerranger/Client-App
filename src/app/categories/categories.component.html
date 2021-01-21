@@ -99,7 +99,7 @@
                 class="mat-cell"
               >
                 <!-- Checkbox Column -->
-                <ng-container matColumnDef="select">
+                <!-- <ng-container matColumnDef="select">
                   <mat-header-cell
                     *matHeaderCellDef
                     [ngClass]="'tbl-col-width-per-6'"
@@ -124,26 +124,33 @@
                     >
                     </mat-checkbox>
                   </mat-cell>
-                </ng-container>
+                </ng-container> -->
                 <!-- ID Column -->
                 <ng-container matColumnDef="id">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
-                  <mat-cell *matCellDef="let row">{{row._id}}</mat-cell>
+                  <mat-header-cell *matHeaderCellDef mat-sort-header
+                    >Id</mat-header-cell
+                  >
+                  <mat-cell *matCellDef="let row">{{ row._id }}</mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="category">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Category
+                  <mat-header-cell *matHeaderCellDef mat-sort-header
+                    >Category
                   </mat-header-cell>
                   <mat-cell
                     *matCellDef="let row"
-                    (contextmenu)="onContextMenu($event, row)">
-                    {{ row.category_name }}</mat-cell>
+                    (contextmenu)="onContextMenu($event, row)"
+                  >
+                    {{ row.category_name }}</mat-cell
+                  >
                 </ng-container>
                 <ng-container matColumnDef="created_at">
                   <mat-header-cell *matHeaderCellDef mat-sort-header
-                    >Created At</mat-header-cell>
+                    >Created At</mat-header-cell
+                  >
                   <mat-cell
                     *matCellDef="let row"
-                    (contextmenu)="onContextMenu($event, row)">
+                    (contextmenu)="onContextMenu($event, row)"
+                  >
                     {{ row.created_at | date: "MM/dd/yyyy" }}
                   </mat-cell>
                 </ng-container>

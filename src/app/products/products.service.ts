@@ -59,7 +59,7 @@ export class ProductsService {
         )
         .subscribe(
           (res) => {
-            console.log(res);
+            //console.log(res);
           },
           (error: HttpErrorResponse) => {
             console.log(error.name + " " + error.message);
@@ -71,11 +71,11 @@ export class ProductsService {
   updateAdvanceTable(advanceTable: ProductsTable): void {
     this.dialogData = advanceTable;
   }
-  deleteAdvanceTable(id: number): void {
+  deleteAdvanceTable(id: number, status: number): void {
     this.httpClient
       .post<any>(`${environment.apiUrl}/api/admin/product/update`, {
         _id: id,
-        is_active: 0,
+        is_active: status,
       })
       .subscribe(
         (res) => {

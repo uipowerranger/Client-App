@@ -41,13 +41,19 @@ export class FormComponent {
       this.advanceTable = new ProductsTable({});
     }
     this.advanceTableForm = this.createContactForm();
+
     this.http
       .post<any>(`${environment.apiUrl}/api/admin/category/getAllCategory`, {})
-      .subscribe((res: any) => (this.categoryList = res.data.data));
+      .subscribe((res: any) => {
+        return (this.categoryList = [
+          { _id: "", category_name: "Select" },
+          ...res.data.data,
+        ]);
+      });
     this.http
       .post<any>(
-        `${environment.apiUrl}/api/admin/subcategory/getAllSubCategory`,
-        {}
+        `${environment.apiUrl}/api/admin/subcategory/getAllSubCategorybyCategory`,
+        { category: this.advanceTable.category_details }
       )
       .subscribe((res: any) => (this.subCategoryList = res.data.data));
   }
@@ -64,6 +70,14 @@ export class FormComponent {
       : this.formControl.hasError("email")
       ? "Not a valid email"
       : "";
+  }
+  categorySelect() {
+    this.http
+      .post<any>(
+        `${environment.apiUrl}/api/admin/subcategory/getAllSubCategorybyCategory`,
+        { category: this.advanceTableForm.get("category_details").value }
+      )
+      .subscribe((res: any) => (this.subCategoryList = res.data.data));
   }
   createContactForm(): FormGroup {
     return this.fb.group({

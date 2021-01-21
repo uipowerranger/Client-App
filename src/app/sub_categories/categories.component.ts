@@ -23,7 +23,6 @@ import { SelectionModel } from "@angular/cdk/collections";
 })
 export class CategoriesComponent implements OnInit {
   displayedColumns = [
-    "select",
     "sub_category",
     "category",
     "created_at",

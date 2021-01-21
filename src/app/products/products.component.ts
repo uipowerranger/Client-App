@@ -23,7 +23,6 @@ import { SelectionModel } from "@angular/cdk/collections";
 })
 export class ProductsComponent implements OnInit {
   displayedColumns = [
-    "select",
     "product",
     "price",
     "state",
@@ -123,8 +122,8 @@ export class ProductsComponent implements OnInit {
         this.exampleDatabase.dataChange.value.splice(foundIndex, 1);
         this.refresh();
         this.showNotification(
-          "snackbar-danger",
-          "Delete Record Successfully...!!!",
+          "snackbar-anger",
+          "Status Changed Successfully...!!!",
           "top",
           "right"
         );

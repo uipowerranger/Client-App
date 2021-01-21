@@ -41,7 +41,11 @@
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
           <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Category</mat-label>
-            <mat-select formControlName="category_details" required>
+            <mat-select
+              formControlName="category_details"
+              (selectionChange)="categorySelect()"
+              required
+            >
               <mat-option
                 *ngFor="let item of categoryList; let i = index"
                 [value]="item._id"
