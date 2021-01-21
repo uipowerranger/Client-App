@@ -23,6 +23,7 @@ import { SelectionModel } from "@angular/cdk/collections";
 })
 export class ProductsComponent implements OnInit {
   displayedColumns = [
+    "img",
     "product",
     "price",
     "state",

@@ -132,6 +132,18 @@
                   >
                   <mat-cell *matCellDef="let row">{{ row._id }}</mat-cell>
                 </ng-container>
+                <ng-container matColumnDef="img">
+                  <mat-header-cell
+                    mat-header-cell
+                    *matHeaderCellDef
+                    [ngClass]="''"
+                  >
+                    Image
+                  </mat-header-cell>
+                  <mat-cell mat-cell *matCellDef="let row" class="table-img">
+                    <img [src]="row.item_image" />
+                  </mat-cell>
+                </ng-container>
                 <ng-container matColumnDef="product">
                   <mat-header-cell *matHeaderCellDef mat-sort-header
                     >Product

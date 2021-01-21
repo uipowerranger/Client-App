@@ -107,7 +107,7 @@ export class FormComponent {
         this.advanceTable.home_page_display,
         [Validators.required],
       ],
-      item_image: [this.advanceTable.item_image],
+      item_image: [this.advanceTable.item_image, [Validators.required]],
       items_available: [
         this.advanceTable.items_available,
         [Validators.required],
@@ -136,5 +136,29 @@ export class FormComponent {
     this.advanceTableService.addAdvanceTable(
       this.advanceTableForm.getRawValue()
     );
+  }
+  uploadFileEvt(imgFile: any) {
+    if (imgFile.target.files && imgFile.target.files[0]) {
+      // HTML5 FileReader API
+      let reader = new FileReader();
+      reader.onload = (e: any) => {
+        let image = new Image();
+        image.src = e.target.result;
+        image.onload = (rs) => {
+          let imgBase64Path = e.target.result;
+          this.http
+            .post(<any>`${environment.apiUrl}/api/admin/fileUpload`, {
+              data: imgBase64Path,
+            })
+            .subscribe((res: any) => {
+              console.log(res);
+              this.advanceTableForm.patchValue({
+                item_image: res.url,
+              });
+            });
+        };
+      };
+      reader.readAsDataURL(imgFile.target.files[0]);
+    }
   }
 }
