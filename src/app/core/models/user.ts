@@ -1,9 +1,10 @@
+import { formatDate } from "@angular/common";
 export class User {
-  id: number;
+  _id: string;
   username: string;
   password: string;
   firstName: string;
   lastName: string;
-  token: string;
+  created_at: string;
   email_id: string;
 }

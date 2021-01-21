@@ -1,6 +1,6 @@
-import { RightSidebarService } from 'src/app/core/service/rightsidebar.service';
-import { AuthService } from 'src/app/core/service/auth.service';
-import { DOCUMENT } from '@angular/common';
+import { RightSidebarService } from "src/app/core/service/rightsidebar.service";
+import { AuthService } from "src/app/core/service/auth.service";
+import { DOCUMENT } from "@angular/common";
 import {
   Component,
   Inject,
@@ -8,15 +8,15 @@ import {
   OnInit,
   Renderer2,
   AfterViewInit,
-} from '@angular/core';
-import { Router } from '@angular/router';
-import { ConfigService } from 'src/app/config/config.service';
+} from "@angular/core";
+import { Router } from "@angular/router";
+import { ConfigService } from "src/app/config/config.service";
 const document: any = window.document;
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.sass'],
+  selector: "app-header",
+  templateUrl: "./header.component.html",
+  styleUrls: ["./header.component.sass"],
 })
 export class HeaderComponent implements OnInit, AfterViewInit {
   public config: any = {};
@@ -32,46 +32,46 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   ) {}
   notifications: any[] = [
     {
-      userImg: 'assets/images/user/user1.jpg',
-      userName: 'Sarah Smith',
-      time: '14 mins ago',
-      message: 'Please check your mail',
+      userImg: "assets/images/user/user1.jpg",
+      userName: "Sarah Smith",
+      time: "14 mins ago",
+      message: "Please check your mail",
     },
     {
-      userImg: 'assets/images/user/user2.jpg',
-      userName: 'Airi Satou',
-      time: '22 mins ago',
-      message: 'Work Completed !!!',
+      userImg: "assets/images/user/user2.jpg",
+      userName: "Airi Satou",
+      time: "22 mins ago",
+      message: "Work Completed !!!",
     },
     {
-      userImg: 'assets/images/user/user3.jpg',
-      userName: 'John Doe',
-      time: '3 hours ago',
-      message: 'kindly help me for code.',
+      userImg: "assets/images/user/user3.jpg",
+      userName: "John Doe",
+      time: "3 hours ago",
+      message: "kindly help me for code.",
     },
     {
-      userImg: 'assets/images/user/user4.jpg',
-      userName: 'Ashton Cox',
-      time: '5 hours ago',
-      message: 'Lets break for lunch...',
+      userImg: "assets/images/user/user4.jpg",
+      userName: "Ashton Cox",
+      time: "5 hours ago",
+      message: "Lets break for lunch...",
     },
     {
-      userImg: 'assets/images/user/user5.jpg',
-      userName: 'Sarah Smith',
-      time: '14 mins ago',
-      message: 'Please check your mail',
+      userImg: "assets/images/user/user5.jpg",
+      userName: "Sarah Smith",
+      time: "14 mins ago",
+      message: "Please check your mail",
     },
     {
-      userImg: 'assets/images/user/user6.jpg',
-      userName: 'Airi Satou',
-      time: '22 mins ago',
-      message: 'Work Completed !!!',
+      userImg: "assets/images/user/user6.jpg",
+      userName: "Airi Satou",
+      time: "22 mins ago",
+      message: "Work Completed !!!",
     },
     {
-      userImg: 'assets/images/user/user7.jpg',
-      userName: 'John Doe',
-      time: '3 hours ago',
-      message: 'kindly help me for code.',
+      userImg: "assets/images/user/user7.jpg",
+      userName: "John Doe",
+      time: "3 hours ago",
+      message: "kindly help me for code.",
     },
   ];
   ngOnInit() {
@@ -79,49 +79,49 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit() {
     // set theme on startup
-    if (localStorage.getItem('theme')) {
+    if (localStorage.getItem("theme")) {
       this.renderer.removeClass(this.document.body, this.config.layout.variant);
-      this.renderer.addClass(this.document.body, localStorage.getItem('theme'));
+      this.renderer.addClass(this.document.body, localStorage.getItem("theme"));
     } else {
       this.renderer.addClass(this.document.body, this.config.layout.variant);
     }
 
-    if (localStorage.getItem('menuOption')) {
+    if (localStorage.getItem("menuOption")) {
       this.renderer.addClass(
         this.document.body,
-        localStorage.getItem('menuOption')
+        localStorage.getItem("menuOption")
       );
     } else {
       this.renderer.addClass(
         this.document.body,
-        'menu_' + this.config.layout.sidebar.backgroundColor
+        "menu_" + this.config.layout.sidebar.backgroundColor
       );
     }
 
-    if (localStorage.getItem('choose_logoheader')) {
+    if (localStorage.getItem("choose_logoheader")) {
       this.renderer.addClass(
         this.document.body,
-        localStorage.getItem('choose_logoheader')
+        localStorage.getItem("choose_logoheader")
       );
     } else {
       this.renderer.addClass(
         this.document.body,
-        'logo-' + this.config.layout.logo_bg_color
+        "logo-" + this.config.layout.logo_bg_color
       );
     }
 
-    if (localStorage.getItem('sidebar_status')) {
-      if (localStorage.getItem('sidebar_status') === 'close') {
-        this.renderer.addClass(this.document.body, 'side-closed');
-        this.renderer.addClass(this.document.body, 'submenu-closed');
+    if (localStorage.getItem("sidebar_status")) {
+      if (localStorage.getItem("sidebar_status") === "close") {
+        this.renderer.addClass(this.document.body, "side-closed");
+        this.renderer.addClass(this.document.body, "submenu-closed");
       } else {
-        this.renderer.removeClass(this.document.body, 'side-closed');
-        this.renderer.removeClass(this.document.body, 'submenu-closed');
+        this.renderer.removeClass(this.document.body, "side-closed");
+        this.renderer.removeClass(this.document.body, "submenu-closed");
       }
     } else {
       if (this.config.layout.sidebar.collapsed === true) {
-        this.renderer.addClass(this.document.body, 'side-closed');
-        this.renderer.addClass(this.document.body, 'submenu-closed');
+        this.renderer.addClass(this.document.body, "side-closed");
+        this.renderer.addClass(this.document.body, "submenu-closed");
       }
     }
   }
@@ -162,13 +162,13 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     }
   }
   callSidemenuCollapse() {
-    const hasClass = this.document.body.classList.contains('side-closed');
+    const hasClass = this.document.body.classList.contains("side-closed");
     if (hasClass) {
-      this.renderer.removeClass(this.document.body, 'side-closed');
-      this.renderer.removeClass(this.document.body, 'submenu-closed');
+      this.renderer.removeClass(this.document.body, "side-closed");
+      this.renderer.removeClass(this.document.body, "submenu-closed");
     } else {
-      this.renderer.addClass(this.document.body, 'side-closed');
-      this.renderer.addClass(this.document.body, 'submenu-closed');
+      this.renderer.addClass(this.document.body, "side-closed");
+      this.renderer.addClass(this.document.body, "submenu-closed");
     }
   }
   public toggleRightSidebar(): void {
@@ -177,10 +177,13 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         .currentStatus._isScalar)
     );
   }
+  profile() {
+    this.router.navigate(["/extra-pages/profile"]);
+  }
   logout() {
     this.authService.logout().subscribe((res) => {
       if (!res.success) {
-        this.router.navigate(['/authentication/signin']);
+        this.router.navigate(["/authentication/signin"]);
       }
     });
   }
