@@ -61,6 +61,23 @@ export class AuthService {
       .pipe(
         map((user) => {
           if (user.status === 200) {
+            return user.data.data[0];
+          } else {
+            return null;
+          }
+        })
+      );
+  }
+
+  verifyOtp(id: string, otp: number) {
+    return this.http
+      .post<any>(`${environment.apiUrl}/api/admin/verifyOtp`, {
+        _id: id,
+        login_otp: otp,
+      })
+      .pipe(
+        map((user) => {
+          if (user.status === 200) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem(
               "currentUser",

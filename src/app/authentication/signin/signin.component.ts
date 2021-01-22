@@ -12,7 +12,9 @@ export class SigninComponent implements OnInit {
   submitted = false;
   returnUrl: string;
   error = "";
+  showLoginTab: boolean = true;
   hide = true;
+  userId: string;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -20,17 +22,22 @@ export class SigninComponent implements OnInit {
   ) {}
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
-      username: ["", Validators.required],
-      password: ["", Validators.required],
+      username: ["admin@gmail.com", Validators.required],
+      password: ["admin123", Validators.required],
+      otp: [""],
     });
   }
   get f() {
     return this.loginForm.controls;
   }
+  submit() {}
   onSubmit() {
     this.submitted = true;
     this.error = "";
-    if (this.loginForm.invalid) {
+    if (
+      this.loginForm.controls.username.errors ||
+      this.loginForm.controls.password.errors
+    ) {
       this.error = "Username and Password not valid !";
       return;
     } else {
@@ -39,10 +46,8 @@ export class SigninComponent implements OnInit {
         .subscribe(
           (res) => {
             if (res) {
-              const email_id = this.authService.currentUserValue.email_id;
-              if (email_id) {
-                this.router.navigate(["/dashboard/main"]);
-              }
+              this.showLoginTab = false;
+              this.userId = res._id;
             } else {
               this.error = "Invalid Login";
             }
@@ -52,6 +57,37 @@ export class SigninComponent implements OnInit {
             this.submitted = false;
           }
         );
+    }
+  }
+  goBack() {
+    this.submitted = false;
+    this.error = "";
+    this.showLoginTab = true;
+  }
+  verifyOtp() {
+    this.submitted = true;
+    this.error = "";
+    if (this.loginForm.controls.otp.value === "") {
+      this.error = "Enter OTP!";
+      return;
+    } else {
+      this.authService.verifyOtp(this.userId, this.f.otp.value).subscribe(
+        (res) => {
+          if (res) {
+            this.showLoginTab = false;
+            const email_id = this.authService.currentUserValue.email_id;
+            if (email_id) {
+              this.router.navigate(["/dashboard/main"]);
+            }
+          } else {
+            this.error = "Invalid OTP";
+          }
+        },
+        (error) => {
+          this.error = error;
+          this.submitted = false;
+        }
+      );
     }
   }
 }

@@ -32,11 +32,7 @@
                 </div>
                 <div class="name-center">{{ profileData.designation }}</div>
               </div>
-              <img
-                src="assets/images/user/usrbig3.jpg"
-                class="user-img"
-                alt=""
-              />
+              <img [src]="profileData.image" class="user-img" alt="" />
               <p>
                 {{ profileData.address }}
                 <br />{{ profileData.city }}

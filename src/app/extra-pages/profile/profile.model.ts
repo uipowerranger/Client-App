@@ -13,6 +13,7 @@ export class ProfileUser {
   new_password: string;
   cnew_password: string;
   image: string;
+  login_otp: number;
 
   constructor(data) {
     this._id = data.id || "";
@@ -29,5 +30,6 @@ export class ProfileUser {
     this.password = data.password || "";
     this.new_password = data.new_password || "";
     this.cnew_password = data.cnew_password || "";
+    this.login_otp = data.login_otp || 0;
   }
 }
