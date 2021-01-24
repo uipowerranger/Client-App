@@ -64,9 +64,9 @@
             </label>
           </div>
           <div>
-            <a class="txt1" routerLink="/authentication/forgot-password"
+            <!-- <a class="txt1" routerLink="/authentication/forgot-password"
               >Forgot Password?</a
-            >
+            > -->
           </div>
         </div>
         <div *ngIf="!showLoginTab" class="flex-sb-m w-full p-t-15 p-b-20">
@@ -84,7 +84,9 @@
             type="submit"
             (click)="onSubmit()"
           >
-            Login
+            Login <div *ngIf="loading" class="spinner-border" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
           </button>
           <button
             *ngIf="!showLoginTab"
@@ -94,27 +96,15 @@
             type="submit"
             (click)="verifyOtp()"
           >
-            Verify OTP
+            Verify OTP <div *ngIf="loading" class="spinner-border" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
           </button>
         </div>
         <div *ngIf="error" class="alert alert-danger mt-3 mb-0">
           {{ error }}
         </div>
-        <!-- <div class="text-center p-t-30 p-b-20">
-          <span class="txt3">
-            or <a routerLink="/authentication/signup">
-              sign up
-            </a> using
-          </span>
-        </div>
-        <div class="login100-form-social flex-c-m">
-          <a href="#" class="login100-form-social-item flex-c-m bg1 m-r-5">
-            <i class="fab fa-facebook-f"></i>
-          </a>
-          <a href="#" class="login100-form-social-item flex-c-m bg2 m-r-5">
-            <i class="fab fa-twitter"></i>
-          </a>
-        </div> -->
+       
       </form>
     </div>
   </div>

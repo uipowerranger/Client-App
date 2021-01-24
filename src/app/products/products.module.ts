@@ -24,9 +24,10 @@ import { MatSortModule } from "@angular/material/sort";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MaterialFileInputModule } from "ngx-material-file-input";
 import { MatMenuModule } from "@angular/material/menu";
+import { RegadminComponent } from './regadmin/regadmin.component';
 
 @NgModule({
-  declarations: [ProductsComponent, advanceTableForm, DeleteComponent],
+  declarations: [ProductsComponent, advanceTableForm, DeleteComponent, RegadminComponent],
   imports: [
     CommonModule,
     FormsModule,

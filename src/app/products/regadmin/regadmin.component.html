@@ -1,0 +1,115 @@
+<section class="content">
+    <div class="container-fluid">
+      <div class="block-header">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <ul class="breadcrumb breadcrumb-style">
+              <li class="breadcrumb-item">
+                <h4 class="page-title">Admin </h4>
+              </li>
+              <li class="breadcrumb-item bcrumb-1">
+                <a routerLink="/dashboard/main">
+                  <i class="fas fa-home"></i> Add Admin</a
+                >
+              </li>
+              
+            </ul>
+          </div>
+        </div>
+      </div>
+  
+  
+  
+   
+      <div class="wrap-login100">
+        <div class="login100-more" >
+        </div>
+        <form #reg class=" validate-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <span class="login100-form-title p-b-30">
+            Add Admin
+          </span>
+          <div class="row">
+            <div class="col-6"><mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>First Name</mat-label>
+              <input matInput formControlName="first_name" required>
+              <mat-icon matSuffix>face</mat-icon>
+              <mat-error *ngIf="loginForm.get('first_name').hasError('required')">
+                First name is required
+              </mat-error>
+            </mat-form-field></div>
+            <div class="col-6"><mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Last Name</mat-label>
+              <input matInput formControlName="last_name" required>
+              <mat-icon matSuffix>face</mat-icon>
+              <mat-error *ngIf="loginForm.get('last_name').hasError('required')">
+                Last name is required
+              </mat-error>
+            </mat-form-field></div>
+          </div>
+          
+          
+ <div class="row">
+            <div class="col-6">  <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Phone No</mat-label>
+              <input matInput formControlName="phone_number" required>
+              <mat-icon matSuffix>phone</mat-icon>
+              <mat-error *ngIf="loginForm.get('phone_number').hasError('required')">
+                Phone no is required
+              </mat-error>
+            </mat-form-field></div>
+            <div class="col-6"><mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="email" required>
+              <mat-icon matSuffix>mail</mat-icon>
+              <mat-error *ngIf="loginForm.get('email').hasError('required') || loginForm.get('email').touched">
+                Please enter a valid email address
+              </mat-error>
+            </mat-form-field></div>
+          </div>
+        
+          
+ <div class="row">
+            <div class="col-6"> <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Password</mat-label>
+              <input matInput formControlName="password" [type]="hide ? 'password' : 'text'" required>
+              <mat-icon matSuffix (click)="hide = !hide">
+                {{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              <mat-error *ngIf="loginForm.get('password').hasError('required')">
+                Password is required
+              </mat-error>
+            </mat-form-field></div>
+            <div class="col-6"><mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Confirm Password</mat-label>
+              <input matInput formControlName="cpassword" [type]="chide ? 'password' : 'text'" required>
+              <mat-icon matSuffix (click)="chide = !chide">
+                {{chide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              <mat-error *ngIf="loginForm.get('cpassword').hasError('required')">
+                Confirm Password is required
+              </mat-error>
+            </mat-form-field></div>
+          </div>
+         
+          
+ <div class="row">
+            <div class="col-6"></div>
+            <div class="col-6"></div>
+          </div>
+          
+          <div class="container-login100-form-btn">
+            <button mat-flat-button color="primary" class="login100-form-btn" type="submit">
+              Add Admin
+            </button>
+          </div>
+         
+
+
+
+
+        </form>
+        
+     
+    </div>
+  
+  </div>
+  </section>
+  

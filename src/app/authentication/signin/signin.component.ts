@@ -14,6 +14,7 @@ export class SigninComponent implements OnInit {
   error = "";
   showLoginTab: boolean = true;
   hide = true;
+  loading:boolean= false;
   userId: string;
   constructor(
     private formBuilder: FormBuilder,
@@ -22,8 +23,8 @@ export class SigninComponent implements OnInit {
   ) {}
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
-      username: ["admin@gmail.com", Validators.required],
-      password: ["admin123", Validators.required],
+      username: ["", Validators.required],
+      password: ["", Validators.required],
       otp: [""],
     });
   }
@@ -32,6 +33,7 @@ export class SigninComponent implements OnInit {
   }
   submit() {}
   onSubmit() {
+    this.loading= true;
     this.submitted = true;
     this.error = "";
     if (
@@ -44,7 +46,7 @@ export class SigninComponent implements OnInit {
       this.authService
         .login(this.f.username.value, this.f.password.value)
         .subscribe(
-          (res) => {
+          (res) => { this.loading= false;
             if (res) {
               this.showLoginTab = false;
               this.userId = res._id;

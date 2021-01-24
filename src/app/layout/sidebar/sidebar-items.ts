@@ -60,6 +60,18 @@ export const ROUTES: RouteInfo[] = [
     badgeClass: "",
     submenu: [],
   },
+  {
+    path: "products/regadmin",
+    title: "Create User",
+    moduleName: "",
+    iconType: "material-icons-two-tone",
+    icon: "table_view",
+    class: "",
+    groupTitle: false,
+    badge: "",
+    badgeClass: "",
+    submenu: [],
+  },
   // {
   //   path: '',
   //   title: '-- Apps',
