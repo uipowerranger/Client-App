@@ -35,10 +35,15 @@ export class ProfileComponent implements OnInit {
         )
       )
       .subscribe((user: any) => {
-        this.profileData = user.data[0];
-        this.assignedState = user.data[0].map_state.state_name;
-        this.advanceTableForm = this.createContactForm(this.profileData);
-        this.passwordTableForm = this.createPasswordForm(this.profileData);
+        if (user.data.length > 0) {
+          this.profileData = user.data[0];
+          this.assignedState =
+            user.data[0].map_state.length > 0
+              ? user.data[0].map_state[0].state_name
+              : "";
+          this.advanceTableForm = this.createContactForm(this.profileData);
+          this.passwordTableForm = this.createPasswordForm(this.profileData);
+        }
       });
 
     this.http
@@ -66,7 +71,7 @@ export class ProfileComponent implements OnInit {
       post_code: [profileData.post_code, [Validators.required]],
       designation: [profileData.designation, [Validators.required]],
       image: [profileData.image, [Validators.required]],
-      assign_state: [profileData.assign_state, [Validators.required]],
+      assign_state: [profileData.assign_state],
       role: [profileData.role, [Validators.required]],
     });
   }
