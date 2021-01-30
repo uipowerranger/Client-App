@@ -1,0 +1,228 @@
+<div class="addContainer">
+  <div class="modalHeader">
+    <div class="editRowModal">
+      <div class="modalHeader clearfix">
+        <img [src]="advanceTable.image" alt="image" />
+        <div class="modal-about">
+          <div class="font-weight-bold p-t-5 p-l-10 font-17">
+            {{ dialogTitle }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <button
+      mat-icon-button
+      (click)="dialogRef.close()"
+      aria-label="Close dialog"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div mat-dialog-content>
+    <form
+      class="register-form m-4"
+      [formGroup]="advanceTableForm"
+      (ngSubmit)="(submit)"
+    >
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="first_name" />
+            <mat-error
+              *ngIf="advanceTableForm.get('first_name').hasError('required')"
+            >
+              First Name is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="last_name" />
+            <mat-error
+              *ngIf="advanceTableForm.get('last_name').hasError('required')"
+            >
+              Last Name is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email_id" />
+            <mat-error
+              *ngIf="advanceTableForm.get('email_id').hasError('required')"
+            >
+              Email is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Phone No</mat-label>
+            <input matInput formControlName="phone_number" />
+            <mat-error
+              *ngIf="advanceTableForm.get('phone_number').hasError('required')"
+            >
+              Phone No is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Password</mat-label>
+            <input
+              readonly="{{ advanceTable._id === '' ? false : true }}"
+              matInput
+              formControlName="password"
+            />
+            <mat-error
+              *ngIf="advanceTableForm.get('password').hasError('required')"
+            >
+              Password is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Designation</mat-label>
+            <input matInput formControlName="designation" />
+            <mat-error
+              *ngIf="advanceTableForm.get('designation').hasError('required')"
+            >
+              Designation is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Address</mat-label>
+            <input matInput formControlName="address" />
+            <mat-error
+              *ngIf="advanceTableForm.get('address').hasError('required')"
+            >
+              Address is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>State</mat-label>
+            <input matInput formControlName="state" />
+            <mat-error
+              *ngIf="advanceTableForm.get('state').hasError('required')"
+            >
+              State is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>City</mat-label>
+            <input matInput formControlName="city" />
+            <mat-error
+              *ngIf="advanceTableForm.get('city').hasError('required')"
+            >
+              City is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Post Code</mat-label>
+            <input matInput formControlName="post_code" />
+            <mat-error
+              *ngIf="advanceTableForm.get('post_code').hasError('required')"
+            >
+              Post Code is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Assigned State</mat-label>
+            <mat-select formControlName="assign_state" required>
+              <mat-option
+                *ngFor="let item of stateList; let i = index"
+                [value]="item._id"
+              >
+                {{ item.state_name }}
+              </mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="advanceTableForm.get('assign_state').hasError('required')"
+            >
+              State is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Role</mat-label>
+            <mat-select formControlName="role" required>
+              <mat-option value="admin"> Admin </mat-option>
+              <mat-option value="state_admin">State Admin </mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="advanceTableForm.get('role').hasError('required')"
+            >
+              Role is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <div class="form-group">
+            <input
+              type="file"
+              (change)="uploadFileEvt($event)"
+              name="image"
+              accept="image/*"
+            />
+            <mat-error
+              *ngIf="advanceTableForm.get('image').hasError('required')"
+            >
+              Image is required
+            </mat-error>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <div class="example-button-row">
+            <button
+              mat-raised-button
+              color="primary"
+              [type]="submit"
+              [disabled]="!advanceTableForm.valid"
+              [mat-dialog-close]="1"
+              (click)="confirmAdd()"
+            >
+              Save
+            </button>
+            <button
+              mat-raised-button
+              color="warn"
+              (click)="onNoClick()"
+              tabindex="-1"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

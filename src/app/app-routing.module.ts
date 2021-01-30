@@ -43,6 +43,23 @@ const routes: Routes = [
           import("./products/products.module").then((m) => m.ProductsModule),
       },
       {
+        path: "admins",
+        loadChildren: () =>
+          import("./add_admins/products.module").then((m) => m.AdminsModule),
+      },
+      {
+        path: "states",
+        loadChildren: () =>
+          import("./states/categories.module").then((m) => m.StatesModule),
+      },
+      {
+        path: "postcodes",
+        loadChildren: () =>
+          import("./postcodes/categories.module").then(
+            (m) => m.PostcodesModule
+          ),
+      },
+      {
         path: "calendar",
         loadChildren: () =>
           import("./calendar/calendar.module").then((m) => m.CalendarsModule),

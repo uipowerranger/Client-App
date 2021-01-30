@@ -26,6 +26,8 @@ export class ProductsComponent implements OnInit {
     "img",
     "product",
     "price",
+    "category",
+    "sub_category",
     "state",
     "post_code_details",
     "created_at",

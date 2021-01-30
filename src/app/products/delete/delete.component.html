@@ -16,7 +16,7 @@
       [mat-dialog-close]="1"
       (click)="confirmDelete()"
     >
-      {{ data.is_active === "1" ? "Delete" : "Activate" }}
+      {{ data.status === true ? "Delete" : "Activate" }}
     </button>
     <button mat-flat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
   </div>

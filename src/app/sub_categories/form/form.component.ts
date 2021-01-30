@@ -39,11 +39,17 @@ export class FormComponent {
       this.dialogTitle = "New Record";
       this.advanceTable = new CategoriesTable({});
     }
-    console.log(this.advanceTable);
+
     this.advanceTableForm = this.createContactForm();
     this.http
-      .post<any>(`${environment.apiUrl}/api/admin/category/getAllCategory`, {})
-      .subscribe((res: any) => (this.categoryList = res.data.data));
+      .get<any>(`${environment.apiUrl}/api/category`, {})
+      .subscribe(
+        (res: any) =>
+          (this.categoryList = [
+            { _id: "", category_name: "Select" },
+            ...res.data,
+          ])
+      );
   }
   formControl = new FormControl("", [
     Validators.required,
@@ -66,15 +72,12 @@ export class FormComponent {
         this.advanceTable.sub_category_name,
         [Validators.required],
       ],
-      category_details: [
-        this.advanceTable.category_details,
+      category: [this.advanceTable.category, [Validators.required]],
+      createdAt: [
+        formatDate(this.advanceTable.createdAt, "yyyy-MM-dd", "en"),
         [Validators.required],
       ],
-      created_at: [
-        formatDate(this.advanceTable.created_at, "yyyy-MM-dd", "en"),
-        [Validators.required],
-      ],
-      is_active: [this.advanceTable.is_active, [Validators.required]],
+      status: [this.advanceTable.status, [Validators.required]],
     });
   }
   submit() {

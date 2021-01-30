@@ -7,4 +7,5 @@ export class User {
   lastName: string;
   created_at: string;
   email_id: string;
+  token: string;
 }

@@ -14,7 +14,7 @@ export class SigninComponent implements OnInit {
   error = "";
   showLoginTab: boolean = true;
   hide = true;
-  loading:boolean= false;
+  loading: boolean = false;
   userId: string;
   constructor(
     private formBuilder: FormBuilder,
@@ -33,7 +33,7 @@ export class SigninComponent implements OnInit {
   }
   submit() {}
   onSubmit() {
-    this.loading= true;
+    this.loading = true;
     this.submitted = true;
     this.error = "";
     if (
@@ -46,10 +46,11 @@ export class SigninComponent implements OnInit {
       this.authService
         .login(this.f.username.value, this.f.password.value)
         .subscribe(
-          (res) => { this.loading= false;
+          (res) => {
+            this.loading = false;
             if (res) {
               this.showLoginTab = false;
-              this.userId = res._id;
+              this.userId = res.email_id;
             } else {
               this.error = "Invalid Login";
             }
@@ -77,8 +78,8 @@ export class SigninComponent implements OnInit {
         (res) => {
           if (res) {
             this.showLoginTab = false;
-            const email_id = this.authService.currentUserValue.email_id;
-            if (email_id) {
+            const token = this.authService.currentUserValue.token;
+            if (token) {
               this.router.navigate(["/dashboard/main"]);
             }
           } else {

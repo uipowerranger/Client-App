@@ -141,7 +141,7 @@
                     Image
                   </mat-header-cell>
                   <mat-cell mat-cell *matCellDef="let row" class="table-img">
-                    <img [src]="row.item_image" />
+                    <img [src]="row.image" />
                   </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="product">
@@ -166,6 +166,28 @@
                     {{ row.price }}</mat-cell
                   >
                 </ng-container>
+                <ng-container matColumnDef="category">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header
+                    >Category
+                  </mat-header-cell>
+                  <mat-cell
+                    *matCellDef="let row"
+                    (contextmenu)="onContextMenu($event, row)"
+                  >
+                    {{ row.map_category.category_name }}</mat-cell
+                  >
+                </ng-container>
+                <ng-container matColumnDef="sub_category">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header
+                    >Sub Category
+                  </mat-header-cell>
+                  <mat-cell
+                    *matCellDef="let row"
+                    (contextmenu)="onContextMenu($event, row)"
+                  >
+                    {{ row.map_sub_category.sub_category_name }}</mat-cell
+                  >
+                </ng-container>
                 <ng-container matColumnDef="state">
                   <mat-header-cell *matHeaderCellDef mat-sort-header
                     >State
@@ -174,7 +196,7 @@
                     *matCellDef="let row"
                     (contextmenu)="onContextMenu($event, row)"
                   >
-                    {{ row.state_details }}</mat-cell
+                    {{ row.map_state.state_name }}</mat-cell
                   >
                 </ng-container>
                 <ng-container matColumnDef="post_code_details">
@@ -185,7 +207,7 @@
                     *matCellDef="let row"
                     (contextmenu)="onContextMenu($event, row)"
                   >
-                    {{ row.post_code_details }}</mat-cell
+                    {{ row.map_postcode.post_code }}</mat-cell
                   >
                 </ng-container>
                 <ng-container matColumnDef="created_at">
@@ -196,7 +218,7 @@
                     *matCellDef="let row"
                     (contextmenu)="onContextMenu($event, row)"
                   >
-                    {{ row.created_at | date: "MM/dd/yyyy" }}
+                    {{ row.createdAt | date: "MM/dd/yyyy" }}
                   </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="is_active">
@@ -207,9 +229,7 @@
                     *matCellDef="let row"
                     (contextmenu)="onContextMenu($event, row)"
                   >
-                    {{
-                      row.is_active === "1" ? "Active" : "Inactive"
-                    }}</mat-cell
+                    {{ row.status === true ? "Active" : "Inactive" }}</mat-cell
                   >
                 </ng-container>
                 <!-- actions -->
@@ -230,7 +250,7 @@
                       >
                     </button>
                     <button
-                      *ngIf="row.is_active === '1'"
+                      *ngIf="row.status === true"
                       mat-icon-button
                       color="accent"
                       class="btn-tbl-delete"
@@ -242,7 +262,7 @@
                       >
                     </button>
                     <button
-                      *ngIf="row.is_active === '0'"
+                      *ngIf="row.status === false"
                       mat-icon-button
                       color="accent"
                       class="btn-tbl-delete"

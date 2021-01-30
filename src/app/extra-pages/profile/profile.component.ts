@@ -15,6 +15,8 @@ export class ProfileComponent implements OnInit {
   profileData: ProfileUser;
   advanceTableForm: FormGroup;
   passwordTableForm: FormGroup;
+  stateList: any[];
+  assignedState: string;
   constructor(
     private authService: AuthService,
     private http: HttpClient,
@@ -27,13 +29,25 @@ export class ProfileComponent implements OnInit {
   }
   async ngOnInit() {
     this.http
-      .post(<any>`${environment.apiUrl}/api/admin/getLoginUser`, {
-        _id: this.authService.currentUserValue._id,
-      })
+      .get(
+        <any>(
+          `${environment.apiUrl}/api/admin/getbyid/${this.authService.currentUserValue._id}`
+        )
+      )
       .subscribe((user: any) => {
-        this.profileData = user.data.data[0];
+        this.profileData = user.data[0];
+        this.assignedState = user.data[0].map_state.state_name;
         this.advanceTableForm = this.createContactForm(this.profileData);
         this.passwordTableForm = this.createPasswordForm(this.profileData);
+      });
+
+    this.http
+      .get(<any>`${environment.apiUrl}/api/state`)
+      .subscribe((state: any) => {
+        return (this.stateList = [
+          { _id: "", state_name: "Select" },
+          ...state.data,
+        ]);
       });
   }
   submit() {
@@ -52,6 +66,8 @@ export class ProfileComponent implements OnInit {
       post_code: [profileData.post_code, [Validators.required]],
       designation: [profileData.designation, [Validators.required]],
       image: [profileData.image, [Validators.required]],
+      assign_state: [profileData.assign_state, [Validators.required]],
+      role: [profileData.role, [Validators.required]],
     });
   }
   createPasswordForm(profileData): FormGroup {
@@ -64,13 +80,6 @@ export class ProfileComponent implements OnInit {
   }
   public passwordChange(): void {
     if (
-      this.passwordTableForm.getRawValue().password !==
-      this.profileData.password
-    ) {
-      this.passwordTableForm.controls.password.setErrors({
-        incorrect: true,
-      });
-    } else if (
       this.passwordTableForm.getRawValue().new_password !==
       this.passwordTableForm.getRawValue().cnew_password
     ) {
@@ -78,13 +87,21 @@ export class ProfileComponent implements OnInit {
         incorrect: true,
       });
     } else {
+      console.log(this.passwordTableForm.getRawValue());
       this.http
-        .post(<any>`${environment.apiUrl}/api/admin/updateAdmin`, {
-          _id: this.passwordTableForm.getRawValue()._id,
-          password: this.passwordTableForm.getRawValue().new_password,
-        })
-        .subscribe((res) => {
-          if (res) {
+        .put(
+          <any>(
+            `${environment.apiUrl}/api/admin/update-password/${
+              this.passwordTableForm.getRawValue()._id
+            }`
+          ),
+          {
+            old_password: this.passwordTableForm.getRawValue().password,
+            new_password: this.passwordTableForm.getRawValue().new_password,
+          }
+        )
+        .subscribe((res: any) => {
+          if (res.status === 200) {
             this.snackBar.open("Password Updated Successfully...!!!", "", {
               duration: 2000,
               verticalPosition: "top",
@@ -97,17 +114,17 @@ export class ProfileComponent implements OnInit {
   }
   public confirmAdd(): void {
     this.http
-      .post(
-        <any>`${environment.apiUrl}/api/admin/updateAdmin`,
+      .put(
+        <any>(
+          `${environment.apiUrl}/api/admin/update/${
+            this.advanceTableForm.getRawValue()._id
+          }`
+        ),
         this.advanceTableForm.getRawValue()
       )
       .subscribe((res) => {
         if (res) {
           this.profileData = this.advanceTableForm.getRawValue();
-          localStorage.setItem(
-            "currentUser",
-            JSON.stringify(this.advanceTableForm.getRawValue())
-          );
           this.snackBar.open("Profile Updated Successfully...!!!", "", {
             duration: 2000,
             verticalPosition: "top",
@@ -136,9 +153,11 @@ export class ProfileComponent implements OnInit {
             })
             .subscribe((res: any) => {
               console.log(res);
-              this.advanceTableForm.patchValue({
-                image: res.url,
-              });
+              if (res.status === 200) {
+                this.advanceTableForm.patchValue({
+                  image: res.data,
+                });
+              }
             });
         };
       };

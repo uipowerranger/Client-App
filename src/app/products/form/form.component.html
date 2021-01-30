@@ -2,7 +2,7 @@
   <div class="modalHeader">
     <div class="editRowModal">
       <div class="modalHeader clearfix">
-        <img [src]="advanceTable.item_image" alt="image" />
+        <img [src]="advanceTable.image" alt="image" />
         <div class="modal-about">
           <div class="font-weight-bold p-t-5 p-l-10 font-17">
             {{ dialogTitle }}
@@ -197,8 +197,17 @@
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
           <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>State</mat-label>
-            <mat-select formControlName="state_details" required>
-              <mat-option [value]="'AP'"> AP </mat-option>
+            <mat-select
+              formControlName="state_details"
+              (selectionChange)="stateSelect()"
+              required
+            >
+              <mat-option
+                *ngFor="let item of stateList; let i = index"
+                [value]="item._id"
+              >
+                {{ item.state_name }}
+              </mat-option>
             </mat-select>
             <mat-error
               *ngIf="advanceTableForm.get('state_details').hasError('required')"
@@ -210,18 +219,20 @@
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
           <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Post code</mat-label>
-            <input
-              matInput
-              formControlName="post_code_details"
-              type="number"
-              required
-            />
+            <mat-select formControlName="post_code_details" required>
+              <mat-option
+                *ngFor="let item of postcodeList; let i = index"
+                [value]="item._id"
+              >
+                {{ item.post_code }}
+              </mat-option>
+            </mat-select>
             <mat-error
               *ngIf="
                 advanceTableForm.get('post_code_details').hasError('required')
               "
             >
-              Post code is required
+              State is required
             </mat-error>
           </mat-form-field>
         </div>
@@ -241,7 +252,7 @@
         <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 mb-2">
           <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Weight</mat-label>
-            <input matInput formControlName="weight" type="number" required />
+            <input matInput formControlName="weight" type="text" required />
             <mat-error
               *ngIf="advanceTableForm.get('weight').hasError('required')"
             >
@@ -273,8 +284,8 @@
           <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Home page display</mat-label>
             <mat-select formControlName="home_page_display" required>
-              <mat-option [value]="'1'"> Yes </mat-option>
-              <mat-option [value]="'0'"> No </mat-option>
+              <mat-option [value]="true"> Yes </mat-option>
+              <mat-option [value]="false"> No </mat-option>
             </mat-select>
             <mat-error
               *ngIf="
@@ -288,12 +299,12 @@
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
           <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Status</mat-label>
-            <mat-select formControlName="is_active" required>
-              <mat-option [value]="'1'"> Active </mat-option>
-              <mat-option [value]="'0'"> Inactive </mat-option>
+            <mat-select formControlName="status" required>
+              <mat-option [value]="true"> Active </mat-option>
+              <mat-option [value]="false"> Inactive </mat-option>
             </mat-select>
             <mat-error
-              *ngIf="advanceTableForm.get('is_active').hasError('required')"
+              *ngIf="advanceTableForm.get('status').hasError('required')"
             >
               Status is required
             </mat-error>
@@ -310,7 +321,7 @@
               accept="image/*"
             />
             <mat-error
-              *ngIf="advanceTableForm.get('item_image').hasError('required')"
+              *ngIf="advanceTableForm.get('image').hasError('required')"
             >
               Image is required
             </mat-error>

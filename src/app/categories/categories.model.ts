@@ -1,16 +1,17 @@
-import { formatDate } from '@angular/common';
+import { formatDate } from "@angular/common";
 export class CategoriesTable {
   id: number;
   _id: string;
   category_name: string;
-  created_at: number;
-  is_active: string;
+  createdAt: number;
+  status: string;
   constructor(advanceTable) {
     {
-      this._id = advanceTable._id || '';
-      this.category_name = advanceTable.category_name || '';
-      this.created_at = advanceTable.created_at || formatDate(new Date(), 'yyyy-MM-dd', 'en');
-      this.is_active = advanceTable.is_active || '1';
+      this._id = advanceTable._id || "";
+      this.category_name = advanceTable.category_name || "";
+      this.createdAt =
+        advanceTable.createdAt || formatDate(new Date(), "yyyy-MM-dd", "en");
+      this.status = advanceTable.status || true;
     }
   }
   public getRandomID(): string {

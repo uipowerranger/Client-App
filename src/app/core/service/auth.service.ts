@@ -23,6 +23,10 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
+  public get getToken(): String {
+    return localStorage.getItem("auth_token");
+  }
+
   register(
     first_name: string,
     last_name: string,
@@ -55,13 +59,13 @@ export class AuthService {
   login(username: string, password: string) {
     return this.http
       .post<any>(`${environment.apiUrl}/api/admin/login`, {
-        username,
+        email_id: username,
         password,
       })
       .pipe(
         map((user) => {
           if (user.status === 200) {
-            return user.data.data[0];
+            return user.data;
           } else {
             return null;
           }
@@ -69,22 +73,20 @@ export class AuthService {
       );
   }
 
-  verifyOtp(id: string, otp: number) {
+  verifyOtp(email: string, otp: number) {
     return this.http
-      .post<any>(`${environment.apiUrl}/api/admin/verifyOtp`, {
-        _id: id,
-        login_otp: otp,
+      .post<any>(`${environment.apiUrl}/api/admin/verify-otp`, {
+        email_id: email,
+        otp: otp,
       })
       .pipe(
         map((user) => {
           if (user.status === 200) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem(
-              "currentUser",
-              JSON.stringify(user.data.data[0])
-            );
-            this.currentUserSubject.next(user.data.data[0]);
-            return user.data.data[0];
+            localStorage.setItem("currentUser", JSON.stringify(user.data));
+            localStorage.setItem("auth_token", user.data.token);
+            this.currentUserSubject.next(user.data);
+            return user.data;
           } else {
             return null;
           }
@@ -95,6 +97,7 @@ export class AuthService {
   logout() {
     // remove user from local storage to log user out
     localStorage.removeItem("currentUser");
+    localStorage.removeItem("auth_token");
     this.currentUserSubject.next(null);
     return of({ success: false });
   }

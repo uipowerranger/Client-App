@@ -24,6 +24,8 @@ export class FormComponent {
   advanceTable: ProductsTable;
   categoryList: any[] = [];
   subCategoryList: any[] = [];
+  stateList: any[] = [];
+  postcodeList: any[] = [];
   constructor(
     public dialogRef: MatDialogRef<FormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -43,19 +45,40 @@ export class FormComponent {
     this.advanceTableForm = this.createContactForm();
 
     this.http
-      .post<any>(`${environment.apiUrl}/api/admin/category/getAllCategory`, {})
+      .get<any>(`${environment.apiUrl}/api/category`)
       .subscribe((res: any) => {
         return (this.categoryList = [
           { _id: "", category_name: "Select" },
-          ...res.data.data,
+          ...res.data,
         ]);
       });
     this.http
-      .post<any>(
-        `${environment.apiUrl}/api/admin/subcategory/getAllSubCategorybyCategory`,
-        { category: this.advanceTable.category_details }
+      .get<any>(`${environment.apiUrl}/api/state`)
+      .subscribe((res: any) => {
+        return (this.stateList = [
+          { _id: "", state_name: "Select" },
+          ...res.data,
+        ]);
+      });
+    this.http
+      .get<any>(
+        `${environment.apiUrl}/api/subcategory/${this.advanceTable.category_details}`
       )
-      .subscribe((res: any) => (this.subCategoryList = res.data.data));
+      .subscribe(
+        (res: any) =>
+          (this.subCategoryList = [
+            { _id: "", sub_category_name: "Select" },
+            ...res.data,
+          ])
+      );
+    this.http
+      .get<any>(
+        `${environment.apiUrl}/api/postcode/${this.advanceTable.state_details}`
+      )
+      .subscribe(
+        (res: any) =>
+          (this.postcodeList = [{ _id: "", post_code: "Select" }, ...res.data])
+      );
   }
   formControl = new FormControl("", [
     Validators.required,
@@ -73,11 +96,30 @@ export class FormComponent {
   }
   categorySelect() {
     this.http
-      .post<any>(
-        `${environment.apiUrl}/api/admin/subcategory/getAllSubCategorybyCategory`,
-        { category: this.advanceTableForm.get("category_details").value }
+      .get<any>(
+        `${environment.apiUrl}/api/subcategory/${
+          this.advanceTableForm.get("category_details").value
+        }`
       )
-      .subscribe((res: any) => (this.subCategoryList = res.data.data));
+      .subscribe(
+        (res: any) =>
+          (this.subCategoryList = [
+            { _id: "", sub_category_name: "Select" },
+            ...res.data,
+          ])
+      );
+  }
+  stateSelect() {
+    this.http
+      .get<any>(
+        `${environment.apiUrl}/api/postcode/${
+          this.advanceTableForm.get("state_details").value
+        }`
+      )
+      .subscribe(
+        (res: any) =>
+          (this.postcodeList = [{ _id: "", post_code: "Select" }, ...res.data])
+      );
   }
   createContactForm(): FormGroup {
     return this.fb.group({
@@ -87,8 +129,8 @@ export class FormComponent {
         this.advanceTable.category_details,
         [Validators.required],
       ],
-      created_at: [
-        formatDate(this.advanceTable.created_at, "yyyy-MM-dd", "en"),
+      createdAt: [
+        formatDate(this.advanceTable.createdAt, "yyyy-MM-dd", "en"),
         [Validators.required],
       ],
       offer_from_date: [
@@ -99,15 +141,15 @@ export class FormComponent {
         formatDate(this.advanceTable.offer_to_date, "yyyy-MM-dd", "en"),
         [Validators.required],
       ],
-      is_active: [this.advanceTable.is_active],
+      status: [this.advanceTable.status],
       deal_details: [this.advanceTable.deal_details],
-      has_deal: [this.advanceTable.has_deal],
-      has_offer: [this.advanceTable.has_offer],
+      has_deal: [this.advanceTable.has_deal ? "1" : "0"],
+      has_offer: [this.advanceTable.has_offer ? "1" : "0"],
       home_page_display: [
         this.advanceTable.home_page_display,
         [Validators.required],
       ],
-      item_image: [this.advanceTable.item_image, [Validators.required]],
+      image: [this.advanceTable.image, [Validators.required]],
       items_available: [
         this.advanceTable.items_available,
         [Validators.required],
@@ -152,9 +194,11 @@ export class FormComponent {
             })
             .subscribe((res: any) => {
               console.log(res);
-              this.advanceTableForm.patchValue({
-                item_image: res.url,
-              });
+              if (res.status === 200) {
+                this.advanceTableForm.patchValue({
+                  image: res.data,
+                });
+              }
             });
         };
       };

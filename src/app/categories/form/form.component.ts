@@ -1,19 +1,19 @@
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Component, Inject } from '@angular/core';
-import { CategoriesService } from '../categories.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
+import { Component, Inject } from "@angular/core";
+import { CategoriesService } from "../categories.service";
 import {
   FormControl,
   Validators,
   FormGroup,
   FormBuilder,
-} from '@angular/forms';
-import { CategoriesTable } from '../categories.model';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
-import { formatDate } from '@angular/common';
+} from "@angular/forms";
+import { CategoriesTable } from "../categories.model";
+import { MAT_DATE_LOCALE } from "@angular/material/core";
+import { formatDate } from "@angular/common";
 @Component({
-  selector: 'app-form',
-  templateUrl: './form.component.html',
-  styleUrls: ['./form.component.sass'],
+  selector: "app-form",
+  templateUrl: "./form.component.html",
+  styleUrls: ["./form.component.sass"],
 })
 export class FormComponent {
   action: string;
@@ -28,17 +28,16 @@ export class FormComponent {
   ) {
     // Set the defaults
     this.action = data.action;
-    if (this.action === 'edit') {
-      this.dialogTitle =
-        data.advanceTable.category_name;
+    if (this.action === "edit") {
+      this.dialogTitle = data.advanceTable.category_name;
       this.advanceTable = data.advanceTable;
     } else {
-      this.dialogTitle = 'New Record';
+      this.dialogTitle = "New Record";
       this.advanceTable = new CategoriesTable({});
     }
     this.advanceTableForm = this.createContactForm();
   }
-  formControl = new FormControl('', [
+  formControl = new FormControl("", [
     Validators.required,
     // Validators.email,
   ]);
@@ -46,21 +45,21 @@ export class FormComponent {
     return this.advanceTableForm.controls;
   }
   getErrorMessage() {
-    return this.formControl.hasError('required')
-      ? 'Required field'
-      : this.formControl.hasError('email')
-      ? 'Not a valid email'
-      : '';
+    return this.formControl.hasError("required")
+      ? "Required field"
+      : this.formControl.hasError("email")
+      ? "Not a valid email"
+      : "";
   }
   createContactForm(): FormGroup {
     return this.fb.group({
       _id: [this.advanceTable._id],
       category_name: [this.advanceTable.category_name, [Validators.required]],
-      created_at: [
-        formatDate(this.advanceTable.created_at, 'yyyy-MM-dd', 'en'),
+      createdAt: [
+        formatDate(this.advanceTable.createdAt, "yyyy-MM-dd", "en"),
         [Validators.required],
       ],
-      is_active: [this.advanceTable.is_active, [Validators.required]],
+      status: [this.advanceTable.status, [Validators.required]],
     });
   }
   submit() {

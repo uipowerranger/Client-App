@@ -3,13 +3,13 @@ export class ProductsTable {
   id: number;
   _id: string;
   category_details: string;
-  created_at: number;
+  createdAt: number;
   deal_details: string;
   has_deal: string;
   has_offer: string;
   home_page_display: string;
-  is_active: string;
-  item_image: string;
+  status: boolean;
+  image: string;
   item_name: string;
   items_available: string;
   offer_details: string;
@@ -22,16 +22,16 @@ export class ProductsTable {
   weight: string;
   constructor(advanceTable) {
     {
-      this.created_at =
-        advanceTable.created_at || formatDate(new Date(), "yyyy-MM-dd", "en");
+      this.createdAt =
+        advanceTable.createdAt || formatDate(new Date(), "yyyy-MM-dd", "en");
       this._id = advanceTable._id || "";
       this.category_details = advanceTable.category_details || "";
       this.deal_details = advanceTable.deal_details || "";
       this.has_deal = advanceTable.has_deal || "0";
       this.has_offer = advanceTable.has_offer || "0";
-      this.home_page_display = advanceTable.home_page_display || "1";
-      this.is_active = advanceTable.is_active || "1";
-      this.item_image = advanceTable.item_image || "";
+      this.home_page_display = advanceTable.home_page_display || true;
+      this.status = advanceTable.status || true;
+      this.image = advanceTable.image || "";
       this.item_name = advanceTable.item_name || "";
       this.items_available = advanceTable.items_available || "";
       this.offer_details = advanceTable.offer_details || "";

@@ -43,7 +43,7 @@
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
           <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Category</mat-label>
-            <mat-select formControlName="category_details" required>
+            <mat-select formControlName="category" required>
               <mat-option
                 *ngFor="let item of categoryList; let i = index"
                 [value]="item._id"
@@ -52,23 +52,21 @@
               </mat-option>
             </mat-select>
             <mat-error
-              *ngIf="
-                advanceTableForm.get('category_details').hasError('required')
-              "
+              *ngIf="advanceTableForm.get('category').hasError('required')"
             >
               Category is required
             </mat-error>
           </mat-form-field>
         </div>
       </div>
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
           <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Created at</mat-label>
             <input
               matInput
               [matDatepicker]="picker"
-              formControlName="created_at"
+              formControlName="createdAt"
             />
             <mat-datepicker-toggle
               matSuffix
@@ -76,23 +74,23 @@
             ></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
             <mat-error
-              *ngIf="advanceTableForm.get('created_at').hasError('required')"
+              *ngIf="advanceTableForm.get('createdAt').hasError('required')"
             >
               Please select date
             </mat-error>
           </mat-form-field>
         </div>
-      </div>
+      </div> -->
       <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
           <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Status</mat-label>
-            <mat-select formControlName="is_active" required>
-              <mat-option [value]="'1'"> Active </mat-option>
-              <mat-option [value]="'0'"> Inactive </mat-option>
+            <mat-select formControlName="status" required>
+              <mat-option [value]="true"> Active </mat-option>
+              <mat-option [value]="false"> Inactive </mat-option>
             </mat-select>
             <mat-error
-              *ngIf="advanceTableForm.get('is_active').hasError('required')"
+              *ngIf="advanceTableForm.get('status').hasError('required')"
             >
               Status is required
             </mat-error>

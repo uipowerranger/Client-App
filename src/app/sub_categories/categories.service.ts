@@ -27,43 +27,33 @@ export class CategoriesService {
   }
   /** CRUD METHODS */
   getAllAdvanceTables(): void {
-    this.httpClient
-      .post<any>(
-        `${environment.apiUrl}/api/admin/subcategory/getAllSubCategory`,
-        {}
-      )
-      .subscribe(
-        (res) => {
-          this.dataChange.next(res.data.data);
-        },
-        (error: HttpErrorResponse) => {
-          console.log(error.name + " " + error.message);
-        }
-      );
+    this.httpClient.get<any>(`${environment.apiUrl}/api/subcategory`).subscribe(
+      (res) => {
+        this.dataChange.next(res.data);
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.name + " " + error.message);
+      }
+    );
   }
   getAllCategories(): void {
-    this.httpClient
-      .post<any>(`${environment.apiUrl}/api/admin/category/getAllCategory`, {})
-      .subscribe(
-        (res) => {
-          this.categoryList.next(res.data.data);
-        },
-        (error: HttpErrorResponse) => {
-          console.log(error.name + " " + error.message);
-        }
-      );
+    this.httpClient.get<any>(`${environment.apiUrl}/api/category`).subscribe(
+      (res) => {
+        this.categoryList.next(res.data);
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.name + " " + error.message);
+      }
+    );
   }
   // DEMO ONLY, you can find working methods below
   addAdvanceTable(advanceTable: CategoriesTable): void {
     if (advanceTable._id === "") {
       this.httpClient
-        .post<any>(
-          `${environment.apiUrl}/api/admin/subcategory/add`,
-          advanceTable
-        )
+        .post<any>(`${environment.apiUrl}/api/subcategory`, advanceTable)
         .subscribe(
           (res) => {
-            //console.log(res);
+            console.log(res);
           },
           (error: HttpErrorResponse) => {
             console.log(error.name + " " + error.message);
@@ -71,15 +61,11 @@ export class CategoriesService {
         );
     } else {
       this.httpClient
-        .post<any>(
-          `${environment.apiUrl}/api/admin/subcategory/updateSubCategory`,
-          {
-            _id: advanceTable._id,
-            sub_category_name: advanceTable.sub_category_name,
-            is_active: advanceTable.is_active,
-            category_details: advanceTable.category_details,
-          }
-        )
+        .put<any>(`${environment.apiUrl}/api/subcategory/${advanceTable._id}`, {
+          sub_category_name: advanceTable.sub_category_name,
+          status: advanceTable.status,
+          category: advanceTable.category,
+        })
         .subscribe(
           (res) => {
             //console.log(res);
@@ -96,12 +82,7 @@ export class CategoriesService {
   }
   deleteAdvanceTable(id: number): void {
     this.httpClient
-      .post<any>(
-        `${environment.apiUrl}/api/admin/subcategory/deleteSubCategory`,
-        {
-          id: id,
-        }
-      )
+      .delete<any>(`${environment.apiUrl}/api/subcategory/${id}`)
       .subscribe(
         (res) => {
           //console.log(res)

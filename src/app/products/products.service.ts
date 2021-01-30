@@ -27,22 +27,20 @@ export class ProductsService {
   }
   /** CRUD METHODS */
   getAllAdvanceTables(): void {
-    this.httpClient
-      .get<any>(`${environment.apiUrl}/api/admin/product`)
-      .subscribe(
-        (res) => {
-          this.dataChange.next(res.data.data);
-        },
-        (error: HttpErrorResponse) => {
-          console.log(error.name + " " + error.message);
-        }
-      );
+    this.httpClient.get<any>(`${environment.apiUrl}/api/products`).subscribe(
+      (res) => {
+        this.dataChange.next(res.data);
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error.name + " " + error.message);
+      }
+    );
   }
   // DEMO ONLY, you can find working methods below
   addAdvanceTable(advanceTable: ProductsTable): void {
     if (advanceTable._id === "") {
       this.httpClient
-        .post<any>(`${environment.apiUrl}/api/admin/product/add`, advanceTable)
+        .post<any>(`${environment.apiUrl}/api/products`, advanceTable)
         .subscribe(
           (res) => {
             //console.log(res);
@@ -53,8 +51,8 @@ export class ProductsService {
         );
     } else {
       this.httpClient
-        .post<any>(
-          `${environment.apiUrl}/api/admin/product/update`,
+        .put<any>(
+          `${environment.apiUrl}/api/products/${advanceTable._id}`,
           advanceTable
         )
         .subscribe(
@@ -71,15 +69,15 @@ export class ProductsService {
   updateAdvanceTable(advanceTable: ProductsTable): void {
     this.dialogData = advanceTable;
   }
-  deleteAdvanceTable(id: number, status: number): void {
+  deleteAdvanceTable(id: string, name: string, status: number): void {
     this.httpClient
-      .post<any>(`${environment.apiUrl}/api/admin/product/update`, {
-        _id: id,
-        is_active: status,
+      .put<any>(`${environment.apiUrl}/api/products/${id}`, {
+        item_name: name,
+        status: status,
       })
       .subscribe(
         (res) => {
-          //console.log(res)
+          console.log(res);
         },
         (error: HttpErrorResponse) => {
           console.log(error.name + " " + error.message);

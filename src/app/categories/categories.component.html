@@ -151,7 +151,7 @@
                     *matCellDef="let row"
                     (contextmenu)="onContextMenu($event, row)"
                   >
-                    {{ row.created_at | date: "MM/dd/yyyy" }}
+                    {{ row.createdAt | date: "MM/dd/yyyy" }}
                   </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="is_active">
@@ -162,9 +162,7 @@
                     *matCellDef="let row"
                     (contextmenu)="onContextMenu($event, row)"
                   >
-                    {{
-                      row.is_active === "1" ? "Active" : "Inactive"
-                    }}</mat-cell
+                    {{ row.status === true ? "Active" : "Inactive" }}</mat-cell
                   >
                 </ng-container>
                 <!-- actions -->

@@ -260,6 +260,39 @@
                     </div>
                     <div class="col-lg-6 col-md-12">
                       <div class="form-group">
+                        <mat-form-field
+                          class="example-full-width"
+                          appearance="fill"
+                        >
+                          <mat-label>Role</mat-label>
+                          <input matInput formControlName="role" />
+                          <mat-error
+                            *ngIf="
+                              advanceTableForm.get('role').hasError('required')
+                            "
+                          >
+                            Role is required
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                      <div class="form-group">
+                        <mat-form-field
+                          class="example-full-width"
+                          appearance="fill"
+                        >
+                          <mat-label>Assigned State</mat-label>
+                          <input
+                            readonly
+                            matInput
+                            value="{{ assignedState }}"
+                          />
+                        </mat-form-field>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                      <div class="form-group">
                         <label>Image</label>
                         <input
                           type="file"
