@@ -48,6 +48,16 @@ const routes: Routes = [
           import("./add_admins/products.module").then((m) => m.AdminsModule),
       },
       {
+        path: "users",
+        loadChildren: () =>
+          import("./add_users/products.module").then((m) => m.UsersModule),
+      },
+      {
+        path: "orders",
+        loadChildren: () =>
+          import("./orders/products.module").then((m) => m.OrdersModule),
+      },
+      {
         path: "states",
         loadChildren: () =>
           import("./states/categories.module").then((m) => m.StatesModule),
