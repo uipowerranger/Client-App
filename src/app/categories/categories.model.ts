@@ -5,6 +5,8 @@ export class CategoriesTable {
   category_name: string;
   createdAt: number;
   status: string;
+  state_details: string;
+  post_code_details: string;
   constructor(advanceTable) {
     {
       this._id = advanceTable._id || "";
@@ -12,6 +14,8 @@ export class CategoriesTable {
       this.createdAt =
         advanceTable.createdAt || formatDate(new Date(), "yyyy-MM-dd", "en");
       this.status = advanceTable.status || true;
+      this.state_details = advanceTable.state_details || "";
+      this.post_code_details = advanceTable.post_code_details || "";
     }
   }
   public getRandomID(): string {

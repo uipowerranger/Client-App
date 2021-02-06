@@ -37,28 +37,30 @@
           </mat-form-field>
         </div>
       </div>
-      <!-- <div class="row">
+      <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
           <mat-form-field class="example-full-width" appearance="outline">
-            <mat-label>Created at</mat-label>
-            <input
-              matInput
-              [matDatepicker]="picker"
-              formControlName="createdAt"
-            />
-            <mat-datepicker-toggle
-              matSuffix
-              [for]="picker"
-            ></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-            <mat-error
-              *ngIf="advanceTableForm.get('createdAt').hasError('required')"
+            <mat-label>State</mat-label>
+            <mat-select
+              formControlName="state_details"
+              (selectionChange)="stateSelect()"
+              required
             >
-              Please select date
+              <mat-option
+                *ngFor="let item of stateList; let i = index"
+                [value]="item._id"
+              >
+                {{ item.state_name }}
+              </mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="advanceTableForm.get('state_details').hasError('required')"
+            >
+              State is required
             </mat-error>
           </mat-form-field>
         </div>
-      </div> -->
+      </div>
       <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
           <mat-form-field class="example-full-width" appearance="outline">
