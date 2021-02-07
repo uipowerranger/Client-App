@@ -22,7 +22,14 @@ import { SelectionModel } from "@angular/cdk/collections";
   providers: [{ provide: MAT_DATE_LOCALE, useValue: "en-GB" }],
 })
 export class CategoriesComponent implements OnInit {
-  displayedColumns = ["category", "created_at", "is_active", "actions"];
+  displayedColumns = [
+    "category",
+    "state",
+    "postcode",
+    "created_at",
+    "is_active",
+    "actions",
+  ];
   exampleDatabase: CategoriesService | null;
   dataSource: ExampleDataSource | null;
   selection = new SelectionModel<CategoriesTable>(true, []);

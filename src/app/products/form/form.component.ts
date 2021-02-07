@@ -12,6 +12,7 @@ import { MAT_DATE_LOCALE } from "@angular/material/core";
 import { formatDate } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
+import { AuthService } from "src/app/core/service/auth.service";
 @Component({
   selector: "app-form",
   templateUrl: "./form.component.html",
@@ -31,7 +32,8 @@ export class FormComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public advanceTableService: ProductsService,
     private fb: FormBuilder,
-    private http: HttpClient
+    private http: HttpClient,
+    private authService: AuthService
   ) {
     // Set the defaults
     this.action = data.action;
@@ -43,7 +45,6 @@ export class FormComponent {
       this.advanceTable = new ProductsTable({});
     }
     this.advanceTableForm = this.createContactForm();
-
     this.http
       .get<any>(`${environment.apiUrl}/api/category`)
       .subscribe((res: any) => {
@@ -53,16 +54,18 @@ export class FormComponent {
         ]);
       });
     this.http
-      .get<any>(`${environment.apiUrl}/api/state`)
+      .get<any>(
+        `${environment.apiUrl}/api/state/details/${this.authService.currentUserValue.assign_state}`
+      )
       .subscribe((res: any) => {
         return (this.stateList = [
           { _id: "", state_name: "Select" },
-          ...res.data,
+          { ...res.data },
         ]);
       });
     this.http
       .get<any>(
-        `${environment.apiUrl}/api/subcategory/${this.advanceTable.category_details}`
+        `${environment.apiUrl}/api/subcategory/bycategory/${this.advanceTable.category_details}`
       )
       .subscribe(
         (res: any) =>
@@ -73,7 +76,7 @@ export class FormComponent {
       );
     this.http
       .get<any>(
-        `${environment.apiUrl}/api/postcode/${this.advanceTable.state_details}`
+        `${environment.apiUrl}/api/postcode/bystate/${this.advanceTable.state_details}`
       )
       .subscribe(
         (res: any) =>
@@ -97,7 +100,7 @@ export class FormComponent {
   categorySelect() {
     this.http
       .get<any>(
-        `${environment.apiUrl}/api/subcategory/${
+        `${environment.apiUrl}/api/subcategory/bycategory/${
           this.advanceTableForm.get("category_details").value
         }`
       )
@@ -112,7 +115,7 @@ export class FormComponent {
   stateSelect() {
     this.http
       .get<any>(
-        `${environment.apiUrl}/api/postcode/${
+        `${environment.apiUrl}/api/postcode/bystate/${
           this.advanceTableForm.get("state_details").value
         }`
       )

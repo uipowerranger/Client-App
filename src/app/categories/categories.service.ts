@@ -53,6 +53,8 @@ export class CategoriesService {
       this.httpClient
         .put<any>(`${environment.apiUrl}/api/category/${advanceTable._id}`, {
           category_name: advanceTable.category_name,
+          state_details: advanceTable.state_details,
+          post_code_details: advanceTable.post_code_details,
           status: advanceTable.status,
         })
         .subscribe(

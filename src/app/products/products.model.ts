@@ -30,7 +30,7 @@ export class ProductsTable {
       this.has_deal = advanceTable.has_deal || "0";
       this.has_offer = advanceTable.has_offer || "0";
       this.home_page_display = advanceTable.home_page_display || true;
-      this.status = advanceTable.status || true;
+      this.status = advanceTable.status || 1;
       this.image = advanceTable.image || "";
       this.item_name = advanceTable.item_name || "";
       this.items_available = advanceTable.items_available || "";

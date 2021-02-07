@@ -11,7 +11,7 @@ export class CategoriesTable {
       this.state_name = advanceTable.state_name || "";
       this.createdAt =
         advanceTable.createdAt || formatDate(new Date(), "yyyy-MM-dd", "en");
-      this.status = advanceTable.status || true;
+      this.status = advanceTable.status || 1;
     }
   }
   public getRandomID(): string {

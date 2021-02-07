@@ -17,7 +17,7 @@ export class DeleteComponent {
     this.dialogRef.close();
   }
   confirmDelete(): void {
-    let status = this.data.status === true ? 0 : 1;
+    let status = this.data.status === 1 ? 0 : 1;
     this.tableService.deleteAdvanceTable(
       this.data._id,
       this.data.item_name,

@@ -13,7 +13,7 @@ export class CategoriesTable {
       this.state = advanceTable.state || "";
       this.createdAt =
         advanceTable.createdAt || formatDate(new Date(), "yyyy-MM-dd", "en");
-      this.status = advanceTable.status || true;
+      this.status = advanceTable.status || 1;
     }
   }
   public getRandomID(): string {

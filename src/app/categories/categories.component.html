@@ -143,6 +143,28 @@
                     {{ row.category_name }}</mat-cell
                   >
                 </ng-container>
+                <ng-container matColumnDef="state">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header
+                    >State
+                  </mat-header-cell>
+                  <mat-cell
+                    *matCellDef="let row"
+                    (contextmenu)="onContextMenu($event, row)"
+                  >
+                    {{ row.map_state.state_name }}</mat-cell
+                  >
+                </ng-container>
+                <ng-container matColumnDef="postcode">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header
+                    >Postcode
+                  </mat-header-cell>
+                  <mat-cell
+                    *matCellDef="let row"
+                    (contextmenu)="onContextMenu($event, row)"
+                  >
+                    {{ row.map_post_code.post_code }}</mat-cell
+                  >
+                </ng-container>
                 <ng-container matColumnDef="created_at">
                   <mat-header-cell *matHeaderCellDef mat-sort-header
                     >Created At</mat-header-cell
@@ -162,7 +184,7 @@
                     *matCellDef="let row"
                     (contextmenu)="onContextMenu($event, row)"
                   >
-                    {{ row.status === true ? "Active" : "Inactive" }}</mat-cell
+                    {{ row.status === 1 ? "Active" : "Inactive" }}</mat-cell
                   >
                 </ng-container>
                 <!-- actions -->

@@ -8,4 +8,5 @@ export class User {
   created_at: string;
   email_id: string;
   token: string;
+  assign_state: string;
 }

@@ -50,7 +50,9 @@ export class FormComponent {
         ]);
       });
     this.http
-      .get<any>(`${environment.apiUrl}/api/postcode/${this.advanceTable._id}`)
+      .get<any>(
+        `${environment.apiUrl}/api/postcode/bystate/${this.advanceTable.state_details}`
+      )
       .subscribe(
         (res: any) =>
           (this.postcodeList = [{ _id: "", post_code: "Select" }, ...res.data])
@@ -71,9 +73,12 @@ export class FormComponent {
       : "";
   }
   stateSelect() {
+    this.advanceTableForm.patchValue({
+      post_code_details: "",
+    });
     this.http
       .get<any>(
-        `${environment.apiUrl}/api/postcode/${
+        `${environment.apiUrl}/api/postcode/bystate/${
           this.advanceTableForm.get("state_details").value
         }`
       )

@@ -229,7 +229,7 @@
                     *matCellDef="let row"
                     (contextmenu)="onContextMenu($event, row)"
                   >
-                    {{ row.status === true ? "Active" : "Inactive" }}</mat-cell
+                    {{ row.status === 1 ? "Active" : "Inactive" }}</mat-cell
                   >
                 </ng-container>
                 <!-- actions -->
@@ -250,7 +250,7 @@
                       >
                     </button>
                     <button
-                      *ngIf="row.status === true"
+                      *ngIf="row.status === 1"
                       mat-icon-button
                       color="accent"
                       class="btn-tbl-delete"
@@ -262,7 +262,7 @@
                       >
                     </button>
                     <button
-                      *ngIf="row.status === false"
+                      *ngIf="row.status === 0"
                       mat-icon-button
                       color="accent"
                       class="btn-tbl-delete"

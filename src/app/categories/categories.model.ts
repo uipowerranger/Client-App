@@ -13,7 +13,7 @@ export class CategoriesTable {
       this.category_name = advanceTable.category_name || "";
       this.createdAt =
         advanceTable.createdAt || formatDate(new Date(), "yyyy-MM-dd", "en");
-      this.status = advanceTable.status || true;
+      this.status = advanceTable.status || 1;
       this.state_details = advanceTable.state_details || "";
       this.post_code_details = advanceTable.post_code_details || "";
     }
