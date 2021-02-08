@@ -238,7 +238,7 @@ export class ExampleDataSource extends DataSource<ProductsTable> {
         this.filteredData = this._exampleDatabase.data
           .slice()
           .filter((advanceTable: ProductsTable) => {
-            const searchStr = advanceTable.item_id.toLowerCase();
+            const searchStr = advanceTable.createdAt.toLowerCase();
             return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
           });
         // Sort filtered data
@@ -266,8 +266,8 @@ export class ExampleDataSource extends DataSource<ProductsTable> {
         case "id":
           [propertyA, propertyB] = [a._id, b._id];
           break;
-        case "item_id":
-          [propertyA, propertyB] = [a.item_id, b.item_id];
+        case "createdAt":
+          [propertyA, propertyB] = [a.createdAt, b.createdAt];
           break;
       }
       const valueA = isNaN(+propertyA) ? propertyA : +propertyA;

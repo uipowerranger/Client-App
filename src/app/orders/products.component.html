@@ -141,7 +141,7 @@
                     *matCellDef="let row"
                     (contextmenu)="onContextMenu($event, row)"
                   >
-                    {{ !!row.item[0] ? row.item[0].item_name : "" }}
+                    {{ !!row.items[0] ? row.items[0].item_id : "" }}
                   </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="price">
@@ -152,7 +152,7 @@
                     *matCellDef="let row"
                     (contextmenu)="onContextMenu($event, row)"
                   >
-                    {{ row.price }}</mat-cell
+                    {{ !!row.items[0] ? row.items[0].price : "" }}</mat-cell
                   >
                 </ng-container>
                 <ng-container matColumnDef="category">
@@ -163,7 +163,7 @@
                     *matCellDef="let row"
                     (contextmenu)="onContextMenu($event, row)"
                   >
-                    {{ row.quantity }}</mat-cell
+                    {{ !!row.items[0] ? row.items[0].quantity : "" }}</mat-cell
                   >
                 </ng-container>
 
@@ -175,7 +175,7 @@
                     *matCellDef="let row"
                     (contextmenu)="onContextMenu($event, row)"
                   >
-                    {{ row.amount }}</mat-cell
+                    {{ !!row.items[0] ? row.items[0].amount : "" }}</mat-cell
                   >
                 </ng-container>
                 <ng-container matColumnDef="post_code_details">
