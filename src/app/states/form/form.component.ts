@@ -60,6 +60,8 @@ export class FormComponent {
         [Validators.required],
       ],
       status: [this.advanceTable.status, [Validators.required]],
+      postcode_from: [this.advanceTable.postcode_from, [Validators.required]],
+      postcode_to: [this.advanceTable.postcode_to, [Validators.required]],
     });
   }
   submit() {

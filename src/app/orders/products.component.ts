@@ -25,7 +25,6 @@ export class ProductsComponent implements OnInit {
   displayedColumns = [
     "product",
     "price",
-    "category",
     "state",
     "post_code_details",
     "created_at",

@@ -54,6 +54,8 @@ export class CategoriesService {
         .put<any>(`${environment.apiUrl}/api/state/${advanceTable._id}`, {
           state_name: advanceTable.state_name,
           status: advanceTable.status,
+          postcode_from: advanceTable.postcode_from,
+          postcode_to: advanceTable.postcode_to,
         })
         .subscribe(
           (res) => {

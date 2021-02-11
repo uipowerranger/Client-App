@@ -27,14 +27,16 @@ export class ProductsService {
   }
   /** CRUD METHODS */
   getAllAdvanceTables(): void {
-    this.httpClient.get<any>(`${environment.apiUrl}/api/order`).subscribe(
-      (res) => {
-        this.dataChange.next(res.data);
-      },
-      (error: HttpErrorResponse) => {
-        console.log(error.name + " " + error.message);
-      }
-    );
+    this.httpClient
+      .get<any>(`${environment.apiUrl}/api/order/get-admin`)
+      .subscribe(
+        (res) => {
+          this.dataChange.next(res.data);
+        },
+        (error: HttpErrorResponse) => {
+          console.log(error.name + " " + error.message);
+        }
+      );
   }
   // DEMO ONLY, you can find working methods below
   addAdvanceTable(advanceTable: ProductsTable): void {

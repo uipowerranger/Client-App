@@ -135,38 +135,26 @@
 
                 <ng-container matColumnDef="product">
                   <mat-header-cell *matHeaderCellDef mat-sort-header
-                    >Item
+                    >Order Id
                   </mat-header-cell>
                   <mat-cell
                     *matCellDef="let row"
                     (contextmenu)="onContextMenu($event, row)"
                   >
-                    {{ !!row.items[0] ? row.items[0].item_id : "" }}
+                    {{ row._id }}
                   </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="price">
                   <mat-header-cell *matHeaderCellDef mat-sort-header
-                    >Price
+                    >Total Items
                   </mat-header-cell>
                   <mat-cell
                     *matCellDef="let row"
                     (contextmenu)="onContextMenu($event, row)"
                   >
-                    {{ !!row.items[0] ? row.items[0].price : "" }}</mat-cell
+                    {{ !!row.items ? row.items.length : "" }}</mat-cell
                   >
                 </ng-container>
-                <ng-container matColumnDef="category">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header
-                    >Quantity
-                  </mat-header-cell>
-                  <mat-cell
-                    *matCellDef="let row"
-                    (contextmenu)="onContextMenu($event, row)"
-                  >
-                    {{ !!row.items[0] ? row.items[0].quantity : "" }}</mat-cell
-                  >
-                </ng-container>
-
                 <ng-container matColumnDef="state">
                   <mat-header-cell *matHeaderCellDef mat-sort-header
                     >Amount
@@ -175,7 +163,7 @@
                     *matCellDef="let row"
                     (contextmenu)="onContextMenu($event, row)"
                   >
-                    {{ !!row.items[0] ? row.items[0].amount : "" }}</mat-cell
+                    {{ !!row.total_amount ? row.total_amount : "" }}</mat-cell
                   >
                 </ng-container>
                 <ng-container matColumnDef="post_code_details">
@@ -210,7 +198,7 @@
                     *matCellDef="let row"
                     (contextmenu)="onContextMenu($event, row)"
                   >
-                    {{ row.status === true ? "Active" : "Inactive" }}</mat-cell
+                    {{ row.status === 1 ? "Active" : "Inactive" }}</mat-cell
                   >
                 </ng-container>
                 <!-- actions -->

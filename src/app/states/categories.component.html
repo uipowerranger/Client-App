@@ -143,6 +143,28 @@
                     {{ row.state_name }}</mat-cell
                   >
                 </ng-container>
+                <ng-container matColumnDef="p_from">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header
+                    >Postcode From
+                  </mat-header-cell>
+                  <mat-cell
+                    *matCellDef="let row"
+                    (contextmenu)="onContextMenu($event, row)"
+                  >
+                    {{ row.postcode_from }}</mat-cell
+                  >
+                </ng-container>
+                <ng-container matColumnDef="p_to">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header
+                    >Postcode To
+                  </mat-header-cell>
+                  <mat-cell
+                    *matCellDef="let row"
+                    (contextmenu)="onContextMenu($event, row)"
+                  >
+                    {{ row.postcode_to }}</mat-cell
+                  >
+                </ng-container>
                 <ng-container matColumnDef="created_at">
                   <mat-header-cell *matHeaderCellDef mat-sort-header
                     >Created At</mat-header-cell

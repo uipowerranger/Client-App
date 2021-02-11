@@ -5,6 +5,8 @@ export class CategoriesTable {
   state_name: string;
   createdAt: number;
   status: string;
+  postcode_from: number;
+  postcode_to: number;
   constructor(advanceTable) {
     {
       this._id = advanceTable._id || "";
@@ -12,6 +14,8 @@ export class CategoriesTable {
       this.createdAt =
         advanceTable.createdAt || formatDate(new Date(), "yyyy-MM-dd", "en");
       this.status = advanceTable.status || 1;
+      this.postcode_from = advanceTable.postcode_from || 0;
+      this.postcode_to = advanceTable.postcode_to || 0;
     }
   }
   public getRandomID(): string {

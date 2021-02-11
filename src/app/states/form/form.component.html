@@ -37,6 +37,32 @@
           </mat-form-field>
         </div>
       </div>
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Postcode From</mat-label>
+            <input matInput formControlName="postcode_from" />
+            <mat-error
+              *ngIf="advanceTableForm.get('postcode_from').hasError('required')"
+            >
+              Postcode from is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Postcode To</mat-label>
+            <input matInput formControlName="postcode_to" />
+            <mat-error
+              *ngIf="advanceTableForm.get('postcode_to').hasError('required')"
+            >
+              Postcode to is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
       <!-- <div class="row">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
           <mat-form-field class="example-full-width" appearance="outline">
