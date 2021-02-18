@@ -1,3 +1,5 @@
+import { ProductsService } from '../../orders/products.service'
+
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   ApexTitleSubtitle,
@@ -16,6 +18,7 @@ import {
   ApexFill,
   ApexResponsive,
 } from 'ng-apexcharts';
+
 import { dataSeries } from './chartdata';
 export type chartOptions = {
   series: ApexAxisChartSeries;
@@ -41,6 +44,7 @@ export type chartOptions = {
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
+  totalOrders: any;
   @ViewChild('chart') chart: ChartComponent;
   public areaChartOptions: Partial<chartOptions>;
   public barChartOptions: Partial<chartOptions>;
@@ -67,7 +71,7 @@ export class MainComponent implements OnInit {
     75.5: { color: 'red' },
   };
 
-  constructor() {
+  constructor(private prdsvc: ProductsService) {
     this.chart1();
     this.chart2();
     this.smallChart();
@@ -305,5 +309,7 @@ export class MainComponent implements OnInit {
       ],
     };
   }
-  ngOnInit() {}
+  ngOnInit() {
+
+  }
 }

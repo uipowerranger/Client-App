@@ -24,9 +24,10 @@ import { MatSortModule } from "@angular/material/sort";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MaterialFileInputModule } from "ngx-material-file-input";
 import { MatMenuModule } from "@angular/material/menu";
+import { GetOrdersComponent } from './get-orders/get-orders.component';
 
 @NgModule({
-  declarations: [ProductsComponent, advanceTableForm, DeleteComponent],
+  declarations: [ProductsComponent, advanceTableForm, DeleteComponent, GetOrdersComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -50,5 +51,8 @@ import { MatMenuModule } from "@angular/material/menu";
     MaterialFileInputModule,
     MatMenuModule,
   ],
+  exports: [
+    GetOrdersComponent
+  ]
 })
-export class OrdersModule {}
+export class OrdersModule { }
