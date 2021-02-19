@@ -27,8 +27,8 @@ export class ProductsTable {
       this._id = advanceTable._id || "";
       this.category_details = advanceTable.category_details || "";
       this.deal_details = advanceTable.deal_details || "";
-      this.has_deal = advanceTable.has_deal || "0";
-      this.has_offer = advanceTable.has_offer || "0";
+      this.has_deal = advanceTable.has_deal || 0;
+      this.has_offer = advanceTable.has_offer || 1;
       this.home_page_display = advanceTable.home_page_display || true;
       this.status = advanceTable.status || 1;
       this.image = advanceTable.image || "";

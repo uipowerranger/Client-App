@@ -14,6 +14,7 @@ import { DeleteComponent } from "./delete/delete.component";
 import { DateAdapter, MAT_DATE_LOCALE } from "@angular/material/core";
 import { MatMenu, MatMenuTrigger } from "@angular/material/menu";
 import { SelectionModel } from "@angular/cdk/collections";
+import { AuthService } from "../core/service/auth.service";
 
 @Component({
   selector: "app-products",
@@ -39,12 +40,13 @@ export class ProductsComponent implements OnInit {
   selection = new SelectionModel<ProductsTable>(true, []);
   id: number;
   advanceTable: ProductsTable | null;
-
+  currentUser: any;
   constructor(
     public httpClient: HttpClient,
     public dialog: MatDialog,
     public advanceTableService: ProductsService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private auth: AuthService
   ) {}
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -54,6 +56,7 @@ export class ProductsComponent implements OnInit {
   contextMenuPosition = { x: "0px", y: "0px" };
   ngOnInit() {
     this.loadData();
+    this.currentUser = this.auth.currentUserValue;
   }
   refresh() {
     this.loadData();

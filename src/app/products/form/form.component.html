@@ -93,6 +93,7 @@
               aria-label="Select Deal"
               formControlName="has_deal"
               required
+              (change)="dealClick($event)"
             >
               <mat-radio-button value="0">No</mat-radio-button>
               <mat-radio-button value="1">Yes</mat-radio-button>
@@ -111,6 +112,7 @@
               aria-label="Select Offer"
               formControlName="has_offer"
               required
+              (change)="offerClick($event)"
             >
               <mat-radio-button value="0">No</mat-radio-button>
               <mat-radio-button value="1">Yes</mat-radio-button>
@@ -123,7 +125,7 @@
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row" *ngIf="advanceTableForm.get('has_deal').value == 1">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
           <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Deal Details</mat-label>
@@ -136,7 +138,7 @@
           </mat-form-field>
         </div>
       </div>
-      <div class="row">
+      <div class="row" *ngIf="advanceTableForm.get('has_offer').value == 1">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
           <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Offer Details</mat-label>
@@ -149,7 +151,7 @@
           </mat-form-field>
         </div>
       </div>
-      <div class="row">
+      <div class="row" *ngIf="advanceTableForm.get('has_offer').value == 1">
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
           <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Offer from date</mat-label>

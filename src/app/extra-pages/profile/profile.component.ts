@@ -127,18 +127,20 @@ export class ProfileComponent implements OnInit {
         ),
         this.advanceTableForm.getRawValue()
       )
-      .subscribe((res) => {
+      .subscribe((res: any) => {
         if (res) {
           this.profileData = this.advanceTableForm.getRawValue();
+          localStorage.setItem("currentUser", JSON.stringify(res.data));
+          localStorage.setItem("auth_token", res.data.token);
           this.snackBar.open("Profile Updated Successfully...!!!", "", {
             duration: 2000,
             verticalPosition: "top",
             horizontalPosition: "right",
             panelClass: "snackbar-success",
           });
-          // setTimeout(() => {
-          //   window.location.reload();
-          // }, 2000);
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
         }
       });
   }

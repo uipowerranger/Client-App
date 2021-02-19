@@ -265,7 +265,7 @@
                           appearance="fill"
                         >
                           <mat-label>Role</mat-label>
-                          <input matInput formControlName="role" />
+                          <input matInput readonly formControlName="role" />
                           <mat-error
                             *ngIf="
                               advanceTableForm.get('role').hasError('required')

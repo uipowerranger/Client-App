@@ -13,7 +13,7 @@
               >
             </li>
             <li class="breadcrumb-item bcrumb-2">
-              <a href="#" onClick="return false;">Admins</a>
+              <a href="#" onClick="return false;">Admins </a>
             </li>
           </ul>
         </div>
@@ -72,6 +72,7 @@
                             mat-mini-fab
                             color="primary"
                             (click)="addNew()"
+                            *ngIf="currentUser.role === 'admin'"
                           >
                             <mat-icon class="col-white">add</mat-icon>
                           </button>

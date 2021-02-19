@@ -124,6 +124,16 @@ export class FormComponent {
           (this.postcodeList = [{ _id: "", post_code: "Select" }, ...res.data])
       );
   }
+  dealClick(e: any) {
+    this.advanceTableForm.patchValue({
+      has_offer: e.value == 1 ? "0" : "1",
+    });
+  }
+  offerClick(e: any) {
+    this.advanceTableForm.patchValue({
+      has_deal: e.value == 1 ? "0" : "1",
+    });
+  }
   createContactForm(): FormGroup {
     return this.fb.group({
       _id: [this.advanceTable._id],

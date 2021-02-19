@@ -23,6 +23,7 @@ export class FormComponent {
   advanceTableForm: FormGroup;
   advanceTable: CategoriesTable;
   categoryList: any[] = [];
+  stateData: any;
   constructor(
     public dialogRef: MatDialogRef<FormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -43,10 +44,16 @@ export class FormComponent {
     this.advanceTableForm = this.createContactForm();
     this.http
       .get<any>(`${environment.apiUrl}/api/state`, {})
-      .subscribe(
-        (res: any) =>
-          (this.categoryList = [{ _id: "", state_name: "Select" }, ...res.data])
-      );
+      .subscribe((res: any) => {
+        let state = res.data.find((s) => {
+          return s._id === this.advanceTable.state;
+        });
+        this.stateData = state;
+        return (this.categoryList = [
+          { _id: "", state_name: "Select" },
+          ...res.data,
+        ]);
+      });
   }
   formControl = new FormControl("", [
     Validators.required,
@@ -61,6 +68,46 @@ export class FormComponent {
       : this.formControl.hasError("email")
       ? "Not a valid email"
       : "";
+  }
+  stateSelect() {
+    this.http
+      .get<any>(`${environment.apiUrl}/api/state`, {})
+      .subscribe((res: any) => {
+        let state = res.data.find((s) => {
+          return s._id === this.advanceTableForm.get("state").value;
+        });
+        this.stateData = state;
+        if (
+          this.stateData &&
+          Number(this.advanceTableForm.get("post_code").value) >=
+            this.stateData.postcode_from &&
+          Number(this.advanceTableForm.get("post_code").value) <=
+            this.stateData.postcode_to
+        ) {
+          console.log("true");
+        } else {
+          this.advanceTableForm.controls.post_code.setErrors({
+            incorrect: true,
+            data: this.stateData,
+          });
+        }
+        return [{ _id: "", state_name: "Select" }, ...res.data];
+      });
+  }
+  postCode(e: any) {
+    if (this.stateData) {
+      if (
+        Number(e.target.value) >= this.stateData.postcode_from &&
+        Number(e.target.value) <= this.stateData.postcode_to
+      ) {
+        console.log("true");
+      } else {
+        this.advanceTableForm.controls.post_code.setErrors({
+          incorrect: true,
+          data: this.stateData,
+        });
+      }
+    }
   }
   createContactForm(): FormGroup {
     return this.fb.group({

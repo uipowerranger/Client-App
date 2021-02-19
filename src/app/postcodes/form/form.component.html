@@ -28,11 +28,26 @@
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
           <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Post code</mat-label>
-            <input matInput formControlName="post_code" />
+            <input
+              type="number"
+              matInput
+              formControlName="post_code"
+              (change)="postCode($event)"
+            />
             <mat-error
               *ngIf="advanceTableForm.get('post_code').hasError('required')"
             >
               Post code is required
+            </mat-error>
+            <mat-error
+              *ngIf="advanceTableForm.get('post_code').hasError('incorrect')"
+            >
+              Post code should be in range between
+              {{
+                advanceTableForm.controls.post_code.errors.data.postcode_from
+              }}
+              and
+              {{ advanceTableForm.controls.post_code.errors.data.postcode_to }}
             </mat-error>
           </mat-form-field>
         </div>
@@ -41,7 +56,11 @@
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
           <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>State</mat-label>
-            <mat-select formControlName="state" required>
+            <mat-select
+              formControlName="state"
+              (selectionChange)="stateSelect()"
+              required
+            >
               <mat-option
                 *ngFor="let item of categoryList; let i = index"
                 [value]="item._id"

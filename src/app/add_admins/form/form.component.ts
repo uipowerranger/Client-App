@@ -55,10 +55,10 @@ export class FormComponent {
     this.http
       .get<any>(`${environment.apiUrl}/api/state`)
       .subscribe((res: any) => {
-        return (this.stateList = [
-          { _id: "", state_name: "Select" },
-          ...res.data,
-        ]);
+        return (this.stateList =
+          this.advanceTableForm.value.role === "admin"
+            ? [{ _id: "6324167fc2d30e27f90b2f19", state_name: "All States" }]
+            : [{ _id: "", state_name: "Select" }, ...res.data]);
       });
   }
   formControl = new FormControl("", [
@@ -92,15 +92,13 @@ export class FormComponent {
   }
   stateSelect() {
     this.http
-      .get<any>(
-        `${environment.apiUrl}/api/postcode/${
-          this.advanceTableForm.get("state_details").value
-        }`
-      )
-      .subscribe(
-        (res: any) =>
-          (this.postcodeList = [{ _id: "", post_code: "Select" }, ...res.data])
-      );
+      .get<any>(`${environment.apiUrl}/api/state`)
+      .subscribe((res: any) => {
+        return (this.stateList =
+          this.advanceTableForm.get("role").value === "admin"
+            ? [{ _id: "6324167fc2d30e27f90b2f19", state_name: "All States" }]
+            : [{ _id: "", state_name: "Select" }, ...res.data]);
+      });
   }
   createContactForm(): FormGroup {
     return this.fb.group({
