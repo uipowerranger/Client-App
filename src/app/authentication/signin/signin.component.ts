@@ -20,7 +20,7 @@ export class SigninComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private authService: AuthService
-  ) {}
+  ) { }
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
       username: ["", Validators.required],
@@ -31,7 +31,7 @@ export class SigninComponent implements OnInit {
   get f() {
     return this.loginForm.controls;
   }
-  submit() {}
+  submit() { }
   onSubmit() {
     this.loading = true;
     this.submitted = true;

@@ -17,6 +17,11 @@ const routes: Routes = [
           import("./dashboard/dashboard.module").then((m) => m.DashboardModule),
       },
       {
+        path: "inquiry/inquiry",
+        loadChildren: () =>
+          import("./dashboard/dashboard.module").then((m) => m.DashboardModule),
+      },
+      {
         path: "advance-table",
         loadChildren: () =>
           import("./advance-table/advance-table.module").then(
@@ -168,4 +173,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, { relativeLinkResolution: "legacy" })],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

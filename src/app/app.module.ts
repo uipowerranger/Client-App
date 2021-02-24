@@ -68,4 +68,4 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   entryComponents: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

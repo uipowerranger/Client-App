@@ -77,7 +77,9 @@
                       </div>
                     </div>
                   </div>
-                  <h1 class="mt-1 mb-3">0</h1>
+                  <h1 class="mt-1 mb-3">
+                    <app-enquycount></app-enquycount>
+                  </h1>
                   <div class="mb-0">
                     <span class="text-success m-r-10"><i class="material-icons col-green align-middle">trending_up</i>
                       <!-- 21..19% -->
@@ -114,6 +116,11 @@
       </div>
       <div class="col-xl-7">
         <div class="card">
+          <div class="body">
+            <app-orderstable></app-orderstable>
+          </div>
+        </div>
+        <!-- <div class="card">
           <div class="header">
             <h2>Daily Booking Chart</h2>
           </div>
@@ -125,7 +132,7 @@
                 [tooltip]="areaChartOptions.tooltip" [dataLabels]="areaChartOptions.dataLabels"></apx-chart>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="row">

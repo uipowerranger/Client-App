@@ -1,0 +1,54 @@
+<form class="d-flex justify-content-end" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+        <mat-label>Enter a date range</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+            <input matStartDate placeholder="Start date" formControlName="startDate">
+            <input matEndDate placeholder="End date" formControlName="endDate">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
+    <button type="submit" mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+        <mat-icon>search</mat-icon>
+    </button>
+
+
+</form>
+<div class="d-flex justify-content-between">
+
+    <h1>
+        <span class="material-icons mr-2">
+            local_shipping
+        </span>{{totalOrders}}
+    </h1>
+
+    <h1>
+        <span class="material-icons">
+            attach_money
+        </span> {{totalAmount}}
+    </h1>
+</div>
+
+
+
+<table class="table  table-striped  table-hover ">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Sl.No</th>
+            <th scope="col">Order Id</th>
+            <th scope="col">Mobile Number</th>
+            <th scope="col">Status</th>
+            <th scope="col">Amount</th>
+        </tr>
+    </thead>
+    <tbody class="order-table overflow-auto bg-dark">
+        <tr *ngFor="let o of orderdata; let i=index">
+            <th scope="row">{{i}}</th>
+            <td>{{o._id}} </td>
+            <td>{{o.phone_number}} </td>
+            <td> {{o.status?'Completed': 'Pending'}}</td>
+            <td>{{o.total_amount}}</td>
+        </tr>
+
+    </tbody>
+</table>
