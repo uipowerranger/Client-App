@@ -27,6 +27,7 @@ export class FormComponent {
   subCategoryList: any[] = [];
   stateList: any[] = [];
   postcodeList: any[] = [];
+  userRole: string;
   constructor(
     public dialogRef: MatDialogRef<FormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -44,6 +45,8 @@ export class FormComponent {
       this.dialogTitle = "New Record";
       this.advanceTable = new ProductsTable({});
     }
+    this.userRole = this.authService.currentUserValue.role;
+
     this.advanceTableForm = this.createContactForm();
     this.http
       .get<any>(`${environment.apiUrl}/api/category`)
@@ -53,16 +56,25 @@ export class FormComponent {
           ...res.data,
         ]);
       });
-    this.http
-      .get<any>(
-        `${environment.apiUrl}/api/state/details/${this.authService.currentUserValue.assign_state}`
-      )
-      .subscribe((res: any) => {
+    let url: any;
+    if (this.authService.currentUserValue.role === "admin") {
+      url = `${environment.apiUrl}/api/state`;
+      this.http.get<any>(url).subscribe((res: any) => {
+        return (this.stateList = [
+          { _id: "", state_name: "Select" },
+          ...res.data,
+        ]);
+      });
+    } else {
+      url = `${environment.apiUrl}/api/state/details/${this.authService.currentUserValue.assign_state}`;
+      this.http.get<any>(url).subscribe((res: any) => {
         return (this.stateList = [
           { _id: "", state_name: "Select" },
           { ...res.data },
         ]);
       });
+    }
+
     this.http
       .get<any>(
         `${environment.apiUrl}/api/subcategory/bycategory/${this.advanceTable.category_details}`
