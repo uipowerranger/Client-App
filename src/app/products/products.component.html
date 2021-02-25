@@ -239,6 +239,12 @@
                   >
                   <mat-cell *matCellDef="let row; let i = index" class="pr-0">
                     <button
+                      *ngIf="
+                        adminRole === 'state_admin' &&
+                        assignState !== row.state_details
+                          ? false
+                          : true
+                      "
                       mat-icon-button
                       color="accent"
                       class="btn-tbl-edit"
@@ -249,30 +255,39 @@
                         >edit</mat-icon
                       >
                     </button>
-                    <button
-                      *ngIf="row.status === 1"
-                      mat-icon-button
-                      color="accent"
-                      class="btn-tbl-delete"
-                      (click)="$event.stopPropagation()"
-                      (click)="deleteItem(row)"
+                    <div
+                      *ngIf="
+                        adminRole === 'state_admin' &&
+                        assignState !== row.state_details
+                          ? false
+                          : true
+                      "
                     >
-                      <mat-icon aria-label="Delete" class="col-white"
-                        >close</mat-icon
+                      <button
+                        *ngIf="row.status === 1"
+                        mat-icon-button
+                        color="accent"
+                        class="btn-tbl-delete"
+                        (click)="$event.stopPropagation()"
+                        (click)="deleteItem(row)"
                       >
-                    </button>
-                    <button
-                      *ngIf="row.status === 0"
-                      mat-icon-button
-                      color="accent"
-                      class="btn-tbl-delete"
-                      (click)="$event.stopPropagation()"
-                      (click)="deleteItem(row)"
-                    >
-                      <mat-icon aria-label="Delete" class="col-white"
-                        >check</mat-icon
+                        <mat-icon aria-label="Delete" class="col-white"
+                          >close</mat-icon
+                        >
+                      </button>
+                      <button
+                        *ngIf="row.status === 0"
+                        mat-icon-button
+                        color="accent"
+                        class="btn-tbl-delete"
+                        (click)="$event.stopPropagation()"
+                        (click)="deleteItem(row)"
                       >
-                    </button>
+                        <mat-icon aria-label="Delete" class="col-white"
+                          >check</mat-icon
+                        >
+                      </button>
+                    </div>
                   </mat-cell>
                 </ng-container>
                 <mat-header-row
@@ -280,7 +295,6 @@
                 ></mat-header-row>
                 <mat-row
                   *matRowDef="let row; columns: displayedColumns"
-                  (click)="editCall(row)"
                   [style.cursor]="'pointer'"
                   matRipple
                 >

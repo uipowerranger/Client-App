@@ -9,4 +9,5 @@ export class User {
   email_id: string;
   token: string;
   assign_state: string;
+  role: string;
 }
