@@ -12,6 +12,7 @@ import { MAT_DATE_LOCALE } from "@angular/material/core";
 import { formatDate } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
+import { AuthService } from "src/app/core/service/auth.service";
 @Component({
   selector: "app-form",
   templateUrl: "./form.component.html",
@@ -28,7 +29,8 @@ export class FormComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public advanceTableService: CategoriesService,
     private fb: FormBuilder,
-    private http: HttpClient
+    private http: HttpClient,
+    private authService: AuthService
   ) {
     // Set the defaults
     this.action = data.action;
@@ -43,13 +45,20 @@ export class FormComponent {
     this.advanceTableForm = this.createContactForm();
     this.http
       .get<any>(`${environment.apiUrl}/api/category`, {})
-      .subscribe(
-        (res: any) =>
-          (this.categoryList = [
-            { _id: "", category_name: "Select" },
-            ...res.data,
-          ])
-      );
+      .subscribe((res: any) => {
+        const { role, assign_state } = this.authService.currentUserValue;
+        let categoryData = res.data.filter((c) => {
+          if (role === "admin") {
+            return true;
+          } else {
+            return c.state_details === assign_state;
+          }
+        });
+        return (this.categoryList = [
+          { _id: "", category_name: "Select" },
+          ...categoryData,
+        ]);
+      });
   }
   formControl = new FormControl("", [
     Validators.required,

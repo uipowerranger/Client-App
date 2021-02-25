@@ -3,6 +3,7 @@ import { BehaviorSubject } from "rxjs";
 import { ProductsTable } from "./products.model";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { environment } from "src/environments/environment";
+import { AuthService } from "../core/service/auth.service";
 
 @Injectable({
   providedIn: "root",

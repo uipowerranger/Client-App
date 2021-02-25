@@ -12,6 +12,7 @@ import { MAT_DATE_LOCALE } from "@angular/material/core";
 import { formatDate } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
+import { AuthService } from "src/app/core/service/auth.service";
 @Component({
   selector: "app-form",
   templateUrl: "./form.component.html",
@@ -24,15 +25,18 @@ export class FormComponent {
   advanceTable: CategoriesTable;
   categoryList: any[] = [];
   stateData: any;
+  adminRole: string;
   constructor(
     public dialogRef: MatDialogRef<FormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public advanceTableService: CategoriesService,
     private fb: FormBuilder,
-    private http: HttpClient
+    private http: HttpClient,
+    private authService: AuthService
   ) {
     // Set the defaults
     this.action = data.action;
+    this.adminRole = this.authService.currentUserValue.role;
     if (this.action === "edit") {
       this.dialogTitle = data.advanceTable.post_code;
       this.advanceTable = data.advanceTable;
@@ -42,18 +46,24 @@ export class FormComponent {
     }
 
     this.advanceTableForm = this.createContactForm();
-    this.http
-      .get<any>(`${environment.apiUrl}/api/state`, {})
-      .subscribe((res: any) => {
-        let state = res.data.find((s) => {
-          return s._id === this.advanceTable.state;
-        });
-        this.stateData = state;
+    let url;
+    if (this.authService.currentUserValue.role === "admin") {
+      url = `${environment.apiUrl}/api/state`;
+      this.http.get<any>(url).subscribe((res: any) => {
         return (this.categoryList = [
           { _id: "", state_name: "Select" },
           ...res.data,
         ]);
       });
+    } else {
+      url = `${environment.apiUrl}/api/state/details/${this.authService.currentUserValue.assign_state}`;
+      this.http.get<any>(url).subscribe((res: any) => {
+        return (this.categoryList = [
+          { _id: "", state_name: "Select" },
+          { ...res.data },
+        ]);
+      });
+    }
   }
   formControl = new FormControl("", [
     Validators.required,

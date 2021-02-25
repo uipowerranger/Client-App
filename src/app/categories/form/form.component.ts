@@ -12,6 +12,7 @@ import { MAT_DATE_LOCALE } from "@angular/material/core";
 import { formatDate } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
+import { AuthService } from "src/app/core/service/auth.service";
 @Component({
   selector: "app-form",
   templateUrl: "./form.component.html",
@@ -29,7 +30,8 @@ export class FormComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public advanceTableService: CategoriesService,
     private fb: FormBuilder,
-    public http: HttpClient
+    public http: HttpClient,
+    private authService: AuthService
   ) {
     // Set the defaults
     this.action = data.action;
@@ -41,14 +43,24 @@ export class FormComponent {
       this.advanceTable = new CategoriesTable({});
     }
     this.advanceTableForm = this.createContactForm();
-    this.http
-      .get<any>(`${environment.apiUrl}/api/state`)
-      .subscribe((res: any) => {
+    let url;
+    if (this.authService.currentUserValue.role === "admin") {
+      url = `${environment.apiUrl}/api/state`;
+      this.http.get<any>(url).subscribe((res: any) => {
         return (this.stateList = [
           { _id: "", state_name: "Select" },
           ...res.data,
         ]);
       });
+    } else {
+      url = `${environment.apiUrl}/api/state/details/${this.authService.currentUserValue.assign_state}`;
+      this.http.get<any>(url).subscribe((res: any) => {
+        return (this.stateList = [
+          { _id: "", state_name: "Select" },
+          { ...res.data },
+        ]);
+      });
+    }
     this.http
       .get<any>(
         `${environment.apiUrl}/api/postcode/bystate/${this.advanceTable.state_details}`

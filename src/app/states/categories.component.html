@@ -69,6 +69,7 @@
                       <li>
                         <div class="icon-button-demo">
                           <button
+                            *ngIf="adminRole === 'admin' ? true : false"
                             mat-mini-fab
                             color="primary"
                             (click)="addNew()"
@@ -194,6 +195,7 @@
                   >
                   <mat-cell *matCellDef="let row; let i = index" class="pr-0">
                     <button
+                      *ngIf="adminRole === 'admin' ? true : false"
                       mat-icon-button
                       color="accent"
                       class="btn-tbl-edit"
@@ -205,6 +207,7 @@
                       >
                     </button>
                     <button
+                      *ngIf="adminRole === 'admin' ? true : false"
                       mat-icon-button
                       color="accent"
                       class="btn-tbl-delete"
@@ -222,7 +225,6 @@
                 ></mat-header-row>
                 <mat-row
                   *matRowDef="let row; columns: displayedColumns"
-                  (click)="editCall(row)"
                   [style.cursor]="'pointer'"
                   matRipple
                 >

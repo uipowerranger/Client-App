@@ -36,12 +36,13 @@ export class FormComponent {
     // Set the defaults
     this.action = data.action;
     if (this.action === "edit") {
-      this.dialogTitle = data.advanceTable.first_name;
+      this.dialogTitle = "Order Details";
       this.advanceTable = data.advanceTable;
     } else {
       this.dialogTitle = "New Record";
       this.advanceTable = new ProductsTable({});
     }
+
     this.advanceTableForm = this.createContactForm();
 
     this.http

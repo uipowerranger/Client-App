@@ -14,6 +14,7 @@ import { DeleteComponent } from "./delete/delete.component";
 import { DateAdapter, MAT_DATE_LOCALE } from "@angular/material/core";
 import { MatMenu, MatMenuTrigger } from "@angular/material/menu";
 import { SelectionModel } from "@angular/cdk/collections";
+import { AuthService } from "../core/service/auth.service";
 
 @Component({
   selector: "app-categories",
@@ -35,13 +36,18 @@ export class CategoriesComponent implements OnInit {
   selection = new SelectionModel<CategoriesTable>(true, []);
   id: number;
   advanceTable: CategoriesTable | null;
-
+  adminRole: string;
+  assignState: string;
   constructor(
     public httpClient: HttpClient,
     public dialog: MatDialog,
     public advanceTableService: CategoriesService,
-    private snackBar: MatSnackBar
-  ) {}
+    private snackBar: MatSnackBar,
+    private authService: AuthService
+  ) {
+    this.adminRole = this.authService.currentUserValue.role;
+    this.assignState = this.authService.currentUserValue.assign_state;
+  }
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild("filter", { static: true }) filter: ElementRef;
