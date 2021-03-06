@@ -146,6 +146,16 @@ export class FormComponent {
       has_deal: e.value == 1 ? "0" : "1",
     });
   }
+  PriceChange(e: any) {
+    let offer = this.advanceTableForm.get("offer_details").value;
+    let actualPrice = this.advanceTableForm.get("actualPrice").value;
+    if (!isNaN(offer) && !isNaN(actualPrice)) {
+      let offerPrice = actualPrice * (offer / 100);
+      this.advanceTableForm.patchValue({
+        price: Number(actualPrice) - Number(offerPrice),
+      });
+    }
+  }
   createContactForm(): FormGroup {
     return this.fb.group({
       _id: [this.advanceTable._id],
@@ -185,6 +195,7 @@ export class FormComponent {
         [Validators.required],
       ],
       price: [this.advanceTable.price],
+      actualPrice: [this.advanceTable.actualPrice],
       state_details: [this.advanceTable.state_details, [Validators.required]],
       sub_category_details: [
         this.advanceTable.sub_category_details,
