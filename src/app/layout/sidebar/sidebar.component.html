@@ -46,8 +46,16 @@
           <div class="header" *ngIf="sidebarItem.groupTitle === true">
             {{ sidebarItem.title }}
           </div>
-          <a [routerLink]="sidebarItem.class === '' ? [sidebarItem.path] : null" *ngIf="!sidebarItem.groupTitle"
-            [ngClass]="[sidebarItem.class]" (click)="callLevel1Toggle($event, sidebarItem.moduleName)" class="menu-top">
+          <a [routerLink]="sidebarItem.class === '' ? [sidebarItem.path] : null"
+            *ngIf="!sidebarItem.groupTitle && (profileData.role==='state_admin' && (sidebarItem.title!='States')&& (sidebarItem.title!='Admin Management'))"
+            [ngClass]=" [sidebarItem.class]" (click)="callLevel1Toggle($event, sidebarItem.moduleName)"
+            class="menu-top">
+            <i [ngClass]="[sidebarItem.iconType]">{{ sidebarItem.icon }}</i>
+            <span class="hide-menu">{{ sidebarItem.title }} </span>
+          </a>
+          <a [routerLink]="sidebarItem.class === '' ? [sidebarItem.path] : null"
+            *ngIf="!sidebarItem.groupTitle && profileData.role==='admin'" [ngClass]=" [sidebarItem.class]"
+            (click)="callLevel1Toggle($event, sidebarItem.moduleName)" class="menu-top">
             <i [ngClass]="[sidebarItem.iconType]">{{ sidebarItem.icon }}</i>
             <span class="hide-menu">{{ sidebarItem.title }} </span>
           </a>
