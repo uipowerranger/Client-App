@@ -17,6 +17,7 @@ export class ProductsTable {
   offer_to_date: number;
   post_code_details: string;
   price: string;
+  actualPrice: string;
   state_details: string;
   sub_category_details: string;
   weight: string;
@@ -43,6 +44,7 @@ export class ProductsTable {
         formatDate(new Date(), "yyyy-MM-dd", "en");
       this.post_code_details = advanceTable.post_code_details || "";
       this.price = advanceTable.price || "";
+      this.actualPrice = advanceTable.actualPrice || "";
       this.state_details = advanceTable.state_details || "";
       this.sub_category_details = advanceTable.sub_category_details || "";
       this.weight = advanceTable.weight || "";
