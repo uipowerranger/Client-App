@@ -96,8 +96,7 @@ export class ProfileComponent implements OnInit {
       this.http
         .put(
           <any>(
-            `${environment.apiUrl}/api/admin/update-password/${
-              this.passwordTableForm.getRawValue()._id
+            `${environment.apiUrl}/api/admin/update-password/${this.passwordTableForm.getRawValue()._id
             }`
           ),
           {
@@ -121,8 +120,7 @@ export class ProfileComponent implements OnInit {
     this.http
       .put(
         <any>(
-          `${environment.apiUrl}/api/admin/update/${
-            this.advanceTableForm.getRawValue()._id
+          `${environment.apiUrl}/api/admin/update/${this.advanceTableForm.getRawValue()._id
           }`
         ),
         this.advanceTableForm.getRawValue()

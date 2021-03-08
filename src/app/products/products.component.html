@@ -187,10 +187,11 @@
                   </mat-cell>
                 </ng-container>
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: displayedColumns" [style.cursor]="'pointer'" matRipple>
+                <mat-row *matRowDef="let row; columns: displayedColumns" [style.cursor]="'pointer'" matRipple
+                  [hidden]="adminRole==='state_admin' && row.map_state.state_name !== stateAssigned">
                 </mat-row>
               </mat-table>
-
+              <!--  [hidden]="row.map_state.state_name !== stateAssigned" -->
               <!-- context menu start -->
               <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
                 [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu"></div>

@@ -15,6 +15,7 @@ import { DateAdapter, MAT_DATE_LOCALE } from "@angular/material/core";
 import { MatMenu, MatMenuTrigger } from "@angular/material/menu";
 import { SelectionModel } from "@angular/cdk/collections";
 import { AuthService } from "../core/service/auth.service";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-categories",
@@ -38,6 +39,7 @@ export class CategoriesComponent implements OnInit {
   advanceTable: CategoriesTable | null;
   adminRole: string;
   assignState: string;
+  stateAssigned: any;
   constructor(
     public httpClient: HttpClient,
     public dialog: MatDialog,
@@ -55,6 +57,16 @@ export class CategoriesComponent implements OnInit {
   contextMenu: MatMenuTrigger;
   contextMenuPosition = { x: "0px", y: "0px" };
   ngOnInit() {
+   
+    this.httpClient
+      .get(<any>`${environment.apiUrl}/api/state/details/${this.assignState}`)
+      .subscribe((state: any) => {
+
+        this.stateAssigned = state.data.state_name;
+        console.log("stateAssigned", this.stateAssigned);
+
+
+      });
     this.loadData();
   }
   refresh() {
@@ -150,8 +162,8 @@ export class CategoriesComponent implements OnInit {
     this.isAllSelected()
       ? this.selection.clear()
       : this.dataSource.renderedData.forEach((row) =>
-          this.selection.select(row)
-        );
+        this.selection.select(row)
+      );
   }
   removeSelectedRows() {
     const totalSelect = this.selection.selected.length;
@@ -254,7 +266,7 @@ export class ExampleDataSource extends DataSource<CategoriesTable> {
       })
     );
   }
-  disconnect() {}
+  disconnect() { }
   /** Returns a sorted copy of the database data. */
   sortData(data: CategoriesTable[]): CategoriesTable[] {
     if (!this._sort.active || this._sort.direction === "") {

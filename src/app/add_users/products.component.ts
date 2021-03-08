@@ -14,6 +14,7 @@ import { DeleteComponent } from "./delete/delete.component";
 import { DateAdapter, MAT_DATE_LOCALE } from "@angular/material/core";
 import { MatMenu, MatMenuTrigger } from "@angular/material/menu";
 import { SelectionModel } from "@angular/cdk/collections";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-products",
@@ -38,13 +39,17 @@ export class ProductsComponent implements OnInit {
   selection = new SelectionModel<ProductsTable>(true, []);
   id: number;
   advanceTable: ProductsTable | null;
-
+  userInfo: any;
+  adminInfo = JSON.parse(localStorage.getItem('currentUser'));
+  stateInfo: any;
+  loading: boolean = false;
   constructor(
     public httpClient: HttpClient,
     public dialog: MatDialog,
     public advanceTableService: ProductsService,
-    private snackBar: MatSnackBar
-  ) {}
+    private snackBar: MatSnackBar,
+    private prodsvc: ProductsService
+  ) { }
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild("filter", { static: true }) filter: ElementRef;
@@ -52,6 +57,17 @@ export class ProductsComponent implements OnInit {
   contextMenu: MatMenuTrigger;
   contextMenuPosition = { x: "0px", y: "0px" };
   ngOnInit() {
+    this.loading = true;
+    let url = `${environment.apiUrl}/api/state/details/${this.adminInfo.assign_state}`;
+    this.httpClient.get(url).subscribe((res: any) => {
+      this.stateInfo = res.data;
+      console.log("res", this.stateInfo);
+    })
+    this.prodsvc.getUsers().subscribe((res: any) => {
+      console.log("UserInfor", res.data);
+      this.userInfo = res.data;
+      this.loading = false;
+    })
     this.loadData();
   }
   refresh() {
@@ -147,8 +163,8 @@ export class ProductsComponent implements OnInit {
     this.isAllSelected()
       ? this.selection.clear()
       : this.dataSource.renderedData.forEach((row) =>
-          this.selection.select(row)
-        );
+        this.selection.select(row)
+      );
   }
   removeSelectedRows() {
     const totalSelect = this.selection.selected.length;
@@ -254,7 +270,7 @@ export class ExampleDataSource extends DataSource<ProductsTable> {
       })
     );
   }
-  disconnect() {}
+  disconnect() { }
   /** Returns a sorted copy of the database data. */
   sortData(data: ProductsTable[]): ProductsTable[] {
     if (!this._sort.active || this._sort.direction === "") {
@@ -278,4 +294,5 @@ export class ExampleDataSource extends DataSource<ProductsTable> {
       );
     });
   }
+
 }

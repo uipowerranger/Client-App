@@ -10,19 +10,25 @@ import { environment } from 'src/environments/environment';
 export class InquiriesdataComponent implements OnInit {
   enquiries: any;
   enqcount: any;
-
+  userInfo = JSON.parse(localStorage.getItem("currentUser"))
+  stateInfo: any;
   constructor(private http: HttpClient) { }
 
 
   ngOnInit(): void {
-    // http://15.206.94.199:4949/api/enquiry
+    let url = `${environment.apiUrl}/api/state/details/${this.userInfo.assign_state}`;
+    this.http.get(url).subscribe((res: any) => {
+      this.stateInfo = res.data;
+      console.log("res", this.stateInfo);
+    })
     this.http.get(`${environment.apiUrl}/api/enquiry`).subscribe((res: any) => {
-      console.log("Enquiries", res);
       this.enquiries = res.data;
-      // this.totalOrders = res.data;
+
       this.enqcount = res.data.length;
 
     })
+
+
   }
 
 

@@ -1,1 +1,2 @@
-{{usercount}}
+<mat-progress-bar *ngIf="loading" mode="buffer"></mat-progress-bar>
+{{adminRole=='admin'? usercount: statewideCount}}

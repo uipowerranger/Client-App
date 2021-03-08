@@ -145,7 +145,6 @@ export class FormComponent {
               data: imgBase64Path,
             })
             .subscribe((res: any) => {
-              console.log(res);
               if (res.status === 200) {
                 this.advanceTableForm.patchValue({
                   image: res.data,

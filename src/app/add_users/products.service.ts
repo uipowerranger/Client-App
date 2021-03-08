@@ -15,7 +15,7 @@ export class ProductsService {
   categoryList: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   // Temporarily stores data from dialogs
   dialogData: any;
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
   get data(): ProductsTable[] {
     return this.dataChange.value;
   }
@@ -26,6 +26,9 @@ export class ProductsService {
     return this.dialogData;
   }
   /** CRUD METHODS */
+  getUsers() {
+    return this.httpClient.get(`${environment.apiUrl}/api/user`);
+  }
   getAllAdvanceTables(): void {
     this.httpClient.get<any>(`${environment.apiUrl}/api/user`).subscribe(
       (res) => {

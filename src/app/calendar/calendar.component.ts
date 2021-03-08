@@ -186,8 +186,6 @@ export class CalendarComponent implements OnInit {
     this.calendarEvents = calendarEvents; // reassign the array
   }
   handleEventRender(info) {
-    // console.log(info)
-    // this.todaysEvents = this.todaysEvents.concat(info);
   }
   changeCategory(e: MatRadioChange) {
     this.filterOptions = e.value;

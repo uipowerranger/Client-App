@@ -37,6 +37,7 @@ export class CategoriesComponent implements OnInit {
   id: number;
   advanceTable: CategoriesTable | null;
   adminRole: string;
+  assignState: string;
 
   constructor(
     public httpClient: HttpClient,
@@ -46,6 +47,7 @@ export class CategoriesComponent implements OnInit {
     private authService: AuthService
   ) {
     this.adminRole = this.authService.currentUserValue.role;
+    this.assignState = this.authService.currentUserValue.assign_state;
   }
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -54,6 +56,9 @@ export class CategoriesComponent implements OnInit {
   contextMenu: MatMenuTrigger;
   contextMenuPosition = { x: "0px", y: "0px" };
   ngOnInit() {
+    console.log("this.authService.currentUserValue", this.authService.currentUserValue);
+    console.log("this.adminRole", this.adminRole);
+    console.log("this.assignState", this.assignState);
     this.loadData();
   }
   refresh() {
@@ -149,8 +154,8 @@ export class CategoriesComponent implements OnInit {
     this.isAllSelected()
       ? this.selection.clear()
       : this.dataSource.renderedData.forEach((row) =>
-          this.selection.select(row)
-        );
+        this.selection.select(row)
+      );
   }
   removeSelectedRows() {
     const totalSelect = this.selection.selected.length;
@@ -253,7 +258,7 @@ export class ExampleDataSource extends DataSource<CategoriesTable> {
       })
     );
   }
-  disconnect() {}
+  disconnect() { }
   /** Returns a sorted copy of the database data. */
   sortData(data: CategoriesTable[]): CategoriesTable[] {
     if (!this._sort.active || this._sort.direction === "") {

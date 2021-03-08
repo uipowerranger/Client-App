@@ -15,7 +15,7 @@ export class ProductsService {
   categoryList: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   // Temporarily stores data from dialogs
   dialogData: any;
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
   get data(): ProductsTable[] {
     return this.dataChange.value;
   }
@@ -26,6 +26,21 @@ export class ProductsService {
     return this.dialogData;
   }
   /** CRUD METHODS */
+  getOrders() {
+    return this.httpClient
+      .get<any>(`${environment.apiUrl}/api/order/get-admin`);
+  }
+  updateOrder(o: any, status: number) {
+    let order = {
+      "order_id": o._id,
+      "payment": status,
+      "order_completed": status
+    }
+
+    console.log("Order:", order)
+    return this.httpClient
+      .post<any>(`${environment.apiUrl}/api/order/update-status`, order);
+  }
   getAllAdvanceTables(): void {
     this.httpClient
       .get<any>(`${environment.apiUrl}/api/order/get-admin`)

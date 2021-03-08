@@ -15,6 +15,7 @@ import { DateAdapter, MAT_DATE_LOCALE } from "@angular/material/core";
 import { MatMenu, MatMenuTrigger } from "@angular/material/menu";
 import { SelectionModel } from "@angular/cdk/collections";
 import { AuthService } from "../core/service/auth.service";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-products",
@@ -42,7 +43,11 @@ export class ProductsComponent implements OnInit {
   advanceTable: ProductsTable | null;
   adminRole: string;
   assignState: string;
-
+  stateList: any[];
+  adminInfo: any = localStorage.getItem('admin');
+  admin_state: any;
+  stateAssigned: any;
+  adminInformation = JSON.parse(localStorage.getItem('currentUser'));
   constructor(
     public httpClient: HttpClient,
     public dialog: MatDialog,
@@ -60,6 +65,22 @@ export class ProductsComponent implements OnInit {
   contextMenu: MatMenuTrigger;
   contextMenuPosition = { x: "0px", y: "0px" };
   ngOnInit() {
+    this.admin_state = this.adminInformation.assign_state;
+    this.adminRole //= this.adminInformation.role;
+    console.log('this.adminRole', this.adminRole)
+    this.httpClient
+      .get(<any>`${environment.apiUrl}/api/state/details/${this.admin_state}`)
+      .subscribe((state: any) => {
+
+        this.stateAssigned = state.data.state_name;
+
+      });
+    this.httpClient
+      .get(<any>`${environment.apiUrl}/api/state/details/+${this.admin_state}`)
+      .subscribe((state: any) => {
+        console.log("Admin State is:", state);
+      });
+
     this.loadData();
   }
   refresh() {
@@ -155,8 +176,8 @@ export class ProductsComponent implements OnInit {
     this.isAllSelected()
       ? this.selection.clear()
       : this.dataSource.renderedData.forEach((row) =>
-          this.selection.select(row)
-        );
+        this.selection.select(row)
+      );
   }
   removeSelectedRows() {
     const totalSelect = this.selection.selected.length;
@@ -262,7 +283,7 @@ export class ExampleDataSource extends DataSource<ProductsTable> {
       })
     );
   }
-  disconnect() {}
+  disconnect() { }
   /** Returns a sorted copy of the database data. */
   sortData(data: ProductsTable[]): ProductsTable[] {
     if (!this._sort.active || this._sort.direction === "") {

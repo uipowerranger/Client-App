@@ -47,6 +47,7 @@ export class SigninComponent implements OnInit {
         .login(this.f.username.value, this.f.password.value)
         .subscribe(
           (res) => {
+            localStorage.setItem('admin', JSON.stringify(res))
             this.loading = false;
             if (res) {
               this.showLoginTab = false;

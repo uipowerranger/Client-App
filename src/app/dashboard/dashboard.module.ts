@@ -23,6 +23,7 @@ import { MatInputModule } from '@angular/material/input';
 
 import { EnquycountComponent } from './main/enquycount/enquycount.component';
 import { InquiriesdataComponent } from './inquiriesdata/inquiriesdata.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 @NgModule({
   declarations: [MainComponent, OrdercountComponent, UserscountComponent, RevenucountComponent, OrderstableComponent, EnquycountComponent, InquiriesdataComponent],
   imports: [
@@ -42,7 +43,8 @@ import { InquiriesdataComponent } from './inquiriesdata/inquiriesdata.component'
     MatFormFieldModule,
     FormsModule,
     ReactiveFormsModule,
-    MatFormFieldModule, MatInputModule
+    MatFormFieldModule, MatInputModule,
+    MatProgressBarModule
   ],
 })
 export class DashboardModule { }

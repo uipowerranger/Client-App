@@ -14,6 +14,8 @@ import { DeleteComponent } from "./delete/delete.component";
 import { DateAdapter, MAT_DATE_LOCALE } from "@angular/material/core";
 import { MatMenu, MatMenuTrigger } from "@angular/material/menu";
 import { SelectionModel } from "@angular/cdk/collections";
+import { environment } from "src/environments/environment";
+import { AuthService } from "../core/service/auth.service";
 
 @Component({
   selector: "app-products",
@@ -22,6 +24,7 @@ import { SelectionModel } from "@angular/cdk/collections";
   providers: [{ provide: MAT_DATE_LOCALE, useValue: "en-GB" }],
 })
 export class ProductsComponent implements OnInit {
+
   displayedColumns = [
     "product",
     "price",
@@ -30,19 +33,25 @@ export class ProductsComponent implements OnInit {
     "created_at",
     "is_active",
     "actions",
+    "amount"
   ];
+
   exampleDatabase: ProductsService | null;
   dataSource: ExampleDataSource | null;
   selection = new SelectionModel<ProductsTable>(true, []);
   id: number;
   advanceTable: ProductsTable | null;
-
+  stateAssigned: any;
+  totalOrders;
+  userInfo = JSON.parse(localStorage.getItem("currentUser"))
   constructor(
     public httpClient: HttpClient,
     public dialog: MatDialog,
     public advanceTableService: ProductsService,
-    private snackBar: MatSnackBar
-  ) {}
+    private snackBar: MatSnackBar,
+    private authService: AuthService,
+    private prodsvc: ProductsService
+  ) { }
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild("filter", { static: true }) filter: ElementRef;
@@ -50,6 +59,15 @@ export class ProductsComponent implements OnInit {
   contextMenu: MatMenuTrigger;
   contextMenuPosition = { x: "0px", y: "0px" };
   ngOnInit() {
+    this.prodsvc.getOrders().subscribe((res: any) => {
+      this.totalOrders = res.data
+    })
+
+    this.httpClient
+      .get(<any>`${environment.apiUrl}/api/state/details/${this.authService.currentUserValue.assign_state}`)
+      .subscribe((state: any) => {
+        this.stateAssigned = state.data.state_name;
+      });
     this.loadData();
   }
   refresh() {
@@ -78,6 +96,18 @@ export class ProductsComponent implements OnInit {
         );
       }
     });
+  }
+  updateOrder(o, status) {
+    console.log("Object",);
+    this.prodsvc.updateOrder(o, status).subscribe((res: any) => {
+
+      this.showNotification(
+        "snackbar-anger",
+        res.message,
+        "top",
+        "right"
+      );
+    })
   }
   editCall(row) {
     this.id = row.id;
@@ -145,8 +175,8 @@ export class ProductsComponent implements OnInit {
     this.isAllSelected()
       ? this.selection.clear()
       : this.dataSource.renderedData.forEach((row) =>
-          this.selection.select(row)
-        );
+        this.selection.select(row)
+      );
   }
   removeSelectedRows() {
     const totalSelect = this.selection.selected.length;
@@ -173,7 +203,7 @@ export class ProductsComponent implements OnInit {
       this.paginator,
       this.sort
     );
-
+    console.log("this.dataSource ", this.dataSource)
     fromEvent(this.filter.nativeElement, "keyup").subscribe(() => {
       if (!this.dataSource) {
         return;
@@ -252,7 +282,7 @@ export class ExampleDataSource extends DataSource<ProductsTable> {
       })
     );
   }
-  disconnect() {}
+  disconnect() { }
   /** Returns a sorted copy of the database data. */
   sortData(data: ProductsTable[]): ProductsTable[] {
     if (!this._sort.active || this._sort.direction === "") {

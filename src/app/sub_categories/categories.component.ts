@@ -149,8 +149,8 @@ export class CategoriesComponent implements OnInit {
     this.isAllSelected()
       ? this.selection.clear()
       : this.dataSource.renderedData.forEach((row) =>
-          this.selection.select(row)
-        );
+        this.selection.select(row)
+      );
   }
   removeSelectedRows() {
     const totalSelect = this.selection.selected.length;
@@ -256,7 +256,7 @@ export class ExampleDataSource extends DataSource<CategoriesTable> {
       })
     );
   }
-  disconnect() {}
+  disconnect() { }
   /** Returns a sorted copy of the database data. */
   sortData(data: CategoriesTable[]): CategoriesTable[] {
     if (!this._sort.active || this._sort.direction === "") {

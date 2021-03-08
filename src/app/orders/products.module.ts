@@ -26,7 +26,7 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { MaterialFileInputModule } from "ngx-material-file-input";
 import { MatMenuModule } from "@angular/material/menu";
 import { GetOrdersComponent } from './get-orders/get-orders.component';
-
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 @NgModule({
   declarations: [ProductsComponent, advanceTableForm, DeleteComponent, GetOrdersComponent],
   imports: [
@@ -51,6 +51,7 @@ import { GetOrdersComponent } from './get-orders/get-orders.component';
     MatToolbarModule,
     MaterialFileInputModule,
     MatMenuModule,
+    MatButtonToggleModule
   ],
   exports: [
     GetOrdersComponent

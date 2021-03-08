@@ -160,7 +160,6 @@ export class ProductsComponent implements OnInit {
       const index: number = this.dataSource.renderedData.findIndex(
         (d) => d === item
       );
-      // console.log(this.dataSource.renderedData.findIndex((d) => d === item));
       this.exampleDatabase.dataChange.value.splice(index, 1);
       this.refresh();
       this.selection = new SelectionModel<ProductsTable>(true, []);

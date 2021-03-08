@@ -1,1 +1,2 @@
-{{totalRevenue}}
+<mat-progress-bar *ngIf="loading" mode="buffer"></mat-progress-bar>
+{{adminRole=='admin'? totalRevenue: stateWidetotalRevenue}}

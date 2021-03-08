@@ -1,3 +1,4 @@
+import { AuthService } from './../../../core/service/auth.service';
 import { formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
@@ -23,8 +24,17 @@ export class OrderstableComponent implements OnInit {
   todate: any;
   daterange: any = {}
   contactForm: FormGroup;
-  constructor(private http: HttpClient, private formBuilder: FormBuilder) {
+  adminRole: any;
+  assignState: any;
+  stateAssigned: any;
+  stateInfo: any;
+  statewide: any;
+  statewideOrders: any;
+  statewideamount: any;
+  constructor(private http: HttpClient, private formBuilder: FormBuilder, private authService: AuthService) {
     this.createContactForm();
+    this.adminRole = this.authService.currentUserValue.role;
+    this.assignState = this.authService.currentUserValue.assign_state;
   }
 
   createContactForm() {
@@ -49,22 +59,37 @@ export class OrderstableComponent implements OnInit {
       this.orderdata = res.data;
       // this.totalOrders = res.data;
       this.totalOrders = res.data.length;
-      console.log('Orders table', this.orderdata);
       this.totalAmount = res.data.map((a: any) => a.total_amount).reduce(function (a: any, b: any) {
         return a + b;
       });
     })
   }
   ngOnInit(): void {
-    this.http.get(`${environment.apiUrl}/api/order/get-admin`).subscribe((res: any) => {
-      this.orderdata = res.data;
-      // this.totalOrders = res.data;
-      this.totalOrders = res.data.length;
-      console.log('Orders table', this.orderdata);
-      this.totalAmount = res.data.map((a: any) => a.total_amount).reduce(function (a: any, b: any) {
-        return a + b;
+    this.http
+      .get(<any>`${environment.apiUrl}/api/state/details/${this.assignState}`)
+      .subscribe((state: any) => {
+        console.log("Orderstable ", state);
+        this.stateAssigned = state.data.state_name;
+        this.stateInfo = state.data;
+        this.http.get(`${environment.apiUrl}/api/order/get-admin`).subscribe((res: any) => {
+          this.orderdata = res.data;
+          this.totalOrders = res.data.length;
+          this.totalAmount = res.data.map((a: any) => a.total_amount).reduce(function (a: any, b: any) {
+            return a + b;
+          });
+          this.statewide = res.data.filter(u => {
+            return (u.shipping_address.state === this.stateAssigned)
+          });
+          this.statewideOrders = this.statewide.length;
+          console.log("this.statewide", this.statewide);
+          this.statewideamount = this.statewide.map((a: any) => a.total_amount).reduce(function (a: any, b: any) {
+            return a + b;
+          });
+          console.log("this.statewideOrders", this.statewideOrders);
+        })
       });
-    })
+
+
   }
 
 
