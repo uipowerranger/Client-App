@@ -21,6 +21,8 @@ export class ProductsTable {
   state_details: string;
   sub_category_details: string;
   weight: string;
+  homepage_filter: string;
+  description: string;
   constructor(advanceTable) {
     {
       this.createdAt =
@@ -48,6 +50,8 @@ export class ProductsTable {
       this.state_details = advanceTable.state_details || "";
       this.sub_category_details = advanceTable.sub_category_details || "";
       this.weight = advanceTable.weight || "";
+      this.homepage_filter = advanceTable.homepage_filter || "";
+      this.description = advanceTable.description || "";
     }
   }
   public getRandomID(): string {

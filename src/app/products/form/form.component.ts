@@ -28,6 +28,19 @@ export class FormComponent {
   stateList: any[] = [];
   postcodeList: any[] = [];
   userRole: string;
+  filterList: any[] = [
+    "Best Deal",
+    "Deal of the Day",
+    "Upto 60% off",
+    "Organic",
+    "Healthy Diet",
+    "Everyday essentials",
+    "Best deals in Oils",
+    "Hot Deal in Honey",
+    "Great offer in Dryfruits",
+    "Best Sellers in Beauty",
+    "Miscellaneous",
+  ];
   constructor(
     public dialogRef: MatDialogRef<FormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -202,6 +215,8 @@ export class FormComponent {
         [Validators.required],
       ],
       weight: [this.advanceTable.weight],
+      homepage_filter: [this.advanceTable.homepage_filter],
+      description: [this.advanceTable.description],
     });
   }
   submit() {
