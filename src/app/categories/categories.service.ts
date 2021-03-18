@@ -56,6 +56,7 @@ export class CategoriesService {
           state_details: advanceTable.state_details,
           post_code_details: advanceTable.post_code_details,
           status: advanceTable.status,
+          image: advanceTable.image,
         })
         .subscribe(
           (res) => {

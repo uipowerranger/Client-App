@@ -7,6 +7,7 @@ export class CategoriesTable {
   status: string;
   state_details: string;
   post_code_details: string;
+  image: string;
   constructor(advanceTable) {
     {
       this._id = advanceTable._id || "";
@@ -16,6 +17,7 @@ export class CategoriesTable {
       this.status = advanceTable.status || 1;
       this.state_details = advanceTable.state_details || "";
       this.post_code_details = advanceTable.post_code_details || "";
+      this.image = advanceTable.image || "";
     }
   }
   public getRandomID(): string {

@@ -109,6 +109,7 @@ export class FormComponent {
       ],
       status: [this.advanceTable.status, [Validators.required]],
       state_details: [this.advanceTable.state_details, [Validators.required]],
+      image: [this.advanceTable.image, [Validators.required]],
       post_code_details: [
         this.advanceTable.post_code_details,
         [Validators.required],
@@ -125,5 +126,31 @@ export class FormComponent {
     this.advanceTableService.addAdvanceTable(
       this.advanceTableForm.getRawValue()
     );
+  }
+  uploadFileEvt(imgFile: any) {
+    if (imgFile.target.files && imgFile.target.files[0]) {
+      // HTML5 FileReader API
+      let reader = new FileReader();
+      reader.onload = (e: any) => {
+        let image = new Image();
+        image.src = e.target.result;
+        image.onload = (rs) => {
+          let imgBase64Path = e.target.result;
+          this.http
+            .post(<any>`${environment.apiUrl}/api/admin/fileUpload`, {
+              data: imgBase64Path,
+            })
+            .subscribe((res: any) => {
+              console.log(res);
+              if (res.status === 200) {
+                this.advanceTableForm.patchValue({
+                  image: res.data,
+                });
+              }
+            });
+        };
+      };
+      reader.readAsDataURL(imgFile.target.files[0]);
+    }
   }
 }
