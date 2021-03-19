@@ -351,7 +351,7 @@
         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-2">
           <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Homepage filter</mat-label>
-            <mat-select formControlName="homepage_filter" required>
+            <mat-select formControlName="homepage_filter">
               <mat-option
                 *ngFor="let item of filterList; let i = index"
                 [value]="item"

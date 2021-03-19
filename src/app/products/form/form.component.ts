@@ -29,6 +29,7 @@ export class FormComponent {
   postcodeList: any[] = [];
   userRole: string;
   filterList: any[] = [
+    "None",
     "Best Deal",
     "Deal of the Day",
     "Upto 60% off",

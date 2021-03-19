@@ -50,7 +50,7 @@ export class ProductsTable {
       this.state_details = advanceTable.state_details || "";
       this.sub_category_details = advanceTable.sub_category_details || "";
       this.weight = advanceTable.weight || "";
-      this.homepage_filter = advanceTable.homepage_filter || "";
+      this.homepage_filter = advanceTable.homepage_filter || "None";
       this.description = advanceTable.description || "";
     }
   }
