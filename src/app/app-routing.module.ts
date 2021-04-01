@@ -63,6 +63,16 @@ const routes: Routes = [
           import("./orders/products.module").then((m) => m.OrdersModule),
       },
       {
+        path: "carousel",
+        loadChildren: () =>
+          import("./carousel/products.module").then((m) => m.CauroselModule),
+      },
+      {
+        path: "stocks",
+        loadChildren: () =>
+          import("./stocks/products.module").then((m) => m.StocksModule),
+      },
+      {
         path: "states",
         loadChildren: () =>
           import("./states/categories.module").then((m) => m.StatesModule),
@@ -173,4 +183,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, { relativeLinkResolution: "legacy" })],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
