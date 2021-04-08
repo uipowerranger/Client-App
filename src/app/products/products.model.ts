@@ -23,6 +23,7 @@ export class ProductsTable {
   weight: string;
   homepage_filter: string;
   description: string;
+  units: string;
   constructor(advanceTable) {
     {
       this.createdAt =
@@ -52,6 +53,7 @@ export class ProductsTable {
       this.weight = advanceTable.weight || "";
       this.homepage_filter = advanceTable.homepage_filter || "None";
       this.description = advanceTable.description || "";
+      this.units = advanceTable.units || "";
     }
   }
   public getRandomID(): string {

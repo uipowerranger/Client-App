@@ -28,6 +28,7 @@ export class FormComponent {
   stateList: any[] = [];
   postcodeList: any[] = [];
   userRole: string;
+  unitsList: any[] = [];
   filterList: any[] = [
     "None",
     "Best Deal",
@@ -67,6 +68,14 @@ export class FormComponent {
       .subscribe((res: any) => {
         return (this.categoryList = [
           { _id: "", category_name: "Select" },
+          ...res.data,
+        ]);
+      });
+    this.http
+      .get<any>(`${environment.apiUrl}/api/units`)
+      .subscribe((res: any) => {
+        return (this.unitsList = [
+          { _id: "", unit_name: "Select" },
           ...res.data,
         ]);
       });
@@ -215,7 +224,8 @@ export class FormComponent {
         this.advanceTable.sub_category_details,
         [Validators.required],
       ],
-      weight: [this.advanceTable.weight],
+      weight: [this.advanceTable.weight, [Validators.required]],
+      units: [this.advanceTable.units, [Validators.required]],
       homepage_filter: [this.advanceTable.homepage_filter],
       description: [this.advanceTable.description],
     });
