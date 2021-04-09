@@ -24,8 +24,13 @@ import { MatInputModule } from '@angular/material/input';
 import { EnquycountComponent } from './main/enquycount/enquycount.component';
 import { InquiriesdataComponent } from './inquiriesdata/inquiriesdata.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { StocksComponent } from './stocks/stocks/stocks.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { StockadjustmentComponent } from './stocks/stockadjustment/stockadjustment.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 @NgModule({
-  declarations: [MainComponent, OrdercountComponent, UserscountComponent, RevenucountComponent, OrderstableComponent, EnquycountComponent, InquiriesdataComponent],
+  declarations: [MainComponent, OrdercountComponent, UserscountComponent, RevenucountComponent, OrderstableComponent, EnquycountComponent, InquiriesdataComponent, StocksComponent, StockadjustmentComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,
@@ -41,10 +46,13 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatTabsModule,
     NgxGaugeModule,
     MatFormFieldModule,
+    MatInputModule,
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule, MatInputModule,
-    MatProgressBarModule
+    MatSnackBarModule,
+    MatProgressBarModule,
+    Ng2SearchPipeModule,
   ],
 })
 export class DashboardModule { }

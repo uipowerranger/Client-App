@@ -1,0 +1,9 @@
+<mat-form-field class="w-100">
+    <mat-label>Adjust the Stock</mat-label>
+    <input type="number" matInput placeholder="10" [(ngModel)]="qty">
+
+</mat-form-field>
+<div class="d-flex  justify-content-around">
+    <button mat-raised-button color="accent" (click)="onNoClick(2)">Append</button>
+    <button mat-raised-button color="accent" (click)="onNoClick(1)">Truncate</button>
+</div>
