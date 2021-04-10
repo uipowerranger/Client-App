@@ -56,6 +56,7 @@ export class ProductsComponent implements OnInit {
   @ViewChild(MatMenuTrigger)
   contextMenu: MatMenuTrigger;
   contextMenuPosition = { x: "0px", y: "0px" };
+  searchedKeyword: string;
   ngOnInit() {
     this.loading = true;
     let url = `${environment.apiUrl}/api/state/details/${this.adminInfo.assign_state}`;

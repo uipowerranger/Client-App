@@ -33,7 +33,12 @@ export class ProductsService {
   updateOrder(o: any, status: number) {
     let order = {
       "order_id": o._id,
-      "payment": status,
+      "payment": o.total_amount ? 1 : 0,
+      "order_completed": status
+    }
+    let order2 = {
+      "order_id": o._id,
+      "payment": o.total_amount,
       "order_completed": status
     }
 

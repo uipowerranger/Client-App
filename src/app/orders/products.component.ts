@@ -43,7 +43,8 @@ export class ProductsComponent implements OnInit {
   advanceTable: ProductsTable | null;
   stateAssigned: any;
   totalOrders;
-  userInfo = JSON.parse(localStorage.getItem("currentUser"))
+  userInfo = JSON.parse(localStorage.getItem("currentUser"));
+  searchedKeyword: any;
   constructor(
     public httpClient: HttpClient,
     public dialog: MatDialog,
@@ -98,7 +99,7 @@ export class ProductsComponent implements OnInit {
     });
   }
   updateOrder(o, status) {
-    console.log("Object",);
+    console.log("Object", o);
     this.prodsvc.updateOrder(o, status).subscribe((res: any) => {
 
       this.showNotification(

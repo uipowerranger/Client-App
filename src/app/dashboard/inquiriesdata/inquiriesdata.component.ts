@@ -12,6 +12,7 @@ export class InquiriesdataComponent implements OnInit {
   enqcount: any;
   userInfo = JSON.parse(localStorage.getItem("currentUser"))
   stateInfo: any;
+  searchedKeyword: string;
   constructor(private http: HttpClient) { }
 
 

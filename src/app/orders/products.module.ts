@@ -27,6 +27,7 @@ import { MaterialFileInputModule } from "ngx-material-file-input";
 import { MatMenuModule } from "@angular/material/menu";
 import { GetOrdersComponent } from './get-orders/get-orders.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { Ng2SearchPipeModule } from "ng2-search-filter";
 @NgModule({
   declarations: [ProductsComponent, advanceTableForm, DeleteComponent, GetOrdersComponent],
   imports: [
@@ -51,7 +52,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatToolbarModule,
     MaterialFileInputModule,
     MatMenuModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    Ng2SearchPipeModule,
   ],
   exports: [
     GetOrdersComponent

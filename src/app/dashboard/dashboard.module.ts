@@ -15,7 +15,7 @@ import { NgxGaugeModule } from 'ngx-gauge';
 import { OrdercountComponent } from './ordercount/ordercount.component';
 import { UserscountComponent } from './userscount/userscount.component';
 import { RevenucountComponent } from './revenucount/revenucount.component';
-import { OrderstableComponent } from './main/orderstable/orderstable.component';
+import { OrderstableComponent, CallbackPipe } from './main/orderstable/orderstable.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -30,7 +30,8 @@ import { StockadjustmentComponent } from './stocks/stockadjustment/stockadjustme
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
-  declarations: [MainComponent, OrdercountComponent, UserscountComponent, RevenucountComponent, OrderstableComponent, EnquycountComponent, InquiriesdataComponent, StocksComponent, StockadjustmentComponent],
+  declarations: [
+    CallbackPipe, MainComponent, OrdercountComponent, UserscountComponent, RevenucountComponent, OrderstableComponent, EnquycountComponent, InquiriesdataComponent, StocksComponent, StockadjustmentComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,

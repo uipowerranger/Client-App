@@ -1,19 +1,26 @@
-<form class="d-flex justify-content-end" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
-    <mat-form-field appearance="fill">
-        <mat-label>Enter a date range</mat-label>
-        <mat-date-range-input [rangePicker]="picker">
-            <input matStartDate placeholder="Start date" formControlName="startDate">
-            <input matEndDate placeholder="End date" formControlName="endDate">
-        </mat-date-range-input>
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-date-range-picker #picker></mat-date-range-picker>
+<div class="d-flex justify-content-between">
+    <mat-form-field class="w-25">
+        <mat-label>Search Item Name</mat-label>
+        <input matInput placeholder="" value="" [(ngModel)]="searchedKeyword">
     </mat-form-field>
-    <button type="submit" mat-icon-button aria-label="Example icon button with a vertical three dot icon">
-        <mat-icon>search</mat-icon>
-    </button>
+    <form class="d-flex justify-content-end" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill">
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input [rangePicker]="picker">
+                <input matStartDate placeholder="Start date" formControlName="startDate">
+                <input matEndDate placeholder="End date" formControlName="endDate">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+        <button type="submit" mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+            <mat-icon>search</mat-icon>
+        </button>
 
 
-</form>
+    </form>
+
+</div>
 <div class="d-flex justify-content-between">
 
     <h1>
@@ -38,15 +45,31 @@
                 <th scope="col">Mobile Number</th>
                 <th scope="col">Status</th>
                 <th scope="col">Amount</th>
+                <th scope="col">Order Date</th>
+                <th scope="col">Action</th>
+
             </tr>
         </thead>
-        <tbody class="order-table overflow-auto bg-dark">
-            <tr *ngFor="let o of orderdata; let i=index">
+        <tbody class="order-table overflow-auto ">
+            <tr *ngFor="let o of orderdata | filter:searchedKeyword;  let i=index">
                 <th scope="row">{{i}}</th>
                 <td>{{o._id}} </td>
                 <td>{{o.phone_number}} </td>
-                <td> {{o.status?'Completed': 'Pending'}}</td>
+                <td> {{o.order_completed?'Completed': 'Pending'}}</td>
                 <td>{{o.total_amount}}</td>
+                <td>{{o.createdAt|date}}</td>
+                <td>
+                    <button type="submit" mat-icon-button aria-label="" (click)="updateOrder(o, 1)"
+                        [disabled]="o.order_completed">
+                        <mat-icon>check</mat-icon>
+                    </button>
+                    <button type="submit" mat-icon-button aria-label="" (click)="updateOrder(o, 0)"
+                        [disabled]="!o.order_completed">
+                        <mat-icon>pending</mat-icon>
+                    </button>
+                </td>
+
+
             </tr>
 
         </tbody>
@@ -67,32 +90,11 @@
             <tr *ngFor="let o of statewide; let i=index">
                 <th scope="row">{{i}}</th>
                 <td>{{o._id}} </td>
-                <td>{{o.phone_number}} </td>
-                <td> {{o.status?'Completed': 'Pending'}}</td>
+                <td>{{o.phone_number}} {{o.order_completed}}</td>
+                <td> {{o.order_completed?'Completed': 'Pending'}}</td>
                 <td>{{o.total_amount}}</td>
             </tr>
 
         </tbody>
     </table>
 </ng-template>
-<!-- <table class="table  table-striped  table-hover ">
-    <thead class="thead-dark">
-        <tr>
-            <th scope="col">Sl.No</th>
-            <th scope="col">Order Id</th>
-            <th scope="col">Mobile Number</th>
-            <th scope="col">Status</th>
-            <th scope="col">Amount</th>
-        </tr>
-    </thead>
-    <tbody class="order-table overflow-auto bg-dark">
-        <tr *ngFor="let o of orderdata; let i=index">
-            <th scope="row">{{i}}</th>
-            <td>{{o._id}} </td>
-            <td>{{o.phone_number}} </td>
-            <td> {{o.status?'Completed': 'Pending'}}</td>
-            <td>{{o.total_amount}}</td>
-        </tr>
-
-    </tbody>
-</table> -->

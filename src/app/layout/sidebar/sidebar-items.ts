@@ -110,7 +110,7 @@ export const ROUTES: RouteInfo[] = [
     submenu: [],
   },
   {
-    path: "stocks",
+    path: "/dashboard/stocks",
     title: "Stock Management",
     moduleName: "advance-table",
     iconType: "material-icons-two-tone",

@@ -70,7 +70,7 @@ const routes: Routes = [
       {
         path: "stocks",
         loadChildren: () =>
-          import("./stocks/products.module").then((m) => m.StocksModule),
+          import("./dashboard/dashboard.module").then((m) => m.DashboardModule),
       },
       {
         path: "states",
@@ -183,4 +183,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, { relativeLinkResolution: "legacy" })],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

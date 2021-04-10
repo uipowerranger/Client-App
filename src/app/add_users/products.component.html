@@ -26,12 +26,16 @@
             <div class="responsive_table">
               <div class="materialTableHeader">
                 <div class="row">
-                  <div class="col-8">
-                    <ul class="header-buttons-left ml-0">
-                      <li class="dropdown">
+                  <div class="col-12">
+                    <ul class="header-buttons-left ml-0 w-100 pr-5">
+                      <li class="dropdown d-flex justify-content-between align-items-center  w-100">
                         <h2>
                           <strong>Users</strong>
                         </h2>
+                        <mat-form-field class="w-25">
+                          <mat-label>Search Item Name</mat-label>
+                          <input matInput placeholder="" value="" [(ngModel)]="searchedKeyword">
+                        </mat-form-field>
                       </li>
                     </ul>
                   </div>
@@ -54,7 +58,7 @@
                   <div class="col-2">State</div>
                 </div>
 
-                <div *ngFor="let u of userInfo; let i =index">
+                <div *ngFor="let u of userInfo | filter:searchedKeyword; let i =index">
                   <div *ngIf="adminInfo.role== 'state_admin'">
                     <div class="row order-block" *ngIf="u.state ===stateInfo.state_name">
                       <div class="col-1">{{i}}</div>

@@ -19,18 +19,21 @@ export class StockadjustmentComponent implements OnInit {
     console.log(this.data)
   }
   onNoClick(status): void {
-    console.log("Hai", this.qty);
     let items = [
       {
-        "item_id": this.data._id,
+        "item_id": this.data.id,
         "quantity": this.qty,
         "status": status
       }
 
     ];
-    this.stocksvc.adjustStocks({ items }).subscribe((res: any) => {
-      console.log("Stock Adjustment", res)
+    console.log("Items:", items)
+    this.stocksvc.adjustStocks(items).subscribe((res: any) => {
+      this.stocksvc.notifyOther({ refresh: true });
     })
+    this.closeDialog();
+  }
+  closeDialog() {
     this.dialogRef.close();
   }
 }

@@ -1,3 +1,4 @@
+import { StocksComponent } from './stocks/stocks/stocks.component';
 import { InquiriesdataComponent } from './inquiriesdata/inquiriesdata.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -15,6 +16,10 @@ const routes: Routes = [
   {
     path: 'inquiry',
     component: InquiriesdataComponent
+  },
+  {
+    path: 'stocks',
+    component: StocksComponent
   }
 ];
 @NgModule({

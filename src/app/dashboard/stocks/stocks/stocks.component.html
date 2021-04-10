@@ -1,42 +1,43 @@
-<div class="container-fluid border card">
-    <div class="row">
-        <div class="col-12 ">
-            <div class="d-flex justify-content-between">
-                <div class="pt-2 ">
-                    <h4>Stock Details</h4>
-                </div>
-                <div>
-                    <mat-form-field class="example-full-width">
-                        <mat-label>Search Item Name</mat-label>
-                        <input matInput placeholder="" value="" [(ngModel)]="searchedKeyword">
-                    </mat-form-field>
+<section class="content">
+    <div class="container-fluid border card">
+        <div class="row">
+            <div class="col-12 ">
+                <div class="d-flex justify-content-between">
+                    <div class="pt-2">
+                        <h4>Stock Details</h4>
+                    </div>
+                    <div>
+                        <mat-form-field class="w-100">
+                            <mat-label>Search Item Name</mat-label>
+                            <input matInput placeholder="" value="" [(ngModel)]="searchedKeyword">
+                        </mat-form-field>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="row py-3 font-weight-bold">
-        <div class="col-1">Sl.No</div>
-        <div class="col-1">Image</div>
-        <div class="col-2">Name</div>
-        <div class="col-2">Total Purchased</div>
-        <div class="col-1 p-0">Total Sold</div>
-        <div class="col-1 p-0">Current Stock</div>
-        <div class="col-2 p-0">Actions</div>
-
-    </div>
-
-    <div class="stockblock" style="height: 300px; overflow-y: auto;">
-        <div class="row border p-1 d-flex align-items-center"
-            *ngFor="let s of totalstock | filter:searchedKeyword; let i = index">
-            <div class="col-1">{{i}}</div>
-            <div class="col-1"> <img src="{{s.image}}" alt="" class="img-fluid"> </div>
-            <div class="col-2">{{s.item_name}}</div>
-            <div class="col-2">{{s.totalPurchase}}</div>
-            <div class="col-1">{{s.totalSold}}</div>
-            <div class="col-1">{{s.currentStock}}</div>
-            <div class="col-2"> <button mat-flat-button color="primary" (click)="openDialog(s)">Adjust</button> </div>
+        <div class="row py-3 font-weight-bold">
+            <div class="col-1">Sl.No</div>
+            <div class="col-1">Image</div>
+            <div class="col-2">Name</div>
+            <div class="col-2">Total Purchased</div>
+            <div class="col-1 p-0">Total Sold</div>
+            <div class="col-1 p-0">Current Stock</div>
+            <div class="col-2 p-0">Actions</div>
         </div>
-    </div>
+        <div class="stockblock" style="height: 300px; overflow-y: auto;">
+            <div class="row border p-1 d-flex align-items-center"
+                *ngFor="let s of totalstock | filter:searchedKeyword; let i = index">
+                <div class="col-1">{{i}}</div>
+                <div class="col-1"> <img src="{{s.image}}" alt="" class="img-fluid"> </div>
+                <div class="col-2">{{s.item_name}}</div>
+                <div class="col-2">{{s.totalPurchase}}</div>
+                <div class="col-1">{{s.totalSold}}</div>
+                <div class="col-1">{{s.currentStock}}</div>
+                <div class="col-2"> <button mat-flat-button color="primary" (click)="openDialog(s)">Adjust</button>
+                </div>
+            </div>
+        </div>
 
-</div>
+    </div>
+</section>

@@ -24,6 +24,7 @@ import { MatSortModule } from "@angular/material/sort";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MaterialFileInputModule } from "ngx-material-file-input";
 import { MatMenuModule } from "@angular/material/menu";
+import { Ng2SearchPipeModule } from "ng2-search-filter";
 
 @NgModule({
   declarations: [ProductsComponent, advanceTableForm, DeleteComponent],
@@ -49,6 +50,7 @@ import { MatMenuModule } from "@angular/material/menu";
     MatToolbarModule,
     MaterialFileInputModule,
     MatMenuModule,
+    Ng2SearchPipeModule
   ],
 })
-export class UsersModule {}
+export class UsersModule { }

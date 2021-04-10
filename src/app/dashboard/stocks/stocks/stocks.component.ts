@@ -15,9 +15,18 @@ export class StocksComponent implements OnInit {
   constructor(private stocksvc: StockserviceService, private dialogModel: MatDialog,) { }
 
   ngOnInit(): void {
+
     this.stocksvc.getStocks().subscribe((res: any) => {
       console.log("stocks:", res.data)
       this.totalstock = res.data;
+    })
+    this.stocksvc.notifyObservable$.subscribe(res => {
+      if (res.refresh) {
+        this.stocksvc.getStocks().subscribe((res: any) => {
+          console.log("stocks:", res.data)
+          this.totalstock = res.data;
+        })
+      }
     })
   }
 
