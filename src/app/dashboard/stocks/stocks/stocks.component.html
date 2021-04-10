@@ -1,7 +1,7 @@
 <section class="content">
     <div class="container-fluid border card">
         <div class="row">
-            <div class="col-12 ">
+            <div class="col-12">
                 <div class="d-flex justify-content-between">
                     <div class="pt-2">
                         <h4>Stock Details</h4>
@@ -25,7 +25,7 @@
             <div class="col-1 p-0">Current Stock</div>
             <div class="col-2 p-0">Actions</div>
         </div>
-        <div class="stockblock" style="height: 300px; overflow-y: auto;">
+        <div class="stockblock" style="height: 70vh; overflow-y: auto;">
             <div class="row border p-1 d-flex align-items-center"
                 *ngFor="let s of totalstock | filter:searchedKeyword; let i = index">
                 <div class="col-1">{{i}}</div>

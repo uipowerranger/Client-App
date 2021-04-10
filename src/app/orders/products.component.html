@@ -58,7 +58,8 @@
 
                 <div *ngFor="let o of totalOrders  | filter:searchedKeyword; ">
                   <div *ngIf="userInfo.role== 'state_admin'">
-                    <div class="row order-block" *ngIf="stateAssigned ===o.shipping_address.state">
+                    <div class="row order-block"
+                      *ngIf="stateAssigned.toLowerCase() === o.shipping_address.state.toLowerCase()">
                       <div class="col-3">{{o._id}}</div>
                       <div class="col-2">{{o.items.length}}</div>
                       <div class="col-2">{{o.shipping_address.state}}</div>

@@ -89,7 +89,7 @@ export class OrderstableComponent implements OnInit {
             return a + b;
           });
           this.statewide = res.data.filter(u => {
-            return (u.shipping_address.state === this.stateAssigned)
+            return (u.shipping_address.state.toLowerCase() === this.stateAssigned.toLowerCase())
           });
           this.statewideOrders = this.statewide.length;
           console.log("this.statewide", this.statewide);
