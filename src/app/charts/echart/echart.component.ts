@@ -283,7 +283,7 @@ export class EchartComponent {
     },
     legend: {
       data: [
-        'Data 1',
+        'Data 11',
         'Data 2',
         'Data 3',
         'Data 4',
@@ -304,7 +304,7 @@ export class EchartComponent {
         data: [
           {
             value: 335,
-            name: 'Data 1'
+            name: 'Data 11'
           },
           {
             value: 310,

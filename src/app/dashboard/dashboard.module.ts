@@ -1,3 +1,4 @@
+import { ChartsModule } from './../charts/charts.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { NgModule } from '@angular/core';
@@ -54,6 +55,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatSnackBarModule,
     MatProgressBarModule,
     Ng2SearchPipeModule,
+    ChartsModule
   ],
 })
 export class DashboardModule { }

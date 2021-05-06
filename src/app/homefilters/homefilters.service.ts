@@ -11,7 +11,7 @@ import { environment } from "src/environments/environment";
 @Injectable({
   providedIn: "root",
 })
-export class CategoriesService {
+export class HomeFilterService {
   private readonly API_URL = "assets/data/advanceTable.json";
   dataChange: BehaviorSubject<CategoriesTable[]> = new BehaviorSubject<
     CategoriesTable[]
@@ -27,7 +27,7 @@ export class CategoriesService {
   }
   /** CRUD METHODS */
   getAllAdvanceTables(): void {
-    this.httpClient.get<any>(`${environment.apiUrl}/api/category`).subscribe(
+    this.httpClient.get<any>(`${environment.apiUrl}/api/filter`).subscribe(
       (res) => {
         this.dataChange.next(res.data);
       },

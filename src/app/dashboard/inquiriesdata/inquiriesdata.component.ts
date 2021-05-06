@@ -46,6 +46,7 @@ export class InquiriesdataComponent implements OnInit {
       return obj;
     }, {}));
     console.log("Enquiries......", output);
+    localStorage.setItem('enquirychart', JSON.stringify(output));
   }
 
 

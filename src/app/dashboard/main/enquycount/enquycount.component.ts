@@ -52,6 +52,7 @@ export class EnquycountComponent implements OnInit {
   findStatewide(res, stateInfo) {
     console.log("Enquirycount", res);
     console.log("State Info.........", stateInfo);
+    // localStorage.setItem('enquiryfreequeency', )
 
 
   }

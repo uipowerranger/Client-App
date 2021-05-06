@@ -98,6 +98,18 @@ export const ROUTES: RouteInfo[] = [
     submenu: [],
   },
   {
+    path: "homefilter",
+    title: "HomeFilter",
+    moduleName: "carousel",
+    iconType: "material-icons-two-tone",
+    icon: "filter_alt",
+    class: "",
+    groupTitle: false,
+    badge: "",
+    badgeClass: "",
+    submenu: [],
+  },
+  {
     path: "",
     title: "-- Stocks",
     moduleName: "",

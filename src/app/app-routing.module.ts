@@ -78,6 +78,11 @@ const routes: Routes = [
           import("./states/categories.module").then((m) => m.StatesModule),
       },
       {
+        path: "homefilter",
+        loadChildren: () =>
+          import("./homefilters/homefilters.module").then((m) => m.HomeFilterModule),
+      },
+      {
         path: "postcodes",
         loadChildren: () =>
           import("./postcodes/categories.module").then(

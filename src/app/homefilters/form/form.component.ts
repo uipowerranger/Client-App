@@ -1,6 +1,8 @@
+
+
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { Component, Inject } from "@angular/core";
-import { CategoriesService } from "../categories.service";
+import { HomeFilterService } from "../homefilters.service";
 import {
   FormControl,
   Validators,
@@ -28,7 +30,7 @@ export class FormComponent {
   constructor(
     public dialogRef: MatDialogRef<FormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public advanceTableService: CategoriesService,
+    public advanceTableService: HomeFilterService,
     private fb: FormBuilder,
     public http: HttpClient,
     private authService: AuthService

@@ -32,5 +32,10 @@ import { GaugeComponent } from './gauge/gauge.component';
     GaugeModule.forRoot(),
     NgxGaugeModule,
   ],
+  exports: [
+    ApexchartComponent,
+    ChartjsComponent,
+    EchartComponent
+  ]
 })
-export class ChartsModule {}
+export class ChartsModule { }

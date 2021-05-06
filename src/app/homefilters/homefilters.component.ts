@@ -1,5 +1,6 @@
+
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
-import { CategoriesService } from "./categories.service";
+import { HomeFilterService } from "./homefilters.service";
 import { HttpClient } from "@angular/common/http";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
@@ -18,12 +19,12 @@ import { AuthService } from "../core/service/auth.service";
 import { environment } from "src/environments/environment";
 
 @Component({
-  selector: "app-categories",
+  selector: "app-homefilters",
   templateUrl: "./categories.component.html",
   styleUrls: ["./categories.component.sass"],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: "en-GB" }],
 })
-export class CategoriesComponent implements OnInit {
+export class HomeFiltersComponent implements OnInit {
   displayedColumns = [
     "img",
     "category",
@@ -33,7 +34,7 @@ export class CategoriesComponent implements OnInit {
     "is_active",
     "actions",
   ];
-  exampleDatabase: CategoriesService | null;
+  exampleDatabase: HomeFilterService | null;
   dataSource: ExampleDataSource | null;
   selection = new SelectionModel<CategoriesTable>(true, []);
   id: number;
@@ -44,7 +45,7 @@ export class CategoriesComponent implements OnInit {
   constructor(
     public httpClient: HttpClient,
     public dialog: MatDialog,
-    public advanceTableService: CategoriesService,
+    public advanceTableService: HomeFilterService,
     private snackBar: MatSnackBar,
     private authService: AuthService
   ) {
@@ -59,8 +60,9 @@ export class CategoriesComponent implements OnInit {
   contextMenuPosition = { x: "0px", y: "0px" };
   ngOnInit() {
     this.httpClient
-      .get(<any>`${environment.apiUrl}/api/state/details/${this.assignState}`)
+      .get(<any>`${environment.apiUrl}/api/filters`)
       .subscribe((state: any) => {
+        console.log("Filters:", state);
         this.stateAssigned = state.data.state_name;
         console.log("stateAssigned", this.stateAssigned);
       });
@@ -184,7 +186,7 @@ export class CategoriesComponent implements OnInit {
     );
   }
   public loadData() {
-    this.exampleDatabase = new CategoriesService(this.httpClient);
+    this.exampleDatabase = new HomeFilterService(this.httpClient);
     this.dataSource = new ExampleDataSource(
       this.exampleDatabase,
       this.paginator,
@@ -227,7 +229,7 @@ export class ExampleDataSource extends DataSource<CategoriesTable> {
   filteredData: CategoriesTable[] = [];
   renderedData: CategoriesTable[] = [];
   constructor(
-    public _exampleDatabase: CategoriesService,
+    public _exampleDatabase: HomeFilterService,
     public _paginator: MatPaginator,
     public _sort: MatSort
   ) {
