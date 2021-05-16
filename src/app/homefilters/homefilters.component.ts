@@ -5,7 +5,7 @@ import { HttpClient } from "@angular/common/http";
 import { MatDialog } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
-import { CategoriesTable } from "./categories.model";
+import { HomeFilterTable } from "./homefilter-form.model";
 import { DataSource } from "@angular/cdk/collections";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { BehaviorSubject, fromEvent, merge, Observable } from "rxjs";
@@ -20,25 +20,19 @@ import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-homefilters",
-  templateUrl: "./categories.component.html",
-  styleUrls: ["./categories.component.sass"],
+  templateUrl: "./homeflter-form.component.html",
+  styleUrls: ["./homeflter-form.component.sass"],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: "en-GB" }],
 })
 export class HomeFiltersComponent implements OnInit {
   displayedColumns = [
-    "img",
-    "category",
-    "state",
-    "postcode",
-    "created_at",
-    "is_active",
-    "actions",
+    "filter_name"
   ];
   exampleDatabase: HomeFilterService | null;
   dataSource: ExampleDataSource | null;
-  selection = new SelectionModel<CategoriesTable>(true, []);
+  selection = new SelectionModel<HomeFilterTable>(true, []);
   id: number;
-  advanceTable: CategoriesTable | null;
+  advanceTable: HomeFilterTable | null;
   adminRole: string;
   assignState: string;
   stateAssigned: any;
@@ -63,6 +57,7 @@ export class HomeFiltersComponent implements OnInit {
       .get(<any>`${environment.apiUrl}/api/filters`)
       .subscribe((state: any) => {
         console.log("Filters:", state);
+        this.dataSource = state.data;
         this.stateAssigned = state.data.state_name;
         console.log("stateAssigned", this.stateAssigned);
       });
@@ -176,7 +171,7 @@ export class HomeFiltersComponent implements OnInit {
       // console.log(this.dataSource.renderedData.findIndex((d) => d === item));
       this.exampleDatabase.dataChange.value.splice(index, 1);
       this.refresh();
-      this.selection = new SelectionModel<CategoriesTable>(true, []);
+      this.selection = new SelectionModel<HomeFilterTable>(true, []);
     });
     this.showNotification(
       "snackbar-danger",
@@ -209,7 +204,7 @@ export class HomeFiltersComponent implements OnInit {
   }
 
   // context menu
-  onContextMenu(event: MouseEvent, item: CategoriesTable) {
+  onContextMenu(event: MouseEvent, item: HomeFilterTable) {
     event.preventDefault();
     this.contextMenuPosition.x = event.clientX + "px";
     this.contextMenuPosition.y = event.clientY + "px";
@@ -218,7 +213,7 @@ export class HomeFiltersComponent implements OnInit {
     this.contextMenu.openMenu();
   }
 }
-export class ExampleDataSource extends DataSource<CategoriesTable> {
+export class ExampleDataSource extends DataSource<HomeFilterTable> {
   _filterChange = new BehaviorSubject("");
   get filter(): string {
     return this._filterChange.value;
@@ -226,8 +221,8 @@ export class ExampleDataSource extends DataSource<CategoriesTable> {
   set filter(filter: string) {
     this._filterChange.next(filter);
   }
-  filteredData: CategoriesTable[] = [];
-  renderedData: CategoriesTable[] = [];
+  filteredData: HomeFilterTable[] = [];
+  renderedData: HomeFilterTable[] = [];
   constructor(
     public _exampleDatabase: HomeFilterService,
     public _paginator: MatPaginator,
@@ -238,7 +233,7 @@ export class ExampleDataSource extends DataSource<CategoriesTable> {
     this._filterChange.subscribe(() => (this._paginator.pageIndex = 0));
   }
   /** Connect function called by the table to retrieve one stream containing the data to render. */
-  connect(): Observable<CategoriesTable[]> {
+  connect(): Observable<HomeFilterTable[]> {
     // Listen for any changes in the base data, sorting, filtering, or pagination
     const displayDataChanges = [
       this._exampleDatabase.dataChange,
@@ -252,8 +247,8 @@ export class ExampleDataSource extends DataSource<CategoriesTable> {
         // Filter data
         this.filteredData = this._exampleDatabase.data
           .slice()
-          .filter((advanceTable: CategoriesTable) => {
-            const searchStr = advanceTable.category_name.toLowerCase();
+          .filter((advanceTable: HomeFilterTable) => {
+            const searchStr = advanceTable.filter_name.toLowerCase();
             return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
           });
         // Sort filtered data
@@ -270,7 +265,7 @@ export class ExampleDataSource extends DataSource<CategoriesTable> {
   }
   disconnect() { }
   /** Returns a sorted copy of the database data. */
-  sortData(data: CategoriesTable[]): CategoriesTable[] {
+  sortData(data: HomeFilterTable[]): HomeFilterTable[] {
     if (!this._sort.active || this._sort.direction === "") {
       return data;
     }
@@ -279,10 +274,10 @@ export class ExampleDataSource extends DataSource<CategoriesTable> {
       let propertyB: number | string = "";
       switch (this._sort.active) {
         case "id":
-          [propertyA, propertyB] = [a._id, b._id];
+          [propertyA, propertyB] = [a.filter_name, b.filter_name];
           break;
-        case "category_name":
-          [propertyA, propertyB] = [a.category_name, b.category_name];
+        case "filter_name":
+          [propertyA, propertyB] = [a.filter_name, b.filter_name];
           break;
       }
       const valueA = isNaN(+propertyA) ? propertyA : +propertyA;

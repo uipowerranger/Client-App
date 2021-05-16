@@ -63,7 +63,7 @@
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
           <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Order.....</mat-label>
-            <input matInput type="number" formControlName="order_number" pattern="[0-9]{10}" />
+            <input matInput type="number" formControlName="order_number" />
             <mat-error *ngIf="advanceTableForm.get('order_number').hasError('required')">
               Order is required
             </mat-error>

@@ -9,7 +9,7 @@ import {
   FormGroup,
   FormBuilder,
 } from "@angular/forms";
-import { CategoriesTable } from "../categories.model";
+import { HomeFilterTable } from "../homefilter-form.model";
 import { MAT_DATE_LOCALE } from "@angular/material/core";
 import { formatDate } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
@@ -24,7 +24,7 @@ export class FormComponent {
   action: string;
   dialogTitle: string;
   advanceTableForm: FormGroup;
-  advanceTable: CategoriesTable;
+  advanceTable: HomeFilterTable;
   stateList: any[];
   postcodeList: any[];
   constructor(
@@ -42,7 +42,7 @@ export class FormComponent {
       this.advanceTable = data.advanceTable;
     } else {
       this.dialogTitle = "New Record";
-      this.advanceTable = new CategoriesTable({});
+      this.advanceTable = new HomeFilterTable({});
     }
     this.advanceTableForm = this.createContactForm();
     let url;
@@ -50,7 +50,7 @@ export class FormComponent {
       url = `${environment.apiUrl}/api/state`;
       this.http.get<any>(url).subscribe((res: any) => {
         return (this.stateList = [
-          { _id: "", state_name: "Select" },
+          { filter_name: "" },
           ...res.data,
         ]);
       });
@@ -58,23 +58,14 @@ export class FormComponent {
       url = `${environment.apiUrl}/api/state/details/${this.authService.currentUserValue.assign_state}`;
       this.http.get<any>(url).subscribe((res: any) => {
         return (this.stateList = [
-          { _id: "", state_name: "Select" },
+          { filter_name: "" },
           { ...res.data },
         ]);
       });
     }
-    this.http
-      .get<any>(
-        `${environment.apiUrl}/api/postcode/bystate/${this.advanceTable.state_details}`
-      )
-      .subscribe(
-        (res: any) =>
-          (this.postcodeList = [{ _id: "", post_code: "Select" }, ...res.data])
-      );
   }
   formControl = new FormControl("", [
     Validators.required,
-    // Validators.email,
   ]);
   get f() {
     return this.advanceTableForm.controls;
@@ -97,25 +88,13 @@ export class FormComponent {
       )
       .subscribe(
         (res: any) =>
-          (this.postcodeList = [{ _id: "", post_code: "Select" }, ...res.data])
+          (this.postcodeList = [{ filter_name: "" }, ...res.data])
       );
   }
   createContactForm(): FormGroup {
     return this.fb.group({
-      _id: [this.advanceTable._id],
-      category_name: [this.advanceTable.category_name, [Validators.required]],
-      order_number: [this.advanceTable.order_number, [Validators.required]],
-      createdAt: [
-        formatDate(this.advanceTable.createdAt, "yyyy-MM-dd", "en"),
-        [Validators.required],
-      ],
-      status: [this.advanceTable.status, [Validators.required]],
-      state_details: [this.advanceTable.state_details, [Validators.required]],
-      image: [this.advanceTable.image, [Validators.required]],
-      post_code_details: [
-        this.advanceTable.post_code_details,
-        [Validators.required],
-      ],
+      filter_name: [this.advanceTable.filter_name],
+
     });
   }
   submit() {
@@ -129,30 +108,5 @@ export class FormComponent {
       this.advanceTableForm.getRawValue()
     );
   }
-  uploadFileEvt(imgFile: any) {
-    if (imgFile.target.files && imgFile.target.files[0]) {
-      // HTML5 FileReader API
-      let reader = new FileReader();
-      reader.onload = (e: any) => {
-        let image = new Image();
-        image.src = e.target.result;
-        image.onload = (rs) => {
-          let imgBase64Path = e.target.result;
-          this.http
-            .post(<any>`${environment.apiUrl}/api/admin/fileUpload`, {
-              data: imgBase64Path,
-            })
-            .subscribe((res: any) => {
-              console.log(res);
-              if (res.status === 200) {
-                this.advanceTableForm.patchValue({
-                  image: res.data,
-                });
-              }
-            });
-        };
-      };
-      reader.readAsDataURL(imgFile.target.files[0]);
-    }
-  }
+
 }
