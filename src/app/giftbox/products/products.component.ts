@@ -77,7 +77,7 @@ export class ProductsComponent implements OnInit {
         {
           "mandatefield": false,
           "item_id": vegbxObj._id,
-          "item_name": vegbxObj.item_name + 'Vinod',
+          "item_name": vegbxObj.item_name,
           "item_image": vegbxObj.image,
           "quantity": 1,
           "price": parseInt(vegbxObj.price),
