@@ -90,6 +90,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: "vegbox",
+        loadChildren: () =>
+          import("./giftbox/giftbox.module").then(
+            (m) => m.GiftBoxModule
+          ),
+      },
+      {
         path: "calendar",
         loadChildren: () =>
           import("./calendar/calendar.module").then((m) => m.CalendarsModule),
