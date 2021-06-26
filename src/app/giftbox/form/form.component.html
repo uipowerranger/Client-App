@@ -1,0 +1,37 @@
+<div class="card">
+  <div class="card-body">
+    <form action="" #vegBoxForm="ngForm" (ngSubmit)="onSubmit()">
+      <div class="d-flex justify-content-between align-items-center">
+        <mat-form-field class="w-50 mr-1 pt-2 mt-1">
+          <mat-label>Vegitable Box Name</mat-label>
+          <input type="text" name="vegboxname" matInput [(ngModel)]="vegbox.name" placeholder="" required>
+          <mat-error *ngIf="vegboxname.hasError('required')">
+            Please Enter Box Name<strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="w-50 ml-1">
+          <mat-label>Select</mat-label>
+          <mat-select name="vegboxsize" [(ngModel)]="vegbox.size" (ngModelChange)="selectOption($event)" required>
+            <mat-option value="5">Small Size</mat-option>
+            <mat-option value="10">Medium Size</mat-option>
+            <mat-option value="30">Large Size</mat-option>
+          </mat-select>
+          <mat-error *ngIf="vegboxsize.hasError('required')">
+            Please Select a Box size
+          </mat-error>
+        </mat-form-field>
+        <button type="submit" mat-mini-fab color="primary" aria-label="" [disabled]="!vegBoxForm.valid">
+          <!-- <mat-icon>menu</mat-icon> -->
+          <span class="material-icons-outlined">
+            send
+          </span>
+        </button>
+
+      </div>
+    </form>
+
+  </div>
+
+  <app-products *ngIf="showproducts" [name]="vgname" [size]="vegsize"></app-products>
+
+</div>
