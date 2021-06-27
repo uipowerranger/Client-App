@@ -25,6 +25,7 @@ export class GiftboxcollectionComponent implements OnInit {
     "item_image"
 
   ];
+
   isChecked = false;
   formGroup: FormGroup;
   dataSource: MatTableDataSource<Data>;
@@ -87,10 +88,12 @@ export class GiftboxcollectionComponent implements OnInit {
     })
   }
 
-  updateBox(parentObject, items) {
+  updateBox(parentObject, offername, items, isEditable) {
     let objIndex = parentObject.items.findIndex((obj => obj._id == items._id));
     console.log("objIndex:", parentObject.items[objIndex]);
-    parentObject.items[objIndex].mandatefield = parentObject.items[objIndex].mandatefield == true ? false : true;
+    parentObject.items[objIndex].mandatefield = isEditable
+    parentObject.items[objIndex].iseditable = false;
+    parentObject.items[objIndex].offer = offername;
     console.log("updated", parentObject.items[objIndex])
     this.setValue(parentObject.items, parentObject.box_name, parentObject._id)
 
@@ -152,7 +155,18 @@ export class GiftboxcollectionComponent implements OnInit {
   }
   getStyleForSelected(mandatefield) {
     return mandatefield ? '1px solid red' : '1px solid transparent'
-
+  }
+  makeMandotry(element) {
+    element.mandatefield = !element.mandatefield;
+  }
+  up(parentObject, event, item) {
+    console.log("ismandatory", item.mandatefield)
+    console.log("iseditable", item.iseditable)
+    item.iseditable = false;
+    console.log("after saving", item);
+    let isEditable = item.mandatefield;
+    let offerdetails = event.target.offer.value.trim();
+    this.updateBox(parentObject, offerdetails, item, isEditable)
   }
   ngOnDestroy() {
 

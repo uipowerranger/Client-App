@@ -39,7 +39,7 @@ export class ProductsComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<ProductsComponent>, readonly snackBar: MatSnackBar, private giftboxsvc: GiftboxService, public dialog: MatDialog, formBuilder: FormBuilder) {
     this.formGroup = formBuilder.group({
-      acceptTerms: ['', Validators.requiredTrue],
+      addtoVegBox: ['', Validators.requiredTrue],
       status: ''
     });
   }
@@ -72,7 +72,8 @@ export class ProductsComponent implements OnInit {
 
     let vegbxObj = (({ _id, item_name, image, price, quantity, mandatefield }) => ({ _id, item_name, image, price, quantity, mandatefield }))(element)
 
-    if (event.checked == true) {
+    if (element.status) {
+      element.status = !element.status;
       this.vegitableBoxArray.push(
         {
           "mandatefield": false,
@@ -82,11 +83,12 @@ export class ProductsComponent implements OnInit {
           "quantity": 1,
           "price": parseInt(vegbxObj.price),
           "amount": parseInt(vegbxObj.price),
+          "isEditable": false,
+          "offer": ""
 
         }
       );
       console.log("this.vegitableBoxArray", this.vegitableBoxArray)
-      element.status = 'Added';
       if (this.size == this.vegitableBoxArray.length) {
         this.enableselectButton = true;
       }
@@ -94,8 +96,8 @@ export class ProductsComponent implements OnInit {
         this.enableselectButton = false;
       }
     } else {
+      element.status = !element.status;
       console.log(this.vegitableBoxArray)
-      element.status = 'Removed'
       for (var i = this.vegitableBoxArray.length - 1; i >= 0; i--) {
         console.log(this.vegitableBoxArray[i].item_id);
         if (this.vegitableBoxArray[i].item_id === element._id) {

@@ -89,14 +89,46 @@
                       <div class=" w-25" *ngFor="let i of g.items">
                         <mat-card class="m-2" style="border: 1px solid transparent"
                           [ngStyle]="{'border':getStyleForSelected(i.mandatefield)}">
-                          <mat-card-header>
-                            <mat-card-title> {{i.item_name}} </mat-card-title>
-                          </mat-card-header>
+                          <div class="m-0 d-flex justify-content-between">
+
+                            <small><strong> {{i.item_name}}</strong> </small>
+                            <small *ngIf="i.offer" class="d-flex justify-content-start">
+                              <mat-icon color="warn">
+                                local_offer
+                              </mat-icon> {{i.offer}}
+                            </small>
+                          </div>
                           <div class="prod-card" [ngStyle]="{'background-image': 'url(' + i.item_image + ')' }"></div>
 
                           <mat-card-actions>
-                            <button mat-button (click)="updateBox(g, i)"> {{i.mandatefield?'Mandatory':'Not Mandatory'}}
+
+                            <button mat-icon-button color="{{i.iseditable?'white': 'warn'}}" aria-label=""
+                              (click)="i.iseditable=!i.iseditable">
+                              <mat-icon>
+                                {{i.iseditable?'edit_off':'mode_edit'}}
+                              </mat-icon>
                             </button>
+                            <div *ngIf="i.iseditable">
+                              <button mat-icon-button color="{{i.mandatefield?'white': 'warn'}}" aria-label=""
+                                (click)="makeMandotry(i)">
+                                <mat-icon>
+                                  check_circle
+                                </mat-icon>
+                              </button> {{i.mandatefield?'Mandatory':'Not Mandatory'}}
+                              <form (ngSubmit)="up(g, $event, i)">
+                                <mat-form-field class="example-full-width" appearance="fill">
+                                  <mat-label>Please Enter the Offer Informatino</mat-label>
+                                  <input matInput placeholder="Offer" name="offer" value=" {{i.offer}} "
+                                    placeholder="Offer Details">
+                                </mat-form-field>
+                                <button type="submit" mat-icon-button color="primary" aria-label="">
+                                  <mat-icon>
+                                    save
+                                  </mat-icon>
+                                </button>
+                              </form>
+
+                            </div>
                           </mat-card-actions>
                         </mat-card>
                       </div>

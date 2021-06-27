@@ -28,11 +28,13 @@
         <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef> Product Name </th>
             <td mat-cell *matCellDef="let element">
-                <form class="example-form" [formGroup]="formGroup" ngNativeValidate>
-                    <mat-slide-toggle formControlName="acceptTerms" (change)="setValue( element, $event )"
-                        [value]='element.item_name'>{{element.status}}
-                    </mat-slide-toggle>
-                </form>
+                <button mat-icon-button color="{{element.status?'white': 'warn'}}" aria-label=""
+                    (click)="setValue(element, $event )">
+                    <mat-icon>
+                        {{element.status?'task_alt':'highlight_off'}}
+                    </mat-icon>
+                </button>
+
             </td>
         </ng-container>
 
