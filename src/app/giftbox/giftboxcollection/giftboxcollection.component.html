@@ -100,12 +100,18 @@
                           </div>
                           <div class="prod-card" [ngStyle]="{'background-image': 'url(' + i.item_image + ')' }"></div>
 
-                          <mat-card-actions>
+                          <mat-card-actions class="d-flex justify-content-between">
 
                             <button mat-icon-button color="{{i.iseditable?'white': 'warn'}}" aria-label=""
                               (click)="i.iseditable=!i.iseditable">
                               <mat-icon>
                                 {{i.iseditable?'edit_off':'mode_edit'}}
+                              </mat-icon>
+                            </button>
+                            <button mat-icon-button color="{{i.iseditable?'white': 'warn'}}" aria-label=""
+                              (click)="deleteItem(g, i)">
+                              <mat-icon>
+                                delete
                               </mat-icon>
                             </button>
                             <div *ngIf="i.iseditable">

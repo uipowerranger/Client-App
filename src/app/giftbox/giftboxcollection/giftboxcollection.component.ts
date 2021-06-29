@@ -9,6 +9,7 @@ import { Data } from '@angular/router';
 import { GiftboxService } from '../giftbox.service';
 import { MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { FormComponent } from "../form/form.component";
+import { AnyNaptrRecord } from 'dns';
 
 
 
@@ -168,7 +169,56 @@ export class GiftboxcollectionComponent implements OnInit {
     let offerdetails = event.target.offer.value.trim();
     this.updateBox(parentObject, offerdetails, item, isEditable)
   }
+  deleteItem(totalItems: any, item) {
+    totalItems.items.splice(item._id, 1)
+    console.log(totalItems);
+    this.setValue(totalItems.items, totalItems.box_name, totalItems._id)
+  }
   ngOnDestroy() {
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
   }
 }
