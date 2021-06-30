@@ -9,6 +9,8 @@ import { Data } from '@angular/router';
 import { FormComponent } from 'src/app/advance-table/form/form.component';
 import { GiftboxService } from '../giftbox.service';
 import { MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { Inject } from '@angular/core';
+import { debugOutputAstAsTypeScript } from '@angular/compiler';
 
 @Component({
   selector: 'app-products',
@@ -34,6 +36,7 @@ export class ProductsComponent implements OnInit {
   _count: number = 0;
   totAmount: number = 0;
   enableselectButton: any;
+  enableselectButtonForGiftBox: boolean = false;
   horizontalPosition: MatSnackBarHorizontalPosition = 'start';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
@@ -46,6 +49,9 @@ export class ProductsComponent implements OnInit {
 
   @Input() name: string;
   @Input() size: number;
+  @Input() addtoGB: any;
+  @Input() parentObj: any;
+
 
   ngOnInit() {
     this.giftboxsvc.getAllProducts().subscribe((d: any) => {
@@ -95,6 +101,7 @@ export class ProductsComponent implements OnInit {
       else {
         this.enableselectButton = false;
       }
+
     } else {
       element.status = !element.status;
       console.log(this.vegitableBoxArray)
@@ -102,7 +109,6 @@ export class ProductsComponent implements OnInit {
         console.log(this.vegitableBoxArray[i].item_id);
         if (this.vegitableBoxArray[i].item_id === element._id) {
           this.vegitableBoxArray.splice(i, 1);
-          console.log("array:", this.vegitableBoxArray)
         }
       }
       if (this.size == this.vegitableBoxArray.length) {
@@ -111,9 +117,13 @@ export class ProductsComponent implements OnInit {
       else {
         this.enableselectButton = false;
       }
+
     }
 
     this.totAmount = this.addPrice(this.vegitableBoxArray);
+    if (this.vegitableBoxArray.length > 0) {
+      this.enableselectButtonForGiftBox = true;
+    } else this.enableselectButtonForGiftBox = false;
   }
   calcSize(a) {
     let arrysize = a.length;
@@ -159,5 +169,20 @@ export class ProductsComponent implements OnInit {
       verticalPosition: this.verticalPosition,
       duration: 1000
     });
+  }
+  pushtoGiftBox() {
+    let array;
+    this.giftboxsvc.changeParam(this.vegitableBoxArray);
+    array = this.vegitableBoxArray.concat(this.parentObj.items)
+    this.vegitableBoxArray = array;
+    this.save();
+    this.delete(this.addtoGB);
+    this.dialogRef.close();
+
+  }
+  delete(_id) {
+    this.giftboxsvc.delteGiftBox(_id).subscribe((res: any) => {
+      this.refresh()
+    })
   }
 }

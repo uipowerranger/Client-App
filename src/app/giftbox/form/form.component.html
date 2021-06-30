@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-body">
-    <form action="" #vegBoxForm="ngForm" (ngSubmit)="onSubmit()">
+    <form action="" #vegBoxForm="ngForm" (ngSubmit)="onSubmit()" *ngIf="!addtoBox._id">
       <div class="d-flex justify-content-between align-items-center">
         <mat-form-field class="w-50 mr-1 pt-2 mt-1">
           <mat-label>Vegitable Box Name</mat-label>
@@ -21,7 +21,6 @@
           </mat-error>
         </mat-form-field>
         <button type="submit" mat-mini-fab color="primary" aria-label="" [disabled]="!vegBoxForm.valid">
-          <!-- <mat-icon>menu</mat-icon> -->
           <span class="material-icons-outlined">
             send
           </span>
@@ -31,7 +30,13 @@
     </form>
 
   </div>
+  <div>
+    {{addtoBox._id}}
+  </div>
 
-  <app-products *ngIf="showproducts" [name]="vgname" [size]="vegsize"></app-products>
+  <app-products *ngIf="showproducts" [name]="vgname" [size]="vegsize" [addtoGB]="addtoBox"></app-products>
+  <app-products *ngIf="addtoBox._id" [name]="addtoBox.box_name" [size]="addtoBox.items.length" [addtoGB]="addtoBox._id"
+    [parentObj]="addtoBox">
+  </app-products>
 
 </div>

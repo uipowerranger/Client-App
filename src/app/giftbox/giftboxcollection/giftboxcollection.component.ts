@@ -24,7 +24,6 @@ export class GiftboxcollectionComponent implements OnInit {
     "box_name",
     "total_amount",
     "item_image"
-
   ];
 
   isChecked = false;
@@ -41,8 +40,9 @@ export class GiftboxcollectionComponent implements OnInit {
   enableselectButton: any;
   horizontalPosition: MatSnackBarHorizontalPosition = 'start';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
-
-
+  selectedMessage: any;
+  subscription: any;
+  giftboxdata: any = []
   constructor(readonly snackBar: MatSnackBar, private giftboxsvc: GiftboxService, public dialog: MatDialog, formBuilder: FormBuilder) {
     this.formGroup = formBuilder.group({
       acceptTerms: ['', Validators.requiredTrue],
@@ -54,50 +54,51 @@ export class GiftboxcollectionComponent implements OnInit {
   @Input() size: number;
 
   ngOnInit() {
+
+    this.giftboxsvc.sharedParam.subscribe(param => {
+      this.vegitableBoxArray.push(param)
+    });
     this.getAllProducts();
     this.giftboxsvc.notifyObservable$.subscribe(res => {
       if (res.refresh) {
         this.getAllProducts();
       }
     })
+
   }
 
-  openDialog() {
+  openDialog(id) {
     const dialogRef = this.dialog.open(FormComponent, {
       width: '100%',
-      height: '90vh'
+      height: '90vh',
+      data: id
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
+
     });
   }
   getAllProducts() {
     this.giftboxsvc.getAllGiftboxes().subscribe((d: any) => {
       this.giftboxCollection = d.data;
-      console.log("total data:", this.giftboxCollection)
     });
   }
   refresh() {
     this.getAllProducts();
   }
   delete(_id) {
-    console.log("In delete Method", _id)
     this.giftboxsvc.delteGiftBox(_id).subscribe((res: any) => {
-      console.log("res", res)
       this.refresh()
     })
   }
 
   updateBox(parentObject, offername, items, isEditable) {
     let objIndex = parentObject.items.findIndex((obj => obj._id == items._id));
-    console.log("objIndex:", parentObject.items[objIndex]);
     parentObject.items[objIndex].mandatefield = isEditable
     parentObject.items[objIndex].iseditable = false;
     parentObject.items[objIndex].offer = offername;
-    console.log("updated", parentObject.items[objIndex])
     this.setValue(parentObject.items, parentObject.box_name, parentObject._id)
-
   }
 
   setValue(element, name, id) {
@@ -140,13 +141,13 @@ export class GiftboxcollectionComponent implements OnInit {
         if (res.status == 200) {
           this.opensnackbar("Updated Successfully");
           this.giftboxsvc.notifyOther({ refresh: true });
-
         } else if (res.status == 201) {
           this.opensnackbar(res.message);
         }
       }
     );
   }
+
   opensnackbar(messsage: string) {
     this.snackBar.open(messsage, '', {
       horizontalPosition: this.horizontalPosition,
@@ -154,71 +155,35 @@ export class GiftboxcollectionComponent implements OnInit {
       duration: 1000
     });
   }
+
   getStyleForSelected(mandatefield) {
     return mandatefield ? '1px solid red' : '1px solid transparent'
   }
+
   makeMandotry(element) {
     element.mandatefield = !element.mandatefield;
   }
+
   up(parentObject, event, item) {
-    console.log("ismandatory", item.mandatefield)
-    console.log("iseditable", item.iseditable)
+
     item.iseditable = false;
-    console.log("after saving", item);
     let isEditable = item.mandatefield;
     let offerdetails = event.target.offer.value.trim();
     this.updateBox(parentObject, offerdetails, item, isEditable)
   }
+
   deleteItem(totalItems: any, item) {
-    totalItems.items.splice(item._id, 1)
-    console.log(totalItems);
+    let index = totalItems.items.findIndex(function (o) {
+      return o._id === item._id;
+    })
+    totalItems.items.splice(index, 1)
     this.setValue(totalItems.items, totalItems.box_name, totalItems._id)
   }
+
+  addItem(g: any) {
+    this.setValue(g.iems, 'test', g._id)
+  }
   ngOnDestroy() {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
+    this.subscription.unsubscribe();
   }
 }

@@ -41,7 +41,7 @@
               <ul class="header-buttons">
                 <li>
                   <div class="icon-button-demo">
-                    <button mat-mini-fab color="primary" (click)="openDialog()">
+                    <button mat-mini-fab color="primary" (click)="openDialog('')">
                       <mat-icon class="col-white">add</mat-icon>
                     </button>
                   </div>
@@ -78,7 +78,10 @@
               <mat-card>
                 <mat-card-header class="bg-primary text-white d-flex justify-content-between align-items-center">
                   <mat-card-title class="pt-3"> {{g.box_name}} </mat-card-title> <button mat-icon-button color="white"
-                    aria-label="" (click)="delete(g._id)">
+                    aria-label="" (click)="openDialog(g)">
+                    <mat-icon>add</mat-icon>
+                  </button>
+                  <button mat-icon-button color="white" aria-label="" (click)="delete(g._id)">
                     <mat-icon>close</mat-icon>
                   </button>
                 </mat-card-header>

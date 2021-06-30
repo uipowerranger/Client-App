@@ -17,6 +17,24 @@ export class GiftboxService {
   public notify = new BehaviorSubject<any>('');
   notifyObservable$ = this.notify.asObservable();
 
+
+
+
+  private messageSource = new BehaviorSubject('default message');
+  currentMessage = this.messageSource.asObservable();
+
+  private paramSource = new BehaviorSubject(null);
+  sharedParam = this.paramSource.asObservable();
+
+
+  changeParam(param: any[]) {
+    this.paramSource.next(param)
+  }
+
+
+  changeMessage(message: any) {
+    this.messageSource.next(message)
+  }
   getAllProducts() {
     return this.http.get(`${environment.apiUrl}/api/products`)
   }
@@ -32,6 +50,7 @@ export class GiftboxService {
     return this.http.post(`${environment.apiUrl}/api/giftbox/create`, { items: body.items, box_name: body.box_name, total_amount: body.total_amount });
   }
   delteGiftBox(id) {
+    console.log("from delete method", id)
     return this.http.delete(`${environment.apiUrl}/api/giftbox/${id}`)
   }
   public notifyOther(data: any) {

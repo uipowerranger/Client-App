@@ -1,6 +1,6 @@
 <div class="flex-container">
 
-    <h5>Please Select: {{size}} &nbsp; items</h5>
+
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
         <!--- Note that these columns can be defined in any order.
@@ -50,7 +50,13 @@
 <div class="d-flex justify-content-end">
     <h3>{{totAmount}}</h3>
 </div>
-<button (click)="save()" mat-fab color="primary" aria-label="" [disabled]="!enableselectButton">
+<button (click)="save()" mat-fab color="primary" aria-label="" [disabled]="!enableselectButton" *ngIf="!addtoGB">
     <mat-icon>save</mat-icon>
 </button>
-{{!enableselectButton? 'Items must be equal to ' +size:''}}
+<span *ngIf="!addtoGB">
+    {{!enableselectButton? 'Items must be equal to ' +size:''}}
+</span>
+<button (click)="pushtoGiftBox()" mat-fab color="primary" aria-label="" *ngIf="addtoGB"
+    [disabled]="!enableselectButtonForGiftBox">
+    <mat-icon>redeem</mat-icon>
+</button>

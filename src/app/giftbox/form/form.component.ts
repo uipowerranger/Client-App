@@ -3,7 +3,7 @@ import { GiftBoxModule } from './../giftbox.module';
 
 
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from "@angular/material/dialog";
-import { Component, Inject } from "@angular/core";
+import { Component, Inject, OnInit } from "@angular/core";
 import {
   FormControl,
   Validators,
@@ -16,12 +16,16 @@ import {
   templateUrl: "./form.component.html",
   styleUrls: ["./form.component.sass"],
 })
-export class FormComponent {
+export class FormComponent implements OnInit {
+  addtoBox: any;
   vgname: string;
   vegsize: string;
   vegbox = {
     "size": "small",
     "name": 'small'
+  }
+  constructor(@Inject(MAT_DIALOG_DATA) private data: any,) {
+    console.log("Inside form component", data)
   }
   vegboxname = new FormControl('', [
     Validators.required,
@@ -38,5 +42,8 @@ export class FormComponent {
   }
   selectOption(value) {
     console.log(value)
+  }
+  ngOnInit() {
+    this.addtoBox = this.data;
   }
 }
