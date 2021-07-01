@@ -25,14 +25,17 @@ import { MatInputModule } from '@angular/material/input';
 import { EnquycountComponent } from './main/enquycount/enquycount.component';
 import { InquiriesdataComponent } from './inquiriesdata/inquiriesdata.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { StocksComponent } from './stocks/stocks/stocks.component';
+import { StocksComponent, StockStateFilterPipe } from './stocks/stocks/stocks.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { StockadjustmentComponent } from './stocks/stockadjustment/stockadjustment.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
-    CallbackPipe, MainComponent, OrdercountComponent, UserscountComponent, RevenucountComponent, OrderstableComponent, EnquycountComponent, InquiriesdataComponent, StocksComponent, StockadjustmentComponent],
+    CallbackPipe, MainComponent, OrdercountComponent, UserscountComponent, RevenucountComponent,
+    OrderstableComponent, EnquycountComponent, InquiriesdataComponent, StocksComponent, StockadjustmentComponent,
+    StockStateFilterPipe
+  ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
