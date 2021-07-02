@@ -1,0 +1,115 @@
+<section class="content">
+  <div class="container-fluid">
+    <div class="block-header">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <ul class="breadcrumb breadcrumb-style">
+            <li class="breadcrumb-item">
+              <h4 class="page-title">Home Filters</h4>
+            </li>
+            <li class="breadcrumb-item bcrumb-1">
+              <a routerLink="/dashboard/main">
+                <i class="fas fa-home"></i> Home</a>
+            </li>
+            <li class="breadcrumb-item bcrumb-2">
+              <a href="#" onClick="return false;">Home Filters</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="card custom-card">
+      <div class="body">
+        <div class="materialTableHeader">
+          <div class="row">
+            <div class="col-8">
+              <ul class="header-buttons-left ml-0">
+                <li class="dropdown">
+                  <h2>
+                    <strong>Home Filters</strong>
+                  </h2>
+                </li>
+                <li class="dropdown m-l-20">
+                  <label for="search-input"><i class="material-icons search-icon">search</i></label>
+                  <input placeholder="Search" type="text" [(ngModel)]="searchTerm" placeholder="Search" #input
+                    class="browser-default search-field" aria-label="Search box" />
+                </li>
+              </ul>
+            </div>
+            <div class="col-4">
+              <ul class="header-buttons">
+                <li>
+                  <div class="icon-button-demo">
+                    <button mat-mini-fab color="primary" (click)="openDialog('')">
+                      <mat-icon class="col-white">add</mat-icon>
+                    </button>
+                  </div>
+                </li>
+                <li>
+                  <div class="icon-button-demo">
+                    <button mat-mini-fab color="primary" (click)="refresh()">
+                      <mat-icon class="col-white">refresh</mat-icon>
+                    </button>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              {{giftboxCollection.length<1?'No Items':''}} </div>
+                <div class="col-3  p-1" *ngFor="let g of giftboxCollection|filter:searchTerm ">
+                  <mat-card class=" border my-1">
+                    <mat-card-header>
+
+                      <mat-card-title> {{g.filter_name}}</mat-card-title>
+
+                    </mat-card-header>
+                    <mat-card-content>
+                      <p>
+
+                      </p>
+                    </mat-card-content>
+                    <mat-card-actions class="d-flex justify-content-between">
+                      <button mat-icon-button color="{{g.iseditable?'white': 'warn'}}" aria-label=""
+                        (click)="g.iseditable=!g.iseditable">
+                        <mat-icon>mode_edit</mat-icon>
+                      </button>
+                      <button mat-icon-button color="{{g.iseditable?'white': 'warn'}}" aria-label=""
+                        (click)="delete(g._id)">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+
+                    </mat-card-actions>
+                    <div *ngIf="g.iseditable">
+
+                      <form (ngSubmit)="updateBox(g._id, filterUpdateValue.value)">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>Edit content</mat-label>
+                          <input matInput placeholder="Filter Name" name="offer" value="" #filterUpdateValue>
+                        </mat-form-field>
+                        <button type="submit" mat-icon-button color="primary" aria-label="">
+                          <span class="material-icons-outlined">
+                            save
+                          </span>
+                        </button>
+                      </form>
+
+                    </div>
+                  </mat-card>
+                  <!-- <div class="card">
+                {{g.filter_name}}
+              </div> -->
+                </div>
+            </div>
+
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+</section>

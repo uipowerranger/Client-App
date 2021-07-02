@@ -1,3 +1,5 @@
+
+import { environment } from "../../environments/environment";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import {
@@ -5,12 +7,11 @@ import {
   HttpErrorResponse,
   HttpHeaders,
 } from "@angular/common/http";
-import { environment } from "src/environments/environment";
 
 @Injectable({
   providedIn: "root",
 })
-export class GiftboxService {
+export class HMService {
   constructor(private http: HttpClient) { }
   private readonly API_URL = "assets/data/advanceTable.json";
   public notify = new BehaviorSubject<any>('');
@@ -38,19 +39,21 @@ export class GiftboxService {
     return this.http.get(`${environment.apiUrl}/api/products`)
   }
   getAllGiftboxes() {
-    return this.http.get(`${environment.apiUrl}/api/giftbox`)
+    return this.http.get(`${environment.apiUrl}/api/filters`)
   }
   saveGiftBox(body) {
-    let payload = {
-      "items": body.items,
-      "box_name": body.box_name,
-      "total_amount": body.total_amount
+    
+    return this.http.post(`${environment.apiUrl}/api/filters/create`, body);
+  }
+  updateFilter(id, name) {
+    let body = {
+      "filter_name": name
     }
-    return this.http.post(`${environment.apiUrl}/api/giftbox/create`, { items: body.items, box_name: body.box_name, total_amount: body.total_amount });
+    return this.http.put(`${environment.apiUrl}/api/filters/${id}`, body);
   }
   delteGiftBox(id) {
     console.log("from delete method", id)
-    return this.http.delete(`${environment.apiUrl}/api/giftbox/${id}`)
+    return this.http.delete(`${environment.apiUrl}/api/filters/${id}`)
   }
   public notifyOther(data: any) {
     if (data) {

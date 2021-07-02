@@ -80,7 +80,7 @@ const routes: Routes = [
       {
         path: "homefilter",
         loadChildren: () =>
-          import("./homefilters/homefilters.module").then((m) => m.HomeFilterModule),
+          import("./HM/HM.module").then((m) => m.HMModule),
       },
       {
         path: "postcodes",

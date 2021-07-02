@@ -1,25 +1,24 @@
-import { element } from 'protractor';
-import { Component, ComponentFactoryResolver, Input, OnInit, ViewChild } from '@angular/core';
+import { HMService } from './../hm.service';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Data } from '@angular/router';
-import { GiftboxService } from '../giftbox.service';
 import { MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { FormComponent } from "../form/form.component";
-import { AnyNaptrRecord } from 'dns';
+
 
 
 
 
 @Component({
-  selector: 'app-giftboxcollection',
-  templateUrl: './giftboxcollection.component.html',
-  styleUrls: ['./giftboxcollection.component.sass']
+  selector: 'app-hmcollection',
+  templateUrl: './hmcollection.component.html',
+  styleUrls: ['./hmcollection.component.sass']
 })
-export class GiftboxcollectionComponent implements OnInit {
+export class HmcollectionComponent implements OnInit {
   displayedColumns: string[] = [
     "box_name",
     "total_amount",
@@ -43,7 +42,7 @@ export class GiftboxcollectionComponent implements OnInit {
   selectedMessage: any;
   subscription: any;
   giftboxdata: any = []
-  constructor(readonly snackBar: MatSnackBar, private giftboxsvc: GiftboxService, public dialog: MatDialog, formBuilder: FormBuilder) {
+  constructor(readonly snackBar: MatSnackBar, private giftboxsvc: HMService, public dialog: MatDialog, formBuilder: FormBuilder) {
     this.formGroup = formBuilder.group({
       acceptTerms: ['', Validators.requiredTrue],
       status: ''
@@ -69,8 +68,8 @@ export class GiftboxcollectionComponent implements OnInit {
 
   openDialog(id) {
     const dialogRef = this.dialog.open(FormComponent, {
-      width: '100%',
-      height: '90vh',
+      width: '30%',
+      height: '20vh',
       data: id
     });
 
@@ -93,12 +92,12 @@ export class GiftboxcollectionComponent implements OnInit {
     })
   }
 
-  updateBox(parentObject, offername, items, isEditable) {
-    let objIndex = parentObject.items.findIndex((obj => obj._id == items._id));
-    parentObject.items[objIndex].mandatefield = isEditable
-    parentObject.items[objIndex].iseditable = false;
-    parentObject.items[objIndex].offer = offername;
-    this.setValue(parentObject.items, parentObject.box_name, parentObject._id)
+  updateBox(id, name) {
+    console.log("update:::", id, name)
+    this.giftboxsvc.updateFilter(id, name).subscribe((res: any) => {
+      console.log("update", res);
+      this.getAllProducts();
+    })
   }
 
   setValue(element, name, id) {
@@ -164,13 +163,7 @@ export class GiftboxcollectionComponent implements OnInit {
     element.mandatefield = !element.mandatefield;
   }
 
-  up(parentObject, event, item) {
 
-    item.iseditable = false;
-    let isEditable = item.mandatefield;
-    let offerdetails = event.target.offer.value.trim();
-    this.updateBox(parentObject, offerdetails, item, isEditable)
-  }
 
   deleteItem(totalItems: any, item) {
     let index = totalItems.items.findIndex(function (o) {
@@ -184,6 +177,6 @@ export class GiftboxcollectionComponent implements OnInit {
     this.setValue(g.iems, 'test', g._id)
   }
   ngOnDestroy() {
-    // this.subscription.unsubscribe();
+
   }
 }
