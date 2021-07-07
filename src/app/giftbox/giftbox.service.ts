@@ -6,12 +6,13 @@ import {
   HttpHeaders,
 } from "@angular/common/http";
 import { environment } from "src/environments/environment";
+import { AuthService } from "../core/service/auth.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class GiftboxService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService) { }
   private readonly API_URL = "assets/data/advanceTable.json";
   public notify = new BehaviorSubject<any>('');
   notifyObservable$ = this.notify.asObservable();
@@ -56,5 +57,20 @@ export class GiftboxService {
     if (data) {
       this.notify.next(data);
     }
+  }
+  getState() {
+    if (this.authService.currentUserValue.role === "admin") {
+      return this.http.get(`${environment.apiUrl}/api/state`)
+    } else {
+      alert('Only super admins can createa vegbox');
+      return null;
+    }
+
+  }
+  getStateName(id: any) {
+
+    return this.http.get(`${environment.apiUrl}/api/state/details/${id}`)
+
+
   }
 }

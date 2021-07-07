@@ -20,11 +20,20 @@ export class FormComponent implements OnInit {
   addtoBox: any;
   vgname: string;
   vegsize: string;
+  vegboxtotalprice: number;
+  statedetails: any;
   vegbox = {
     "size": "small",
-    "name": 'small'
+    "name": 'small',
+    "state": '',
+    "amount": 0
   }
-  constructor(@Inject(MAT_DIALOG_DATA) private data: any,) {
+  statesList: any;
+  constructor(@Inject(MAT_DIALOG_DATA) private data: any, private giftboxsvc: GiftboxService) {
+    this.giftboxsvc.getState().subscribe((res: any) => {
+      this.statesList = res.data;
+      console.log("states", res.data)
+    })
     console.log("Inside form component", data)
   }
   vegboxname = new FormControl('', [
@@ -33,14 +42,22 @@ export class FormComponent implements OnInit {
   vegboxsize = new FormControl('', [
     Validators.required,
   ]);
+  vegboxprice = new FormControl('', [
+    Validators.required,
+  ]);
   showproducts: boolean = false;
 
   onSubmit() {
     this.showproducts = true;
     this.vgname = this.vegbox.name;
-    this.vegsize = this.vegbox.size;
+    this.vegboxtotalprice = this.vegbox.amount;
+    this.statedetails = this.vegbox.state;
+    console.log("state information:", this.vegbox)
   }
   selectOption(value) {
+    console.log(value)
+  }
+  stateOptionChange(value) {
     console.log(value)
   }
   ngOnInit() {

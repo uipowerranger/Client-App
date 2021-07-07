@@ -9,12 +9,28 @@
             Please Enter Box Name<strong>required</strong>
           </mat-error>
         </mat-form-field>
-        <mat-form-field appearance="fill" class="w-50 ml-1">
+        <mat-form-field class="w-50 mr-1 pt-2 mt-1">
+          <mat-label>Amount</mat-label>
+          <input type="number" name="vegboxprice" matInput [(ngModel)]="vegbox.amount" placeholder="" required>
+          <mat-error *ngIf="vegboxprice.hasError('required')">
+            Please Enter Box Price
+          </mat-error>
+        </mat-form-field>
+        <!-- <mat-form-field appearance="fill" class="w-50 ml-1">
           <mat-label>Select</mat-label>
           <mat-select name="vegboxsize" [(ngModel)]="vegbox.size" (ngModelChange)="selectOption($event)" required>
             <mat-option value="5">Small Size</mat-option>
             <mat-option value="10">Medium Size</mat-option>
             <mat-option value="30">Large Size</mat-option>
+          </mat-select>
+          <mat-error *ngIf="vegboxsize.hasError('required')">
+            Please Select a Box size
+          </mat-error>
+        </mat-form-field> -->
+        <mat-form-field appearance="fill" class="w-50 ml-1">
+          <mat-label>Select State</mat-label>
+          <mat-select name="state" [(ngModel)]="vegbox.state" (ngModelChange)="stateOptionChange($event)" required>
+            <mat-option *ngFor="let s of statesList" [value]="s._id">{{s.state_name}} </mat-option>
           </mat-select>
           <mat-error *ngIf="vegboxsize.hasError('required')">
             Please Select a Box size
@@ -30,11 +46,10 @@
     </form>
 
   </div>
-  <div>
-    {{addtoBox._id}}
-  </div>
+  
 
-  <app-products *ngIf="showproducts" [name]="vgname" [size]="vegsize" [addtoGB]="addtoBox"></app-products>
+  <app-products *ngIf="showproducts" [name]="vgname" [price]="vegboxtotalprice" [addtoGB]="addtoBox"
+    [stateInfo]="statedetails"></app-products>
   <app-products *ngIf="addtoBox._id" [name]="addtoBox.box_name" [size]="addtoBox.items.length" [addtoGB]="addtoBox._id"
     [parentObj]="addtoBox">
   </app-products>

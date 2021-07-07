@@ -1,5 +1,5 @@
 <div class="flex-container">
-
+    {{stateName}}-{{price}}
 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
@@ -48,13 +48,13 @@
 <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]">
 </mat-paginator>
 <div class="d-flex justify-content-end">
-    <h3>{{totAmount}}</h3>
+    <h3>Total: &nbsp;{{totAmount}}</h3>
 </div>
 <button (click)="save()" mat-fab color="primary" aria-label="" [disabled]="!enableselectButton" *ngIf="!addtoGB">
     <mat-icon>save</mat-icon>
 </button>
-<span *ngIf="!addtoGB">
-    {{!enableselectButton? 'Items must be equal to ' +size:''}}
+<span>
+    {{!enableselectButton? "Please select at least one Item" :""}}
 </span>
 <button (click)="pushtoGiftBox()" mat-fab color="primary" aria-label="" *ngIf="addtoGB"
     [disabled]="!enableselectButtonForGiftBox">

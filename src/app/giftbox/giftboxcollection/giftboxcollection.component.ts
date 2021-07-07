@@ -42,7 +42,9 @@ export class GiftboxcollectionComponent implements OnInit {
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   selectedMessage: any;
   subscription: any;
-  giftboxdata: any = []
+  giftboxdata: any = [];
+
+
   constructor(readonly snackBar: MatSnackBar, private giftboxsvc: GiftboxService, public dialog: MatDialog, formBuilder: FormBuilder) {
     this.formGroup = formBuilder.group({
       acceptTerms: ['', Validators.requiredTrue],
@@ -51,7 +53,8 @@ export class GiftboxcollectionComponent implements OnInit {
   }
   searchTerm: string;
   @Input() name: string;
-  @Input() size: number;
+  @Input() stateInfo: any;
+  @Input() price: number;
 
   ngOnInit() {
 

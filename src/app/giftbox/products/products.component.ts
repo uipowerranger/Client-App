@@ -39,6 +39,7 @@ export class ProductsComponent implements OnInit {
   enableselectButtonForGiftBox: boolean = false;
   horizontalPosition: MatSnackBarHorizontalPosition = 'start';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+  stateName: string;
 
   constructor(public dialogRef: MatDialogRef<ProductsComponent>, readonly snackBar: MatSnackBar, private giftboxsvc: GiftboxService, public dialog: MatDialog, formBuilder: FormBuilder) {
     this.formGroup = formBuilder.group({
@@ -51,9 +52,15 @@ export class ProductsComponent implements OnInit {
   @Input() size: number;
   @Input() addtoGB: any;
   @Input() parentObj: any;
+  @Input() stateInfo: any;
+  @Input() price: number;
 
 
   ngOnInit() {
+    this.giftboxsvc.getStateName(this.stateInfo).subscribe((res: any) => {
+      console.log("state ", res)
+      this.stateName = res.data.state_name
+    })
     this.giftboxsvc.getAllProducts().subscribe((d: any) => {
       this.dataSource = new MatTableDataSource(d.data);
       this.dataSource.sort = this.sort;
@@ -87,15 +94,15 @@ export class ProductsComponent implements OnInit {
           "item_name": vegbxObj.item_name,
           "item_image": vegbxObj.image,
           "quantity": 1,
-          "price": parseInt(vegbxObj.price),
-          "amount": parseInt(vegbxObj.price),
+          "price": parseFloat(vegbxObj.price).toFixed(2),
+          "amount": parseFloat(vegbxObj.price).toFixed(2),
           "isEditable": false,
           "offer": ""
 
         }
       );
-      console.log("this.vegitableBoxArray", this.vegitableBoxArray)
-      if (this.size == this.vegitableBoxArray.length) {
+
+      if (this.vegitableBoxArray.length) {
         this.enableselectButton = true;
       }
       else {
@@ -111,7 +118,7 @@ export class ProductsComponent implements OnInit {
           this.vegitableBoxArray.splice(i, 1);
         }
       }
-      if (this.size == this.vegitableBoxArray.length) {
+      if (this.vegitableBoxArray.length) {
         this.enableselectButton = true;
       }
       else {
@@ -130,6 +137,7 @@ export class ProductsComponent implements OnInit {
     return arrysize;
   }
   addPrice(arr) {
+    console.log("Total Array:", arr)
     let s = 0;
     if (arr.length == 0) {
       return 0;
@@ -140,7 +148,7 @@ export class ProductsComponent implements OnInit {
         if (arr.length > 1) {
           for (let i = 0; i < arr.length; i++) {
             console.log(arr[i].price)
-            s = s + arr[i].price
+            s = s + parseFloat(arr[i].price)
           }
 
           return s;
