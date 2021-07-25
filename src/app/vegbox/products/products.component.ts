@@ -1,16 +1,14 @@
-import { element } from 'protractor';
+import { VegboxService } from './../vegbox.service';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition, MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Data } from '@angular/router';
-import { FormComponent } from 'src/app/advance-table/form/form.component';
-import { GiftboxService } from '../giftbox.service';
-import { MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
-import { Inject } from '@angular/core';
-import { debugOutputAstAsTypeScript } from '@angular/compiler';
+import { GiftboxService } from 'src/app/giftbox/giftbox.service';
+import { Data } from 'src/app/HM/data';
+import { FormComponent } from '../form/form.component';
 
 @Component({
   selector: 'app-products',
@@ -39,10 +37,10 @@ export class ProductsComponent implements OnInit {
   enableselectButtonForGiftBox: boolean = false;
   horizontalPosition: MatSnackBarHorizontalPosition = 'start';
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
-  stateName: string;
+
   vegboxId: any;
   stateId: any;
-  constructor(public dialogRef: MatDialogRef<ProductsComponent>, readonly snackBar: MatSnackBar, private giftboxsvc: GiftboxService, public dialog: MatDialog, formBuilder: FormBuilder) {
+  constructor(private vegboxsvc: VegboxService, public dialogRef: MatDialogRef<ProductsComponent>, readonly snackBar: MatSnackBar, private giftboxsvc: GiftboxService, public dialog: MatDialog, formBuilder: FormBuilder) {
     this.formGroup = formBuilder.group({
       addtoVegBox: ['', Validators.requiredTrue],
       status: ''
@@ -54,21 +52,12 @@ export class ProductsComponent implements OnInit {
   @Input() addtoGB: any;
   @Input() parentObj: any;
   @Input() stateInfo: any;
+  @Input() stateName: any;
   @Input() price: number;
 
 
-  ngOnInit() {
-    this.giftboxsvc.notifyObservable$.subscribe(res => {
-      if (res.refresh) {
-        this.giftboxsvc.getStateName(this.stateInfo).subscribe((res: any) => {
-          this.stateName = res.data.state_name
-        })
-      }
-    })
-
-
-
-    this.giftboxsvc.getAllProducts().subscribe((d: any) => {
+  ngOnInit(): void {
+    this.vegboxsvc.getAllProducts().subscribe((d: any) => {
       this.dataSource = new MatTableDataSource(d.data);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
@@ -89,6 +78,7 @@ export class ProductsComponent implements OnInit {
     });
   }
   setValue(element, event) {
+
 
     let vegbxObj = (({ _id, item_name, image, price, quantity, mandatefield }) => ({ _id, item_name, image, price, quantity, mandatefield }))(element)
 
@@ -157,14 +147,14 @@ export class ProductsComponent implements OnInit {
           return s;
         }
   }
-  refresh() { }
+  refresh() { this.giftboxsvc.notifyOther({ refresh: true }); }
   save() {
-    debugger;
-    let tot: number = (this.price === undefined ? parseInt(localStorage.getItem('tot')) : this.price);
-    let stateId = this.stateInfo === undefined ? localStorage.getItem('stId') : this.stateInfo;
+    let tot: number = this.price;
+    let stateId = this.stateInfo;
     let body = {
-      items: this.vegitableBoxArray, total_amount: tot, box_name: this.name, state: stateId
+      items: this.vegitableBoxArray, total_amount: tot, box_name: this.name, state_id: stateId, state_name: this.stateName
     }
+
 
     this.giftboxsvc.saveGiftBox(body).subscribe(
 
@@ -172,7 +162,7 @@ export class ProductsComponent implements OnInit {
         if (res.status == 200) {
           this.vegboxId = res._id;
           this.opensnackbar(res.message);
-          this.giftboxsvc.notifyOther({ refresh: true });
+          this.refresh();
           this.dialogRef.close();
         } else if (res.status == 201) {
           this.opensnackbar(res.message);
@@ -190,9 +180,9 @@ export class ProductsComponent implements OnInit {
   pushtoGiftBox() {
     let array;
     this.giftboxsvc.changeParam(this.vegitableBoxArray);
-    array = this.vegitableBoxArray.concat(this.parentObj.items)
+    array = this.vegitableBoxArray.concat(this.addtoGB.items)
     this.vegitableBoxArray = array;
-    // this.delete(this.addtoGB);
+    this.delete(this.addtoGB._id);
     this.save();
     this.dialogRef.close();
 

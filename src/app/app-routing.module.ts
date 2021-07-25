@@ -90,10 +90,17 @@ const routes: Routes = [
           ),
       },
       {
-        path: "vegbox",
+        path: "vegbox1",
         loadChildren: () =>
           import("./giftbox/giftbox.module").then(
             (m) => m.GiftBoxModule
+          ),
+      },
+      {
+        path: "vegbox2",
+        loadChildren: () =>
+          import("./vegbox/vegbox.module").then(
+            (m) => m.VegboxModule
           ),
       },
       {

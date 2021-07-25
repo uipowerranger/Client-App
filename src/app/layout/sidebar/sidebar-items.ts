@@ -50,6 +50,18 @@ export const ROUTES: RouteInfo[] = [
     submenu: [],
   },
   {
+    path: "vegbox2",
+    title: "Vegitable Box2",
+    moduleName: "vegbox",
+    iconType: "material-icons-two-tone",
+    icon: "home",
+    class: "",
+    groupTitle: false,
+    badge: "",
+    badgeClass: "",
+    submenu: [],
+  },
+  {
     path: "vegbox",
     title: "Vegitable Box",
     moduleName: "vegbox",

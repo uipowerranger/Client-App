@@ -62,15 +62,12 @@ export class GiftboxcollectionComponent implements OnInit {
       this.vegitableBoxArray.push(param)
     });
     this.getAllProducts();
-    this.giftboxsvc.notifyObservable$.subscribe(res => {
-      if (res.refresh) {
-        this.getAllProducts();
-      }
-    })
+
 
   }
 
   openDialog(id) {
+    console.log("from openDialog", id)
     const dialogRef = this.dialog.open(FormComponent, {
       width: '100%',
       height: '90vh',
@@ -85,7 +82,17 @@ export class GiftboxcollectionComponent implements OnInit {
   getAllProducts() {
     this.giftboxsvc.getAllGiftboxes().subscribe((d: any) => {
       this.giftboxCollection = d.data;
+      console.log("Length", d.data)
     });
+    this.giftboxsvc.notifyObservable$.subscribe(res => {
+      debugger
+      if (res.refresh) {
+        this.giftboxsvc.getAllGiftboxes().subscribe((res: any) => {
+          this.giftboxCollection = res.data;
+          console.log("Length", res.data)
+        })
+      }
+    })
   }
   refresh() {
     this.getAllProducts();
@@ -109,8 +116,8 @@ export class GiftboxcollectionComponent implements OnInit {
     this.name = name;
     this.vegitableBoxArray = JSON.parse(JSON.stringify(element))
     this.totAmount = this.addPrice(this.vegitableBoxArray);
+    // this.delete(id);
     this.save();
-    this.delete(id);
   }
 
   calcSize(a) {
@@ -136,14 +143,17 @@ export class GiftboxcollectionComponent implements OnInit {
   }
 
   save() {
+    let tot: number = (this.price === undefined ? parseInt(localStorage.getItem('tot')) : this.price);
+    let stateId = (this.stateInfo === undefined || this.stateInfo === null) ? localStorage.getItem('stId') : this.stateInfo;
     let body = {
-      items: this.vegitableBoxArray, total_amount: this.totAmount, box_name: this.name
+      items: this.vegitableBoxArray, total_amount: tot, box_name: this.name, state: stateId
     }
     this.giftboxsvc.saveGiftBox(body).subscribe(
       (res: any) => {
         if (res.status == 200) {
           this.opensnackbar("Updated Successfully");
-          this.giftboxsvc.notifyOther({ refresh: true });
+          // this.giftboxsvc.notifyOther({ refresh: true });
+          this.refresh()
         } else if (res.status == 201) {
           this.opensnackbar(res.message);
         }
@@ -176,17 +186,20 @@ export class GiftboxcollectionComponent implements OnInit {
   }
 
   deleteItem(totalItems: any, item) {
+
+    console.log("totalItems:", totalItems)
+    console.log("Item:::", item)
     let index = totalItems.items.findIndex(function (o) {
-      return o._id === item._id;
+      return o.item_id === item.item_id;
     })
     totalItems.items.splice(index, 1)
-    this.setValue(totalItems.items, totalItems.box_name, totalItems._id)
+    // this.setValue(totalItems.items, totalItems.box_name, totalItems._id)
   }
 
   addItem(g: any) {
     this.setValue(g.iems, 'test', g._id)
   }
   ngOnDestroy() {
-    // this.subscription.unsubscribe();
+
   }
 }

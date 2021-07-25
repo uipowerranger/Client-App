@@ -34,7 +34,7 @@ export class FormComponent implements OnInit {
       this.statesList = res.data;
       console.log("states", res.data)
     })
-    console.log("Inside form component", data)
+    localStorage.setItem('stId', data)
   }
   vegboxname = new FormControl('', [
     Validators.required,
@@ -48,19 +48,26 @@ export class FormComponent implements OnInit {
   showproducts: boolean = false;
 
   onSubmit() {
+    console.log("State::::", this.vegbox.state)
+    localStorage.setItem('tot', (this.vegbox.amount).toString())
     this.showproducts = true;
     this.vgname = this.vegbox.name;
     this.vegboxtotalprice = this.vegbox.amount;
     this.statedetails = this.vegbox.state;
-    console.log("state information:", this.vegbox)
+    this.refresh();
   }
   selectOption(value) {
     console.log(value)
   }
   stateOptionChange(value) {
-    console.log(value)
+
+    this.statedetails = this.vegbox.state;
+    this.refresh();
   }
   ngOnInit() {
     this.addtoBox = this.data;
+  }
+  refresh() {
+    this.giftboxsvc.notifyOther({ refresh: true });
   }
 }

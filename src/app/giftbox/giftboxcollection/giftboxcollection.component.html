@@ -40,7 +40,7 @@
             <div class="col-4">
               <ul class="header-buttons">
                 <li>
-                  <div class="icon-button-demo">
+                  <div class="icon-button-demo">{{giftboxCollection.length}}
                     <button mat-mini-fab color="primary" (click)="openDialog('')">
                       <mat-icon class="col-white">add</mat-icon>
                     </button>
@@ -57,13 +57,13 @@
             </div>
           </div>
         </div>
-        <div class="container">
+        <div class="container">{{giftboxCollection}}
           <div *ngIf="!giftboxCollection.length">
 
 
 
 
-            <div class="card custom-card">
+            <div class="card custom-card" *ngIf="giftboxCollection.length<1">
               <div class="body">
 
                 <h1>No Products Available</h1>
@@ -73,12 +73,12 @@
 
 
           </div>
-          <div class="row" *ngFor="let g of giftboxCollection|filter:searchTerm ">
-            <div class="col m-1"> {{giftboxCollection.len}}
+          <!-- <div class="row" *ngFor="let g of giftboxCollection|filter:searchTerm ">
+            <div class="col m-1"> {{giftboxCollection.length}}
               <mat-card>
                 <mat-card-header class="bg-primary text-white d-flex justify-content-between align-items-center">
-                  <mat-card-title class="pt-3"> {{g.box_name}} </mat-card-title> <button mat-icon-button color="white"
-                    aria-label="" (click)="openDialog(g)">
+                  <mat-card-title class="pt-3"> {{g.box_name}} -{{g.total_amount |currency}} </mat-card-title> <button
+                    mat-icon-button color="white" aria-label="" (click)="openDialog(g)">
                     <mat-icon>add</mat-icon>
                   </button>
                   <button mat-icon-button color="white" aria-label="" (click)="delete(g._id)">
@@ -149,7 +149,7 @@
               </mat-card>
             </div>
 
-          </div>
+          </div> -->
         </div>
 
       </div>
