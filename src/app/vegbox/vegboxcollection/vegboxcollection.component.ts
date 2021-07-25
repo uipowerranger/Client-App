@@ -30,7 +30,6 @@ export class VegboxcollectionComponent implements OnInit {
     this.getProducts();
     this.vegbsvc.notifyObservable$.subscribe(res => {
       if (res.refresh) {
-        alert('yes')
         this.vegbsvc.getAllGiftboxes().subscribe((res: any) => {
           this.vegboxCollection = res.data;
         })
